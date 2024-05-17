@@ -3,7 +3,6 @@ package logicaDeNegocio.Clases;
 public class Ubicacion {
     private int idUbicacion;
     private String estado;
-    private String ciudad;
 
     public Ubicacion() {
     }
@@ -23,14 +22,6 @@ public class Ubicacion {
     public void setEstado(String estado) {
         this.estado = estado;
     }
-
-    public String getCiudad() {
-        return ciudad;
-    }
-
-    public void setCiudad(String ciudad) {
-        this.ciudad = ciudad;
-    }     
     
     @Override
     public boolean equals(Object obj){
@@ -38,8 +29,7 @@ public class Ubicacion {
             return false;
         }
         Ubicacion ubicacionTemporal=(Ubicacion)obj;
-        return ciudad.equals(ubicacionTemporal.getCiudad())&&
-                estado.equals(ubicacionTemporal.getEstado());                
+        return estado.equals(ubicacionTemporal.getEstado());                
     }
         
 }
