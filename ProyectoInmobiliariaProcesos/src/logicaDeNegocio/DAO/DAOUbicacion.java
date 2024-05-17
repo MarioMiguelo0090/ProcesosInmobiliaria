@@ -12,20 +12,20 @@ import java.util.logging.Logger;
 import logicaDeNegocio.Clases.Ubicacion;
 import logicaDeNegocio.Interfaces.UbicacionInterface;
 
-public class DAOUbicacion implements UbicacionInterface{
-    public static final ManejadorBaseDatos BASE_DE_DATOS=new ManejadorBaseDatos();
+public class DAOUbicacion implements UbicacionInterface {
+
+    public static final ManejadorBaseDatos BASE_DE_DATOS = new ManejadorBaseDatos();
     private Connection conexion;
 
     @Override
     public int registrarUbicacion(Ubicacion ubicacion) {
         PreparedStatement declaracion;
-        int numeroFilasAfectadas=0;
+        int numeroFilasAfectadas = 0;
         try {
-            conexion=BASE_DE_DATOS.getConexion();
-            declaracion=conexion.prepareStatement("Insert into ubicacion (estado,ciudad) values (?,?);");
+            conexion = BASE_DE_DATOS.getConexion();
+            declaracion = conexion.prepareStatement("Insert into ubicacion (estado) values (?);");
             declaracion.setString(1, ubicacion.getEstado());
-            declaracion.setString(2,ubicacion.getCiudad());
-            numeroFilasAfectadas=declaracion.executeUpdate();
+            numeroFilasAfectadas = declaracion.executeUpdate();
             conexion.close();
         } catch (SQLException ex) {
             Logger.getLogger(DAOUbicacion.class.getName()).log(Level.SEVERE, null, ex);
@@ -37,16 +37,15 @@ public class DAOUbicacion implements UbicacionInterface{
     public List<Ubicacion> consultarUbicaciones() {
         PreparedStatement declaracion;
         ResultSet resultado;
-        List<Ubicacion> ubicaciones=new ArrayList<>();
+        List<Ubicacion> ubicaciones = new ArrayList<>();
         try {
-            conexion=BASE_DE_DATOS.getConexion();
-            declaracion=conexion.prepareStatement("Select * from Ubicacion;");
-            resultado=declaracion.executeQuery();
-            while(resultado.next()){
-                Ubicacion ubicacion=new Ubicacion();
+            conexion = BASE_DE_DATOS.getConexion();
+            declaracion = conexion.prepareStatement("Select * from Ubicacion;");
+            resultado = declaracion.executeQuery();
+            while (resultado.next()) {
+                Ubicacion ubicacion = new Ubicacion();
                 ubicacion.setIdUbicacion(resultado.getInt("idUbicacion"));
                 ubicacion.setEstado(resultado.getString("estado"));
-                ubicacion.setCiudad(resultado.getString("ciudad"));
                 ubicaciones.add(ubicacion);
             }
             conexion.close();
@@ -55,5 +54,24 @@ public class DAOUbicacion implements UbicacionInterface{
         }
         return ubicaciones;
     }
-    
+
+    @Override
+    public Ubicacion consultarUbicacionPorID(int idUbicacion) {
+        PreparedStatement declaracion;
+        ResultSet resultado;
+        Ubicacion ubicacion = new Ubicacion();
+        try {
+            conexion = BASE_DE_DATOS.getConexion();
+            declaracion = conexion.prepareStatement("Select * from Ubicacion where idUbicacion = ?;");
+            declaracion.setInt(1, idUbicacion);
+            resultado = declaracion.executeQuery();
+            ubicacion.setIdUbicacion(resultado.getInt("idUbicacion"));
+            ubicacion.setEstado(resultado.getString("estado"));
+            conexion.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOUbicacion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return ubicacion;
+    }
+
 }

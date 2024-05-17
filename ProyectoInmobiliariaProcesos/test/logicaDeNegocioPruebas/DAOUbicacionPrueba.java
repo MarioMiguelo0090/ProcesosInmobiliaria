@@ -12,7 +12,6 @@ public class DAOUbicacionPrueba {
     @Test
     public void pruebaRegistrarUbicacionExitosa(){
         Ubicacion ubicacion=new Ubicacion();
-        ubicacion.setCiudad("Xalapa");
         ubicacion.setEstado("Veracruz");
         int resultadoEsperado=1;
         DAOUbicacion daoUbicacion=new DAOUbicacion();
@@ -23,7 +22,6 @@ public class DAOUbicacionPrueba {
     @Test
     public void pruebaConsultarUbicacionesExitosa(){
         Ubicacion ubicacion=new Ubicacion();
-        ubicacion.setCiudad("Xalapa");
         ubicacion.setEstado("Veracruz");
         List<Ubicacion> resultadoEsperado=new ArrayList<>();
         resultadoEsperado.add(ubicacion);

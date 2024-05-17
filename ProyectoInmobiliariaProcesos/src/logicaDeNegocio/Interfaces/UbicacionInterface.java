@@ -5,5 +5,6 @@ import logicaDeNegocio.Clases.Ubicacion;
 
 public interface UbicacionInterface {
     public int registrarUbicacion(Ubicacion ubicacion);
-    public List<Ubicacion> consultarUbicaciones();        
+    public List<Ubicacion> consultarUbicaciones();
+    public Ubicacion consultarUbicacionPorID(int idUbicacion);
 }
