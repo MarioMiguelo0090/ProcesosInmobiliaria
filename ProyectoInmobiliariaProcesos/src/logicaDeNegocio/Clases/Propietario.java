@@ -1,5 +1,7 @@
 package logicaDeNegocio.Clases;
 
+import java.util.Objects;
+
 public class Propietario {
     private int idPropietario;
     private String estadoPropietario;
@@ -30,6 +32,15 @@ public class Propietario {
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
+    }
+    
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Propietario that = (Propietario) o;
+        return Objects.equals(estadoPropietario, that.estadoPropietario) &&
+               Objects.equals(usuario, that.usuario);
     }
     
 }

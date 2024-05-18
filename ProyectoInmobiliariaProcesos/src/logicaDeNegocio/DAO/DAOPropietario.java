@@ -207,6 +207,7 @@ public class DAOPropietario implements PropietarioInterface {
         return propietariosObtenidos;
     }
 
+    @Override
     public Propietario consultarPropietarioPorID(int idPropietario) {
         PreparedStatement sentencia;
         ResultSet resultado;
@@ -217,11 +218,12 @@ public class DAOPropietario implements PropietarioInterface {
             sentencia = conexion.prepareStatement("SELECT * FROM propietario where idPropietario = ?");
             sentencia.setInt(1, idPropietario);
             resultado = sentencia.executeQuery();
-            Propietario propietario = new Propietario();
-            propietario.setIdPropietario(resultado.getInt("idPropietario"));
-            propietario.setEstadoPropietario(resultado.getString("estadoPropietario"));
-            int idUsuario = resultado.getInt("Usuario_idCliente");
-            propietario.setUsuario(daoUsuario.consultarUsuarioPorId(idUsuario));
+             while(resultado.next()){
+                propietarioObtenido.setIdPropietario(resultado.getInt("idPropietario"));
+                propietarioObtenido.setEstadoPropietario(resultado.getString("estadoPropietario")); 
+                int idUsuario = resultado.getInt("Usuario_idCliente");
+                propietarioObtenido.setUsuario(daoUsuario.consultarUsuarioPorId(idUsuario));
+            }
             conexion.close();
         } catch (SQLException excepcion) {
             Logger.getLogger(DAOPropietario.class.getName()).log(Level.SEVERE, null, excepcion);
@@ -229,5 +231,30 @@ public class DAOPropietario implements PropietarioInterface {
         }
         return propietarioObtenido;
     }
+    
+    @Override
+    public Propietario consultarPropietarioPorIDUsuario(int idUsuario){
+        PreparedStatement sentencia;
+        ResultSet resultado;
+        Propietario propietarioObtenido = new Propietario();
+        DAOUsuario daoUsuario = new DAOUsuario();
+        try {
+            conexion = BASE_DE_DATOS.getConexion();
+            sentencia = conexion.prepareStatement("SELECT * FROM propietario where Usuario_idCliente = ?");
+            sentencia.setInt(1, idUsuario);
+            resultado = sentencia.executeQuery();
+            while(resultado.next()){
+                propietarioObtenido.setIdPropietario(resultado.getInt("idPropietario"));
+                propietarioObtenido.setEstadoPropietario(resultado.getString("estadoPropietario")); 
+                int idUsuarioObtenido = resultado.getInt("Usuario_idCliente");
+                propietarioObtenido.setUsuario(daoUsuario.consultarUsuarioPorId(idUsuarioObtenido));
+            }
+            conexion.close();
+        } catch (SQLException excepcion) {
+            Logger.getLogger(DAOPropietario.class.getName()).log(Level.SEVERE, null, excepcion);
+            propietarioObtenido = null;
+        }
+        return propietarioObtenido;
+     }
 
 }

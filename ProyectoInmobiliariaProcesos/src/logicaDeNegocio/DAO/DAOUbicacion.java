@@ -65,13 +65,35 @@ public class DAOUbicacion implements UbicacionInterface {
             declaracion = conexion.prepareStatement("Select * from Ubicacion where idUbicacion = ?;");
             declaracion.setInt(1, idUbicacion);
             resultado = declaracion.executeQuery();
-            ubicacion.setIdUbicacion(resultado.getInt("idUbicacion"));
-            ubicacion.setEstado(resultado.getString("estado"));
+            while(resultado.next()){
+               ubicacion.setIdUbicacion(resultado.getInt("idUbicacion"));
+               ubicacion.setEstado(resultado.getString("estado")); 
+            }
             conexion.close();
         } catch (SQLException ex) {
             Logger.getLogger(DAOUbicacion.class.getName()).log(Level.SEVERE, null, ex);
         }
         return ubicacion;
     }
-
+    
+    @Override
+    public Ubicacion consultarUbicacionPorEstado(String estado) {
+        PreparedStatement declaracion;
+        ResultSet resultado;
+        Ubicacion ubicacion = new Ubicacion();
+        try {
+            conexion = BASE_DE_DATOS.getConexion();
+            declaracion = conexion.prepareStatement("Select * from Ubicacion where estado = ?;");
+            declaracion.setString(1, estado);
+            resultado = declaracion.executeQuery();
+            while(resultado.next()){
+               ubicacion.setIdUbicacion(resultado.getInt("idUbicacion"));
+               ubicacion.setEstado(resultado.getString("estado")); 
+            }
+            conexion.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOUbicacion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return ubicacion;
+    }
 }

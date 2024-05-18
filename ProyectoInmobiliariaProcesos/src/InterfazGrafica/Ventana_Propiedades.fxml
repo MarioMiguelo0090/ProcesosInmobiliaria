@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="pane_Principal" prefHeight="663.0" prefWidth="1478.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="InterfazGrafica.Controladores.Ventana_PropiedadesControlador">
+   <children>
+      <Pane fx:id="pane_Contenedor" layoutX="-7.0" layoutY="19.0" prefHeight="620.0" prefWidth="1239.0" AnchorPane.bottomAnchor="24.0" AnchorPane.leftAnchor="-7.0" AnchorPane.rightAnchor="41.0" AnchorPane.topAnchor="19.0">
+         <children>
+            <Pane layoutX="4.0" layoutY="-24.0" prefHeight="108.0" prefWidth="1484.0" style="-fx-background-color: #53d4ff;">
+               <children>
+                  <ImageView fitHeight="139.0" fitWidth="126.0" layoutX="1044.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../recursos/logo.png" />
+                     </image>
+                  </ImageView>
+                  <Label id="lbl_TextoBuscar" layoutX="474.0" layoutY="40.0" text="Propiedades Inmobiliaria El Encanto" textFill="WHITE">
+                     <font>
+                        <Font name="Arial Black" size="27.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="btn_Regresar" layoutX="27.0" layoutY="33.0" mnemonicParsing="false" style="-fx-background-color: #f03c02;" text="Regresar" textFill="WHITE">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Button>
+                  <Label fx:id="lbl_subtitulo" layoutX="576.0" layoutY="80.0" prefHeight="28.0" prefWidth="331.0" text="Inmobiliaria &quot;EL ENCANTO&quot;" textFill="WHITE">
+                     <font>
+                        <Font name="Arial Black" size="19.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <TextField fx:id="txfd_EstadoPropiedad" layoutX="571.0" layoutY="104.0" prefHeight="25.0" prefWidth="316.0" promptText="Ej: Veracruz" style="-fx-background-radius: 13;">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </TextField>
+            <Label fx:id="lbl_TextoBuscar" layoutX="340.0" layoutY="109.0" text="Buscar propiedades por estado:">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <TableView fx:id="tableView_Propiedades" layoutX="14.0" layoutY="156.0" prefHeight="449.0" prefWidth="1458.0">
+               <columns>
+                  <TableColumn fx:id="column_idPropiedad" prefWidth="79.99999618530273" text="idPropiedad" />
+                  <TableColumn fx:id="column_Nombre" minWidth="0.0" prefWidth="209.6000213623047" text="Nombre" />
+                  <TableColumn fx:id="column_TipoDePropiedad" prefWidth="109.60003662109375" text="Tipo de propiedad" />
+                  <TableColumn fx:id="column_Metros" prefWidth="71.9998779296875" text="Metros" />
+                  <TableColumn fx:id="column_Habitaciones" minWidth="0.0" prefWidth="83.20001220703125" text="Habitaciones" />
+                  <TableColumn fx:id="column_Pisos" prefWidth="50.39996337890625" text="Pisos" />
+                  <TableColumn fx:id="column_Banios" prefWidth="55.99993896484375" text="Baños" />
+                  <TableColumn fx:id="column_EstadoPropiedad" prefWidth="127.20001220703125" text="Estado de propiedad" />
+                  <TableColumn fx:id="column_Calle" prefWidth="88.79998779296875" text="Calle" />
+                  <TableColumn fx:id="column_CodigoPostal" prefWidth="75.0" text="C.P" />
+                  <TableColumn fx:id="column_Ciudad" prefWidth="75.0" text="Ciudad" />
+                  <TableColumn fx:id="column_Estado" prefWidth="104.7999267578125" text="Estado" />
+                  <TableColumn fx:id="column_Precio" prefWidth="92.0" text="Precio" />
+                  <TableColumn fx:id="column_Propietario" prefWidth="155.1998291015625" text="Propietario" />
+                  <TableColumn fx:id="column_Modificar" prefWidth="75.0" text="Modificar" />
+               </columns>
+            </TableView>
+            <Button fx:id="btn_Buscar" layoutX="899.0" layoutY="104.0" mnemonicParsing="false" prefWidth="68.0" style="-fx-background-color: #04c9fa;" text="Buscar" textFill="WHITE" onAction="#mostrarPropiedadesPorEstado" >
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Label layoutX="260.0" layoutY="102.0" />
+            <ComboBox fx:id="cmb_tipoDePropiedad" layoutX="981.0" layoutY="104.0" prefHeight="31.0" prefWidth="146.0" promptText="Tipo de propiedad" style="-fx-background-color: #04c9fa;" onAction="#mostrarPropiedadesPorFiltro" />
+            <Button fx:id="btn_RegistrarPropiedad" layoutX="1145.0" layoutY="104.0" mnemonicParsing="false" onAction="#registrarPropiedad" prefHeight="31.0" prefWidth="163.0" style="-fx-background-color: green;" text="Registrar Propiedad" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Button>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

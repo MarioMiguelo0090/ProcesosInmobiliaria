@@ -1,9 +1,12 @@
 package logicaDeNegocio.Clases;
 
+import java.util.regex.Pattern;
+
 public class Ubicacion {
     private int idUbicacion;
     private String estado;
-
+    private static final String SOLO_LETRAS_PATTERN = "^[\\p{L}\\sáéíóúÁÉÍÓÚüÜ]+$";
+    
     public Ubicacion() {
     }
 
@@ -19,8 +22,12 @@ public class Ubicacion {
         return estado;
     }
 
-    public void setEstado(String estado) {
-        this.estado = estado;
+    public void setEstado(String estado)throws IllegalArgumentException {
+        if(estado!=null&&Pattern.matches(SOLO_LETRAS_PATTERN, String.valueOf(estado))){
+            this.estado = estado;
+        }else{
+            throw new IllegalArgumentException();
+        }
     }
     
     @Override
