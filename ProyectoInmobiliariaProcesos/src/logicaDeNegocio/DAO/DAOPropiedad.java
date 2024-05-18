@@ -194,6 +194,42 @@ public class DAOPropiedad implements PropiedadInterface{
         }
         return resultadoModificacion;
     }
+    
+    @Override
+    public int modificarPropietario(Propiedad propiedad, int idPropietario) {
+        PreparedStatement sentencia;
+        int resultadoModificacion = 0;
+        try{
+            conexion = BASE_DE_DATOS.getConexion();
+            sentencia = conexion.prepareStatement("UPDATE propiedad SET Propietario_idPropietario = ? where idPropiedad = ?");
+            sentencia.setInt(1, idPropietario);
+            sentencia.setInt(2, propiedad.getIdPropiedad());
+            resultadoModificacion = sentencia.executeUpdate();
+            conexion.close();
+        }catch(SQLException excepcion){
+              Logger.getLogger(DAOPropiedad.class.getName()).log(Level.SEVERE, null, excepcion);
+              resultadoModificacion = -1;
+        }
+        return resultadoModificacion;
+    }
+    
+    @Override
+    public int modificarTipoDePropiedad(Propiedad propiedad, int idTipoPropiedad) {
+        PreparedStatement sentencia;
+        int resultadoModificacion = 0;
+        try{
+            conexion = BASE_DE_DATOS.getConexion();
+            sentencia = conexion.prepareStatement("UPDATE propiedad SET idTipoPropiedad = ? where idPropiedad = ?");
+            sentencia.setInt(1, idTipoPropiedad);
+            sentencia.setInt(2, propiedad.getIdPropiedad());
+            resultadoModificacion = sentencia.executeUpdate();
+            conexion.close();
+        }catch(SQLException excepcion){
+              Logger.getLogger(DAOPropiedad.class.getName()).log(Level.SEVERE, null, excepcion);
+              resultadoModificacion = -1;
+        }
+        return resultadoModificacion;
+    }
 
     @Override
     public List<Propiedad> consultarPropiedades() {
@@ -239,7 +275,7 @@ public class DAOPropiedad implements PropiedadInterface{
     }
 
     @Override
-    public List<Propiedad> consultarPropiedadPorTipo(int tipoDePropiedad) {
+    public List<Propiedad> consultarPropiedadPorTipo(String tipoDePropiedad) {
        List<Propiedad> propiedadesObtenidas = new ArrayList();
         PreparedStatement sentencia;
         ResultSet resultado;
@@ -248,8 +284,10 @@ public class DAOPropiedad implements PropiedadInterface{
         DAODireccion daoDireccion = new DAODireccion();
         try{
             conexion = BASE_DE_DATOS.getConexion();
-            sentencia = conexion.prepareStatement("Select * from propiedad where idTipoPropiedad = ?");
-            sentencia.setInt(1, tipoDePropiedad);
+            sentencia = conexion.prepareStatement("Select propiedad.* from propiedad "
+                    + "join tipoPropiedad on tipoPropiedad.idTipoPropiedad = propiedad.idTipoPropiedad "
+                    + "where tipos = ?");
+            sentencia.setString(1, tipoDePropiedad);
             resultado = sentencia.executeQuery();
             if(resultado.isBeforeFirst()){
                 while(resultado.next()){
@@ -293,7 +331,7 @@ public class DAOPropiedad implements PropiedadInterface{
         try{
             conexion = BASE_DE_DATOS.getConexion();
             sentencia = conexion.prepareStatement("SELECT propiedad.* FROM propiedad "
-             + "JOIN direccion ON propiedad.idDirecion = direccion.idDirecion "
+             + "JOIN direccion ON propiedad.idDireccion = direccion.idDireccion "
              + "JOIN ubicacion ON direccion.idUbicacion = ubicacion.idUbicacion "
              + "WHERE ubicacion.Estado = ?;");
             sentencia.setString(1, ubicacion);

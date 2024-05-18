@@ -23,12 +23,13 @@ public class DAODireccion implements DireccionInterface {
         try {
             conexion=BASE_DE_DATOS.getConexion();
             declaracion=conexion.prepareStatement("Insert into direccion "
-                    + "(codigoPostal,calle,ciudad,idUbicacion)"
-                    + " values (?,?,?,?);");
+                    + "(codigoPostal,calle,ciudad,colonia,idUbicacion)"
+                    + " values (?,?,?,?,?);");
             declaracion.setString(1, direccion.getCodigoPostal());
             declaracion.setString(2, direccion.getCalle());
             declaracion.setString(3, direccion.getCiudad());
-            declaracion.setInt(4, direccion.getUbicacion().getIdUbicacion());
+            declaracion.setString(4,direccion.getColonia());
+            declaracion.setInt(5, direccion.getUbicacion().getIdUbicacion());
             numeroFilasAfectadas = declaracion.executeUpdate();
             conexion.close();
         } catch (SQLException ex) {
@@ -47,6 +48,8 @@ public class DAODireccion implements DireccionInterface {
             sentencia = conexion.prepareStatement("UPDATE direccion set codigoPostal = ? where idDireccion = ?");
             sentencia.setString(1, codigoPostal);
             sentencia.setInt(2, direccion.getIdDireccion());
+            resultadoModificacion = sentencia.executeUpdate();
+            conexion.close();
         }catch(SQLException excepcion){
             Logger.getLogger(DAODireccion.class.getName()).log(Level.SEVERE, null, excepcion);
             resultadoModificacion = -1;
@@ -63,6 +66,8 @@ public class DAODireccion implements DireccionInterface {
             sentencia = conexion.prepareStatement("UPDATE direccion set calle = ? where idDireccion = ?");
             sentencia.setString(1, calle);
             sentencia.setInt(2, direccion.getIdDireccion());
+            resultadoModificacion = sentencia.executeUpdate();
+            conexion.close();
         }catch(SQLException excepcion){
             Logger.getLogger(DAODireccion.class.getName()).log(Level.SEVERE, null, excepcion);
             resultadoModificacion = -1;
@@ -79,6 +84,8 @@ public class DAODireccion implements DireccionInterface {
             sentencia = conexion.prepareStatement("UPDATE ubicacion set estado = ? where idUbicacion = ?");
             sentencia.setString(1, estado);
             sentencia.setInt(2, direccion.getUbicacion().getIdUbicacion());
+            resultadoModificacion = sentencia.executeUpdate();
+            conexion.close();
         }catch(SQLException excepcion){
             Logger.getLogger(DAODireccion.class.getName()).log(Level.SEVERE, null, excepcion);
             resultadoModificacion = -1;
@@ -92,9 +99,29 @@ public class DAODireccion implements DireccionInterface {
         int resultadoModificacion = 0;
         try{
             conexion = BASE_DE_DATOS.getConexion();
-            sentencia = conexion.prepareStatement("UPDATE ubicacion set ciudad = ? where idUbicacion = ?");
+            sentencia = conexion.prepareStatement("UPDATE direccion set ciudad = ? where idDireccion = ?");
             sentencia.setString(1, ciudad);
-            sentencia.setInt(2, direccion.getUbicacion().getIdUbicacion());
+            sentencia.setInt(2, direccion.getIdDireccion());
+            resultadoModificacion = sentencia.executeUpdate();
+            conexion.close();
+        }catch(SQLException excepcion){
+            Logger.getLogger(DAODireccion.class.getName()).log(Level.SEVERE, null, excepcion);
+            resultadoModificacion = -1;
+        }
+        return resultadoModificacion;
+    }
+    
+    @Override
+    public int modificarColonia(Direccion direccion, String colonia) {
+        PreparedStatement sentencia;
+        int resultadoModificacion = 0;
+        try{
+            conexion = BASE_DE_DATOS.getConexion();
+            sentencia = conexion.prepareStatement("UPDATE direccion set colonia = ? where idDireccion = ?");
+            sentencia.setString(1, colonia);
+            sentencia.setInt(2, direccion.getIdDireccion());
+            resultadoModificacion = sentencia.executeUpdate();
+            conexion.close();
         }catch(SQLException excepcion){
             Logger.getLogger(DAODireccion.class.getName()).log(Level.SEVERE, null, excepcion);
             resultadoModificacion = -1;
@@ -112,6 +139,33 @@ public class DAODireccion implements DireccionInterface {
             conexion = BASE_DE_DATOS.getConexion();
             sentencia = conexion.prepareStatement("select * from direccion where idDireccion = ?");
             sentencia.setInt(1, idDireccion);
+            resultadoConsulta = sentencia.executeQuery();
+            while(resultadoConsulta.next()){
+                direccion.setIdDireccion(resultadoConsulta.getInt("idDireccion"));
+                direccion.setCalle(resultadoConsulta.getString("calle"));
+                direccion.setCiudad(resultadoConsulta.getString("ciudad"));
+                direccion.setCodigoPostal(resultadoConsulta.getString("codigoPostal"));
+                direccion.setColonia(resultadoConsulta.getString("colonia"));
+                int idUbicacion = resultadoConsulta.getInt("idUbicacion");
+                Ubicacion ubicacion = new Ubicacion();
+                ubicacion = daoUbicacion.consultarUbicacionPorID(idUbicacion);
+                direccion.setUbicacion(ubicacion);
+            }
+        }catch(SQLException excepcion){
+            Logger.getLogger(DAODireccion.class.getName()).log(Level.SEVERE, null, excepcion);
+        }
+        return direccion;
+    }
+    
+    @Override
+    public Direccion ObtenerUltimaDireccionRegistrada(){
+         Direccion direccion = new Direccion();
+        ResultSet resultadoConsulta;
+        PreparedStatement sentencia;
+        DAOUbicacion daoUbicacion = new DAOUbicacion();
+        try{
+            conexion = BASE_DE_DATOS.getConexion();
+            sentencia = conexion.prepareStatement("select * from direccion order by idDireccion desc limit 1");
             resultadoConsulta = sentencia.executeQuery();
             while(resultadoConsulta.next()){
                 direccion.setIdDireccion(resultadoConsulta.getInt("idDireccion"));

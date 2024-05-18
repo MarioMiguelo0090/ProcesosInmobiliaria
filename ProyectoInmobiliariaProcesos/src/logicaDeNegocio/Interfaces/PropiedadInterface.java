@@ -13,7 +13,9 @@ public interface PropiedadInterface {
     public int modificarMetrosDeTerreno(Propiedad propiedad, float metrosDeTerreno);
     public int modificarPrecioTerreno(Propiedad propiedad, float precio);
     public int moodificarEstadoPopiedad(Propiedad propiedad, String estadoPropiedad);
+    public int modificarPropietario(Propiedad propiedad, int idPropietario);
+    public int modificarTipoDePropiedad(Propiedad propiedad, int idTipoPropiedad);
     public List<Propiedad> consultarPropiedades();
-    public List<Propiedad> consultarPropiedadPorTipo(int tipoPropiedad);
+    public List<Propiedad> consultarPropiedadPorTipo(String tipoPropiedad);
     public List<Propiedad> consultarPropiedadPorUbicacion(String ubicacion);
 }
