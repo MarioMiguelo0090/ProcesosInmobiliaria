@@ -12,12 +12,12 @@ public class DAOUsuarioPrueba {
     @Test
     public void pruebaRegistrarUsuarioExitosa(){
         Usuario usuario=new Usuario();
-        usuario.setNombre("Mario");
-        usuario.setApellidoPaterno("Limon");
-        usuario.setApellidoMaterno("Cabrera");
-        usuario.setCorreo("mario@gmail.com");
-        usuario.setRFC("LICM123456YYY");
-        usuario.setTelefono("2281870034");
+        usuario.setNombre("Oscar");
+        usuario.setApellidoPaterno("Apodaca");
+        usuario.setApellidoMaterno("Garcia");
+        usuario.setCorreo("oscar@gmail.com");
+        usuario.setRFC("OSCA0123123YY");
+        usuario.setTelefono("229191101");
         DAOUsuario daoUsuario=new DAOUsuario();
         int resultadoEsperado=1;
         int resultadoObtenido=daoUsuario.registrarUsuario(usuario);
@@ -62,6 +62,35 @@ public class DAOUsuarioPrueba {
         DAOUsuario daoUsuario=new DAOUsuario();
         usuarioObtenido=daoUsuario.consultarUsuarioPorId(idUsuario);
         assertEquals(usuarioEsperado,usuarioObtenido);                        
+    }
+    
+    @Test
+    public void pruebaModificarCorreoPorIdUsuarioExitosa(){
+        DAOUsuario daoUsuario=new DAOUsuario();
+        String correo="mario@gmail.com";
+        int idUsuario=1;
+        int resultadoEsperado=1;
+        int resultadoObtenido=daoUsuario.modificarCorreoPorIdUsuario(idUsuario, correo);
+        assertEquals(resultadoEsperado,resultadoObtenido); 
+    }
+    
+    @Test
+    public void pruebaModificarRFCPorIdUsuarioExitosa(){
+        DAOUsuario daoUsuario=new DAOUsuario();
+        String RFC="LICM123456YYY";
+        int idUsuario=1;
+        int resultadoEsperado=1;
+        int resultadoObtenido=daoUsuario.modificarRFCPorIdUsuario(idUsuario, RFC);
+        assertEquals(resultadoEsperado,resultadoObtenido);                
+    }
+    
+    @Test
+    public void pruebaObtenerIdUsuarioPorCorreoExitosa(){
+        DAOUsuario daoUsuario=new DAOUsuario();
+        String correo="mario@gmail.com";
+        int resultadoEsperado=1;
+        int resultadoObtenido=daoUsuario.obtenerIdUsuarioPorCorreo(correo);
+        assertEquals(resultadoEsperado,resultadoObtenido); 
     }
     
 }

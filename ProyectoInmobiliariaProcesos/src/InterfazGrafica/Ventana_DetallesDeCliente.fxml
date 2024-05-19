@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" fx:id="anchor_DetallesDeCliente" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="InterfazGrafica.Controladores.Ventana_DetallesDeClienteController">
+   <children>
+      <Pane prefHeight="69.0" prefWidth="756.0" style="-fx-background-color: linear-gradient(to right, #53D4FE, #53D4FE);">
+         <children>
+            <Label layoutX="276.0" layoutY="17.0" text="Detalles de cliente" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="63.0" fitWidth="104.0" layoutX="679.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../actualizar-pagina.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <Label layoutX="119.0" layoutY="101.0" text="Nombre(s):">
+         <font>
+            <Font name="System Bold Italic" size="15.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txfd_Nombre" layoutX="206.0" layoutY="99.0" prefHeight="25.0" prefWidth="413.0" />
+      <Label layoutX="119.0" layoutY="131.0" text="Apellido paterno:">
+         <font>
+            <Font name="System Bold Italic" size="15.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txfd_ApellidoPaterno" layoutX="252.0" layoutY="129.0" prefHeight="25.0" prefWidth="369.0" />
+      <Label layoutX="119.0" layoutY="164.0" text="Apellido materno:">
+         <font>
+            <Font name="System Bold Italic" size="15.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txfd_ApellidoMaterno" layoutX="252.0" layoutY="162.0" prefHeight="25.0" prefWidth="369.0" />
+      <Label layoutX="119.0" layoutY="203.0" text="Teléfono:">
+         <font>
+            <Font name="System Bold Italic" size="15.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txfd_Telefono" layoutX="192.0" layoutY="201.0" prefHeight="25.0" prefWidth="177.0" />
+      <Label layoutX="381.0" layoutY="203.0" text="RFC:">
+         <font>
+            <Font name="System Bold Italic" size="15.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txfd_RFC" layoutX="420.0" layoutY="201.0" prefHeight="25.0" prefWidth="200.0" />
+      <Label layoutX="119.0" layoutY="240.0" text="Correo:">
+         <font>
+            <Font name="System Bold Italic" size="15.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txfd_Correo" layoutX="180.0" layoutY="238.0" prefHeight="25.0" prefWidth="442.0" />
+      <Label layoutX="119.0" layoutY="277.0" text="Preferencias">
+         <font>
+            <Font name="System Bold Italic" size="18.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="cmb_TipoPropiedad" layoutX="117.0" layoutY="312.0" prefHeight="28.0" prefWidth="154.0" promptText="Tipo de propiedad" />
+      <ComboBox fx:id="cmb_Estado" layoutX="281.0" layoutY="312.0" prefHeight="28.0" prefWidth="127.0" promptText="Estado" />
+      <Label layoutX="420.0" layoutY="315.0" text="Ciudad:">
+         <font>
+            <Font name="System Bold Italic" size="15.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txfd_Ciudad" layoutX="482.0" layoutY="313.0" prefHeight="25.0" prefWidth="141.0" />
+      <Label layoutX="118.0" layoutY="352.0" text="Rango de precios:">
+         <font>
+            <Font name="System Bold Italic" size="15.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txfd_PrecioMinimo" layoutX="256.0" layoutY="350.0" prefHeight="25.0" prefWidth="124.0" promptText="\$ Mínimo" />
+      <Label layoutX="403.0" layoutY="352.0" prefHeight="21.0" prefWidth="9.0" text="a">
+         <font>
+            <Font name="System Bold Italic" size="15.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txfd_PrecioMaximo" layoutX="428.0" layoutY="350.0" prefHeight="25.0" prefWidth="141.0" promptText="\$ Máximo" />
+      <Label layoutX="583.0" layoutY="352.0" text="MXN">
+         <font>
+            <Font name="System Bold Italic" size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="117.0" layoutY="388.0" text="Número mínimo de m²:">
+         <font>
+            <Font name="System Bold Italic" size="15.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txfd_MinimoMetros" layoutX="298.0" layoutY="386.0" prefHeight="25.0" prefWidth="141.0" />
+      <Button layoutX="341.0" layoutY="431.0" mnemonicParsing="false" onAction="#salirDeLaVentana" prefHeight="31.0" prefWidth="79.0" style="-fx-background-color: red;" text="Cancelar" textFill="#fffbfb">
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font></Button>
+      <Button layoutX="529.0" layoutY="431.0" mnemonicParsing="false" onAction="#actualizar" prefHeight="31.0" prefWidth="79.0" style="-fx-background-color: green;" text="Aceptar" textFill="WHITE">
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font></Button>
+      <Button layoutX="166.0" layoutY="431.0" mnemonicParsing="false" onAction="#eliminarCliente" prefHeight="31.0" prefWidth="79.0" style="-fx-background-color: red;" text="Eliminar" textFill="WHITE">
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

@@ -77,6 +77,27 @@ public class DAOUbicacion implements UbicacionInterface {
     }
     
     @Override
+
+    public int consultarIdUbicacionPorEstado(String estado){
+        PreparedStatement declaracion;
+        ResultSet resultado;
+        int idUbicacion=0;
+        try {
+            conexion=BASE_DE_DATOS.getConexion();
+            declaracion=conexion.prepareStatement("Select idUbicacion from Ubicacion where estado=?");
+            declaracion.setString(1, estado);
+            resultado=declaracion.executeQuery();
+            while(resultado.next()){
+                idUbicacion=resultado.getInt("idUbicacion");
+          }
+            conexion.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOUbicacion.class.getName()).log(Level.SEVERE, null, ex);
+            idUbicacion=-1;
+        }
+        return idUbicacion;                
+    }
+
     public Ubicacion consultarUbicacionPorEstado(String estado) {
         PreparedStatement declaracion;
         ResultSet resultado;
@@ -90,10 +111,33 @@ public class DAOUbicacion implements UbicacionInterface {
                ubicacion.setIdUbicacion(resultado.getInt("idUbicacion"));
                ubicacion.setEstado(resultado.getString("estado")); 
             }
-            conexion.close();
+               conexion.close();
         } catch (SQLException ex) {
             Logger.getLogger(DAOUbicacion.class.getName()).log(Level.SEVERE, null, ex);
         }
         return ubicacion;
     }
+           
+    
+    @Override
+    public Ubicacion obtenerUbicacionPorId(int idUbicacion){
+        PreparedStatement declaracion;
+        ResultSet resultado;
+        Ubicacion ubicacion=new Ubicacion();
+        try {
+            conexion=BASE_DE_DATOS.getConexion();
+            declaracion=conexion.prepareStatement("Select * from Ubicacion where idUbicacion=?");
+            declaracion.setInt(1, idUbicacion);
+            resultado=declaracion.executeQuery();
+            while(resultado.next()){
+                ubicacion.setIdUbicacion(resultado.getInt("idUbicacion"));
+                ubicacion.setEstado(resultado.getString("estado"));
+            }
+            conexion.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOUbicacion.class.getName()).log(Level.SEVERE, null, ex);            
+        }
+        return ubicacion;         
+    }
+    
 }

@@ -77,6 +77,27 @@ public class DAOTipoPropiedad implements TipoPropiedadInterface {
     }
     
     @Override
+
+    public int consultarIdPropiedadPorTipo(String tipo){
+        PreparedStatement declaracion;
+        ResultSet resultado;
+        int idTipoPropiedad=0;
+        try {
+            conexion=BASE_DE_DATOS.getConexion();
+            declaracion=conexion.prepareStatement("Select idTipoPropiedad from TipoPropiedad where tipos=?");
+            declaracion.setString(1, tipo);
+            resultado=declaracion.executeQuery();
+            while(resultado.next()){
+                idTipoPropiedad=resultado.getInt("idTipoPropiedad");                                
+            }
+            conexion.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOTipoPropiedad.class.getName()).log(Level.SEVERE, null, ex);
+            idTipoPropiedad=-1;
+        }
+        return idTipoPropiedad;
+    }
+         
     public TipoPropiedad consultarTiposPropiedadPorTipo(String tipo) {
         PreparedStatement declaracion;
         ResultSet resultado;
@@ -92,8 +113,12 @@ public class DAOTipoPropiedad implements TipoPropiedadInterface {
             }
             conexion.close();
         } catch (SQLException ex) {
-            Logger.getLogger(DAOTipoPropiedad.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DAOTipoPropiedad.class.getName()).log(Level.SEVERE, null, ex);            
         }
-        return tipoPropiedad;
+        return tipoPropiedad;        
+
+        }
+
+
     }
 }

@@ -1,14 +1,21 @@
 package logicaDeNegocio.Clases;
 
+import java.math.BigDecimal;
+import java.util.regex.Pattern;
+
 public class Cliente {
     private int idCliente;
     private String estadoCliente;   
-    private float rangoDePrecioMinimo;
-    private float rangoDePrecioMaximo;
-    private float minimoMetrosCuadrados;
+    private BigDecimal rangoDePrecioMinimo;
+    private BigDecimal rangoDePrecioMaximo;
+    private BigDecimal minimoMetrosCuadrados;
+    private String ciudad;
     private TipoPropiedad tipoPropiedad;
     private Ubicacion ubicacion;
     private Usuario usuario;    
+    private static final String SOLO_NUMEROS_FLOTANTES_PATTERN = "-?\\d*(\\.\\d+)?([eE][+-]?\\d+)?";
+    private static final String SOLO_LETRAS_PATTERN = "^[\\p{L}\\sáéíóúÁÉÍÓÚüÜ]+(?:\\s[\\p{L}\\sáéíóúÁÉÍÓÚüÜ]+)*$";
+    private static final String SOLO_NUMEROS_PATTERN = "\\d+";
     
     public Cliente() {
     }
@@ -18,7 +25,11 @@ public class Cliente {
     }
 
     public void setIdCliente(int idCliente) {
-        this.idCliente = idCliente;
+        if(Pattern.matches(SOLO_NUMEROS_PATTERN, String.valueOf(idCliente))){
+            this.idCliente = idCliente;
+        }else{
+            throw new IllegalArgumentException();
+        }
     }
 
     public String getEstadoCliente() {
@@ -29,28 +40,40 @@ public class Cliente {
         this.estadoCliente = estadoCliente;
     }
 
-    public float getRangoDePrecioMinimo() {
+    public BigDecimal getRangoDePrecioMinimo() {
         return rangoDePrecioMinimo;
     }
 
-    public void setRangoDePrecioMinimo(float rangoDePrecioMinimo) {
-        this.rangoDePrecioMinimo = rangoDePrecioMinimo;
+    public void setRangoDePrecioMinimo(BigDecimal rangoDePrecioMinimo) {        
+        if(Pattern.matches(SOLO_NUMEROS_FLOTANTES_PATTERN,String.valueOf(rangoDePrecioMinimo))){
+            this.rangoDePrecioMinimo = rangoDePrecioMinimo;
+        }else{
+            throw new IllegalArgumentException();
+        }
     }      
 
-    public float getRangoDePrecioMaximo() {
+    public BigDecimal getRangoDePrecioMaximo() {
         return rangoDePrecioMaximo;
     }
 
-    public void setRangoDePrecioMaximo(float rangoDePrecioMaximo) {
-        this.rangoDePrecioMaximo = rangoDePrecioMaximo;
+    public void setRangoDePrecioMaximo(BigDecimal rangoDePrecioMaximo) {
+        if(Pattern.matches(SOLO_NUMEROS_FLOTANTES_PATTERN, String.valueOf(rangoDePrecioMaximo))){
+            this.rangoDePrecioMaximo = rangoDePrecioMaximo;
+        }else{
+            throw new IllegalArgumentException();
+        }
     }
 
-    public float getMinimoMetrosCuadrados() {
+    public BigDecimal getMinimoMetrosCuadrados() {
         return minimoMetrosCuadrados;
     }
 
-    public void setMinimoMetrosCuadrados(float minimoMetrosCuadrados) {
-        this.minimoMetrosCuadrados = minimoMetrosCuadrados;
+    public void setMinimoMetrosCuadrados(BigDecimal minimoMetrosCuadrados) {
+        if(Pattern.matches(SOLO_NUMEROS_FLOTANTES_PATTERN, String.valueOf(minimoMetrosCuadrados))){
+            this.minimoMetrosCuadrados = minimoMetrosCuadrados;
+        }else{
+            throw new IllegalArgumentException();
+        }
     }
 
     public TipoPropiedad getTipoPropiedad() {
@@ -76,6 +99,18 @@ public class Cliente {
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }     
+
+    public String getCiudad() {
+        return ciudad;
+    }
+
+    public void setCiudad(String ciudad) {
+        if(ciudad!=null&&Pattern.matches(SOLO_LETRAS_PATTERN, ciudad.trim())&&ciudad.trim().length()<=100){
+            this.ciudad = ciudad.trim().replaceAll("\\s+", " ");
+        }else{
+            throw new IllegalArgumentException();
+        }
+    }            
     
     @Override
     public boolean equals(Object obj){
