@@ -210,7 +210,13 @@ public class DAOUsuario implements UsuarioInterface {
             resultado=declaracion.executeQuery();
             while(resultado.next()){
                 idUsuario=resultado.getInt("idUsuario");
-
+            }
+            conexion.close();
+        }catch (SQLException ex) {
+            Logger.getLogger(DAOUsuario.class.getName()).log(Level.SEVERE, null, ex);            
+        }
+        return idUsuario;
+    }
     
     @Override
     public Usuario consultarUsuarioPorRFC(String rfc){
@@ -234,9 +240,9 @@ public class DAOUsuario implements UsuarioInterface {
             conexion.close();
         } catch (SQLException ex) {
             Logger.getLogger(DAOUsuario.class.getName()).log(Level.SEVERE, null, ex);
-            idUsuario=-1;
+            
         }
-        return idUsuario;                
+        return usuario;                
     }
      
 
