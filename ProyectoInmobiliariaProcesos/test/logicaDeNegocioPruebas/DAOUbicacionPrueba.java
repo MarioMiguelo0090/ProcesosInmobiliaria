@@ -11,8 +11,7 @@ public class DAOUbicacionPrueba {
     
     @Test
     public void pruebaRegistrarUbicacionExitosa(){
-        Ubicacion ubicacion=new Ubicacion();
-        ubicacion.setCiudad("Xalapa");
+        Ubicacion ubicacion=new Ubicacion();        
         ubicacion.setEstado("Veracruz");
         int resultadoEsperado=1;
         DAOUbicacion daoUbicacion=new DAOUbicacion();
@@ -22,8 +21,7 @@ public class DAOUbicacionPrueba {
     
     @Test
     public void pruebaConsultarUbicacionesExitosa(){
-        Ubicacion ubicacion=new Ubicacion();
-        ubicacion.setCiudad("Xalapa");
+        Ubicacion ubicacion=new Ubicacion();       
         ubicacion.setEstado("Veracruz");
         List<Ubicacion> resultadoEsperado=new ArrayList<>();
         resultadoEsperado.add(ubicacion);
@@ -31,6 +29,14 @@ public class DAOUbicacionPrueba {
         DAOUbicacion daoUbicacion=new DAOUbicacion();
         resultadoObtenido=daoUbicacion.consultarUbicaciones();
         assertEquals(resultadoEsperado,resultadoObtenido);                                
+    }
+    
+    @Test
+    public void pruebaConsultarIdUbicacionPorEstadoExitosa(){
+        DAOUbicacion daoUbicacion=new DAOUbicacion();
+        int resultadoEsperado=1;
+        int resultadoObtenido=daoUbicacion.consultarIdUbicacionPorEstado("Veracruz");
+        assertEquals(resultadoEsperado,resultadoObtenido);
     }
     
 }

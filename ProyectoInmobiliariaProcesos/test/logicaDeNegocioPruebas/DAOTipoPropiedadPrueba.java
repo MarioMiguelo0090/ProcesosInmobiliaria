@@ -30,4 +30,12 @@ public class DAOTipoPropiedadPrueba {
         assertEquals(resultadoEsperado,resultadoObtenido);                
     }
     
+    @Test
+    public void pruebaConsultarIdPropiedadPorTipoExitosa(){
+        DAOTipoPropiedad daoTipoPropiedad=new DAOTipoPropiedad();
+        int resultadoEsperado=1;
+        int resultadoObtenido=daoTipoPropiedad.consultarIdPropiedadPorTipo("Departamento");
+        assertEquals(resultadoEsperado,resultadoObtenido); 
+    }
+    
 }

@@ -55,4 +55,46 @@ public class DAOTipoPropiedad implements TipoPropiedadInterface{
         return tiposPropiedad;        
     }
     
+    @Override
+    public int consultarIdPropiedadPorTipo(String tipo){
+        PreparedStatement declaracion;
+        ResultSet resultado;
+        int idTipoPropiedad=0;
+        try {
+            conexion=BASE_DE_DATOS.getConexion();
+            declaracion=conexion.prepareStatement("Select idTipoPropiedad from TipoPropiedad where tipos=?");
+            declaracion.setString(1, tipo);
+            resultado=declaracion.executeQuery();
+            while(resultado.next()){
+                idTipoPropiedad=resultado.getInt("idTipoPropiedad");                                
+            }
+            conexion.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOTipoPropiedad.class.getName()).log(Level.SEVERE, null, ex);
+            idTipoPropiedad=-1;
+        }
+        return idTipoPropiedad;
+    }
+    
+    @Override
+    public TipoPropiedad obtenerTipoPropiedadPorId(int idTipoPropiedad){
+        PreparedStatement declaracion;
+        ResultSet resultado;
+        TipoPropiedad tipoPropiedad=new TipoPropiedad();
+        try {
+            conexion=BASE_DE_DATOS.getConexion();
+            declaracion=conexion.prepareStatement("Select * from TipoPropiedad where idTipoPropiedad=?");
+            declaracion.setInt(1, idTipoPropiedad);
+            resultado=declaracion.executeQuery();
+            while(resultado.next()){
+                tipoPropiedad.setIdTipoPropiedad(resultado.getInt("idTipoPropiedad"));    
+                tipoPropiedad.setTipo(resultado.getString("tipos"));
+            }
+            conexion.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOTipoPropiedad.class.getName()).log(Level.SEVERE, null, ex);
+            
+        }
+        return tipoPropiedad;        
+    }
 }
