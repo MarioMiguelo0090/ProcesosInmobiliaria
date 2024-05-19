@@ -98,6 +98,7 @@ public class DAOTipoPropiedad implements TipoPropiedadInterface {
         return idTipoPropiedad;
     }
          
+    @Override
     public TipoPropiedad consultarTiposPropiedadPorTipo(String tipo) {
         PreparedStatement declaracion;
         ResultSet resultado;
@@ -118,7 +119,5 @@ public class DAOTipoPropiedad implements TipoPropiedadInterface {
         return tipoPropiedad;        
 
         }
-
-
-    }
+    
 }

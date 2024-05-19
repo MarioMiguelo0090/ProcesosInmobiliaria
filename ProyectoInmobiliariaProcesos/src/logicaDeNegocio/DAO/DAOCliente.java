@@ -288,7 +288,7 @@ public class DAOCliente implements ClienteInterface{
                 Ubicacion ubicacion=daoUbicacion.obtenerUbicacionPorId(idUbicacion);
                 cliente.setUbicacion(ubicacion);                
                 int idTipoPropiedad=(resultado.getInt("idTipoPropiedad"));
-                TipoPropiedad tipoPropiedad=daoTipoPropiedad.obtenerTipoPropiedadPorId(idTipoPropiedad);
+                TipoPropiedad tipoPropiedad=daoTipoPropiedad.consultarTiposPropiedadPorID(idTipoPropiedad);
                 cliente.setTipoPropiedad(tipoPropiedad);     
                 cliente.setCiudad(resultado.getString("ciudad"));
             }

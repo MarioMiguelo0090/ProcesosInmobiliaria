@@ -76,8 +76,7 @@ public class DAOUbicacion implements UbicacionInterface {
         return ubicacion;
     }
     
-    @Override
-
+    
     public int consultarIdUbicacionPorEstado(String estado){
         PreparedStatement declaracion;
         ResultSet resultado;
@@ -98,6 +97,7 @@ public class DAOUbicacion implements UbicacionInterface {
         return idUbicacion;                
     }
 
+    @Override
     public Ubicacion consultarUbicacionPorEstado(String estado) {
         PreparedStatement declaracion;
         ResultSet resultado;
@@ -117,9 +117,7 @@ public class DAOUbicacion implements UbicacionInterface {
         }
         return ubicacion;
     }
-           
-    
-    @Override
+                   
     public Ubicacion obtenerUbicacionPorId(int idUbicacion){
         PreparedStatement declaracion;
         ResultSet resultado;
