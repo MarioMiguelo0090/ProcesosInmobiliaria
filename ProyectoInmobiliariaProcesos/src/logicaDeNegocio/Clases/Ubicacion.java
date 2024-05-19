@@ -4,6 +4,7 @@ import java.util.regex.Pattern;
 
 public class Ubicacion {
     private int idUbicacion;
+
     private String estado;    
     private static final String SOLO_LETRAS_PATTERN = "^[\\p{L}\\sáéíóúÁÉÍÓÚüÜ]+(?:\\s[\\p{L}\\sáéíóúÁÉÍÓÚüÜ]+)*$";
     private static final String SOLO_NUMEROS_PATTERN = "\\d+";
@@ -27,6 +28,7 @@ public class Ubicacion {
         return estado;
     }
 
+
     public void setEstado(String estado) {
         if(estado!=null&&Pattern.matches(SOLO_LETRAS_PATTERN, estado.trim())&&estado.trim().length()<=150){
             this.estado = estado.trim().replaceAll("\\s+", " ");
@@ -34,6 +36,7 @@ public class Ubicacion {
             throw new IllegalArgumentException();
         }
     }  
+
     
     @Override
     public boolean equals(Object obj){

@@ -78,7 +78,7 @@ public class DAOUsuario implements UsuarioInterface {
             declaracion=conexion.prepareStatement("Select * from usuario where idUsuario=?");
             declaracion.setInt(1, idUsuario);
             resultado=declaracion.executeQuery();
-            if(resultado.next()){
+            while(resultado.next()){
                 usuario.setIdUsuario(resultado.getInt("idUsuario"));
                 usuario.setNombre(resultado.getString("nombre"));
                 usuario.setApellidoPaterno(resultado.getString("apellidoPaterno"));
@@ -210,6 +210,26 @@ public class DAOUsuario implements UsuarioInterface {
             resultado=declaracion.executeQuery();
             while(resultado.next()){
                 idUsuario=resultado.getInt("idUsuario");
+
+    
+    @Override
+    public Usuario consultarUsuarioPorRFC(String rfc){
+        PreparedStatement declaracion;
+        ResultSet resultado;
+        Usuario usuario=new Usuario();
+        try {
+            conexion=BASE_DE_DATOS.getConexion();
+            declaracion=conexion.prepareStatement("Select * from usuario where RFC=?");
+            declaracion.setString(1, rfc);
+            resultado=declaracion.executeQuery();
+            while(resultado.next()){
+                usuario.setIdUsuario(resultado.getInt("idUsuario"));
+                usuario.setNombre(resultado.getString("nombre"));
+                usuario.setApellidoPaterno(resultado.getString("apellidoPaterno"));
+                usuario.setApellidoMaterno(resultado.getString("apellidoMaterno"));
+                usuario.setTelefono(resultado.getString("telefono"));
+                usuario.setCorreo(resultado.getString("correo"));
+                usuario.setRFC(resultado.getString("RFC"));                
             }
             conexion.close();
         } catch (SQLException ex) {
@@ -219,4 +239,6 @@ public class DAOUsuario implements UsuarioInterface {
         return idUsuario;                
     }
      
+
+ 
 }
