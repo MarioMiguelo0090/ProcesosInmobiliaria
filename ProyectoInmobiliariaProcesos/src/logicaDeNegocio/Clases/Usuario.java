@@ -15,9 +15,6 @@ public class Usuario {
     private static final String SOLO_NUMEROS_PATTERN = "\\d+";
     private static final String RFC_PATTERN = "^[A-ZÑ&]{3,4}\\d{2}(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01])[A-Z\\d]{3}$";
 
-    public Usuario() {
-    }
-
     public int getIdUsuario() {
         return idUsuario;
     }
@@ -95,11 +92,9 @@ public class Usuario {
     }
 
     public void setRFC(String RFC) {
-        if(RFC!=null&&Pattern.matches(RFC_PATTERN, RFC.trim())&&RFC.trim().length()<=13){
+
             this.RFC = RFC.trim().replaceAll("\\s+", " ");            
-        }else{
-            throw new IllegalArgumentException();            
-        }
+        
     }            
     
     @Override
@@ -111,6 +106,5 @@ public class Usuario {
         return correo.equals(usuarioTemporal.getCorreo())&&
                 RFC.equals(usuarioTemporal.getRFC());        
     }
-    
-    
+        
 }

@@ -1,11 +1,11 @@
 package InterfazGrafica.Controladores;
 
-import interfazGrafica.Alertas.Alertas;
+import InterfazGrafica.Alertas.Alertas;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -45,8 +45,6 @@ public class Ventana_PropiedadesControlador implements Initializable {
     @FXML
     private AnchorPane pane_Principal;
     @FXML
-    private Button btn_Regresar;
-    @FXML
     private TextField txfd_EstadoPropiedad;
     @FXML
     private TableView<Propiedad> tableView_Propiedades;
@@ -81,8 +79,6 @@ public class Ventana_PropiedadesControlador implements Initializable {
     @FXML
     private TableColumn<Propiedad, Void> column_Modificar;
     @FXML
-    private Button btn_Buscar;
-    @FXML
     private ComboBox<String> cmb_tipoDePropiedad;
     private static final String SOLO_LETRAS_PATTERN = "^[\\p{L}\\sáéíóúÁÉÍÓÚüÜ]+$";
     
@@ -105,7 +101,6 @@ public class Ventana_PropiedadesControlador implements Initializable {
     }
     
     public void mostrarPropiedadesPorEstado(){
-        tableView_Propiedades.getItems().clear();
         String estado = txfd_EstadoPropiedad.getText();
         if(estado!=null&&Pattern.matches(SOLO_LETRAS_PATTERN, String.valueOf(estado))){
             DAOUbicacion daoUbicacion = new DAOUbicacion();
@@ -130,7 +125,6 @@ public class Ventana_PropiedadesControlador implements Initializable {
         String seleccion = (String) cmb_tipoDePropiedad.getSelectionModel().getSelectedItem();
         DAOPropiedad daoPropiedad = new DAOPropiedad();
         List<Propiedad> propiedadesObtenidas = daoPropiedad.consultarPropiedadPorTipo(seleccion);
-        tableView_Propiedades.getItems().clear();
         if(!propiedadesObtenidas.isEmpty()){
             mostrarPropiedades(propiedadesObtenidas);
         }else{

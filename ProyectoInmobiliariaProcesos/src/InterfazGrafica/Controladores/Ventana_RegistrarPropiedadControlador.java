@@ -1,6 +1,7 @@
 package InterfazGrafica.Controladores;
 
-import interfazGrafica.Alertas.Alertas;
+import InterfazGrafica.Alertas.Alertas;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -12,9 +13,6 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Spinner;
-import javafx.scene.control.Label;
 import javafx.scene.control.Button;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -75,11 +73,7 @@ public class Ventana_RegistrarPropiedadControlador implements Initializable {
     @FXML
     private TextField txfd_RFCPropietario;
     @FXML
-    private ComboBox<String> cmb_TipoDePropiedad;
-    @FXML
-    private Button btn_Cancelar;
-    @FXML
-    private Button btn_Guardar;
+    private ComboBox<String> cmb_TipoDePropiedad; 
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
