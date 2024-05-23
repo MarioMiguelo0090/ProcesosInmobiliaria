@@ -1,4 +1,4 @@
-package interfazDeUsuario.Alertas;
+package interfazGrafica.Alertas;
 
 import java.util.Optional;
 import javafx.application.Application;
@@ -101,6 +101,24 @@ public class Alertas extends Application {
             mensaje.showAndWait();
         
         });
+    }
+    
+    public static void clienteRegistradoCorrectamente(){
+         Platform.runLater(() ->{
+            Alert mensaje = new Alert(AlertType.INFORMATION);
+            mensaje.setTitle("Registro de cliente correcot");
+            mensaje.setContentText("El cliente se registro de forma correcta");
+            mensaje.showAndWait();
+        
+        });
+    }
+    
+    public static boolean confirmarEliminacion() {
+        Alert mensaje = new Alert(AlertType.CONFIRMATION);
+        mensaje.setTitle("Eliminación");
+        mensaje.setContentText("¿Está seguro realizar esta acción?");
+        Optional<ButtonType> resultado = mensaje.showAndWait();
+        return resultado.isPresent() && resultado.get() == ButtonType.OK;
     }
     
     @Override
