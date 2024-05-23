@@ -1,5 +1,4 @@
 package InterfazGrafica.Controladores;
-
 import InterfazGrafica.Alertas.Alertas;
 import java.io.IOException;
 import java.net.URL;
