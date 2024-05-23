@@ -1,12 +1,12 @@
 package logicaDeNegocio.Clases;
 
-import java.util.regex.Pattern;
 
 public class Login {
         
     private int idLogin;
     private String usuario;
     private String contrasenia;
+    private int idUsuario;
     private String tipoUsuario;
     
     public Login(){
@@ -17,10 +17,20 @@ public class Login {
         return idLogin;
     }
 
-    public void setIdLogin(int idLogin)throws IllegalArgumentException{
+    public void setIdLogin(int idLogin){
             this.idLogin = idLogin;
 
     }
+   
+    public int getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIUsuario(int idUsuario){
+            this.idUsuario = idUsuario;
+
+    }
+    
     
     public String getUsuario() {
         return usuario;

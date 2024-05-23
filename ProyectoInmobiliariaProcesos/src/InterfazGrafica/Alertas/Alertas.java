@@ -19,6 +19,15 @@ public class Alertas extends Application {
         });
     }
     
+        public static void mostrarMensajeErrorCambioPantalla(){
+        Platform.runLater(() -> {
+            Alert mensaje = new Alert(AlertType.ERROR);
+            mensaje.setTitle("ERROR");
+            mensaje.setContentText("Error al cambiar de pantalla");
+            mensaje.showAndWait();
+        });
+    }
+    
     public static void mostrarMensajeActualizacionExitosa(){
         Platform.runLater(() -> {
             Alert mensaje = new Alert(AlertType.INFORMATION);
@@ -51,6 +60,16 @@ public class Alertas extends Application {
             Alert mensaje = new Alert(AlertType.WARNING);
             mensaje.setTitle("Datos inválidos");
             mensaje.setContentText("Verifique que los datos ingresados sean los correctos");
+            mensaje.showAndWait();
+        });
+    }
+    
+        
+    public static void mostrarMensajeDatosVacios(){
+        Platform.runLater(() ->{
+            Alert mensaje = new Alert(AlertType.WARNING);
+            mensaje.setTitle("Campos vacios");
+            mensaje.setContentText("Verifique los campos");
             mensaje.showAndWait();
         });
     }
