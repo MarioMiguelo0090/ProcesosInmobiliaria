@@ -31,4 +31,12 @@ public class DAOUbicacionPrueba {
         assertEquals(resultadoEsperado,resultadoObtenido);                                
     }
     
+    @Test
+    public void pruebaConsultarIdUbicacionPorEstadoExitosa(){
+        DAOUbicacion daoUbicacion=new DAOUbicacion();
+        int resultadoEsperado=1;
+        int resultadoObtenido=daoUbicacion.consultarIdUbicacionPorEstado("Veracruz");
+        assertEquals(resultadoEsperado,resultadoObtenido);
+    }
+    
 }

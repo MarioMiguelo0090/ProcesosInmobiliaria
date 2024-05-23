@@ -36,6 +36,7 @@ public class DAOUsuario implements UsuarioInterface {
             conexion.close();            
         } catch (SQLException ex) {
             Logger.getLogger(DAOUsuario.class.getName()).log(Level.SEVERE, null, ex);
+            resultadoInsercion=-1;
         }
         return resultadoInsercion;
     }
@@ -92,6 +93,130 @@ public class DAOUsuario implements UsuarioInterface {
         }
         return usuario;        
     }
+
+    @Override
+    public int modificarNombrePorIdUsuario(int idUsuario, String nombre) {
+        int numeroFilasAfectadas=0;
+        PreparedStatement declaracion;
+        try {
+            conexion=BASE_DE_DATOS.getConexion();
+            declaracion=conexion.prepareStatement("UPDATE usuario set nombre=? where idUsuario=?");
+            declaracion.setString(1, nombre);
+            declaracion.setInt(2, idUsuario);
+            numeroFilasAfectadas=declaracion.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOUsuario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return numeroFilasAfectadas;        
+    }
+
+    @Override
+    public int modificarApellidoPaternoPorIdUsuario(int idUsuario, String apellidoPaterno) {
+        int numeroFilasAfectadas=0;
+        PreparedStatement declaracion;
+        try {
+            conexion=BASE_DE_DATOS.getConexion();
+            declaracion=conexion.prepareStatement("UPDATE usuario set apellidoPaterno=? where idUsuario=?");
+            declaracion.setString(1, apellidoPaterno);
+            declaracion.setInt(2, idUsuario);
+            numeroFilasAfectadas=declaracion.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOUsuario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return numeroFilasAfectadas;        
+    }
+
+    @Override
+    public int modificarApellidoMaternoPorIdUsuario(int idUsuario, String apellidoMaterno) {
+        int numeroFilasAfectadas=0;
+        PreparedStatement declaracion;
+        try {
+            conexion=BASE_DE_DATOS.getConexion();
+            declaracion=conexion.prepareStatement("UPDATE usuario set apellidoMaterno=? where idUsuario=?");
+            declaracion.setString(1, apellidoMaterno);
+            declaracion.setInt(2, idUsuario);
+            numeroFilasAfectadas=declaracion.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOUsuario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return numeroFilasAfectadas;
+    }
+
+    @Override
+    public int modificarTelefonoPorIdUsuario(int idUsuario, String telefono) {
+        int numeroFilasAfectadas=0;
+        PreparedStatement declaracion;
+        try {
+            conexion=BASE_DE_DATOS.getConexion();
+            declaracion=conexion.prepareStatement("UPDATE usuario set telefono=? where idUsuario=?");
+            declaracion.setString(1, telefono);
+            declaracion.setInt(2, idUsuario);
+            numeroFilasAfectadas=declaracion.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOUsuario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return numeroFilasAfectadas;
+    }
+
+    @Override
+    public int modificarCorreoPorIdUsuario(int idUsuario, String correo) {
+        int resultadoModificacion=0;
+        CallableStatement declaracion;
+        try {
+            conexion=BASE_DE_DATOS.getConexion();
+            declaracion=conexion.prepareCall("Call actualizarCorreo(?,?,?);");
+            declaracion.setInt(1, idUsuario);
+            declaracion.setString(2, correo);
+            declaracion.registerOutParameter(3, Types.INTEGER);
+            declaracion.execute();
+            resultadoModificacion=declaracion.getInt(3);
+            conexion.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOUsuario.class.getName()).log(Level.SEVERE, null, ex);
+            resultadoModificacion=-1;
+        }
+        return resultadoModificacion;        
+    }
+
+    @Override
+    public int modificarRFCPorIdUsuario(int idUsuario, String RFC) {
+        int resultadoModificacion=0;
+        CallableStatement declaracion;
+        try {
+            conexion=BASE_DE_DATOS.getConexion();
+            declaracion=conexion.prepareCall("Call actualizarRFC(?,?,?);");
+            declaracion.setInt(1, idUsuario);
+            declaracion.setString(2, RFC);
+            declaracion.registerOutParameter(3, Types.INTEGER);
+            declaracion.execute();
+            resultadoModificacion=declaracion.getInt(3);
+            conexion.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOUsuario.class.getName()).log(Level.SEVERE, null, ex);
+            resultadoModificacion=-1;
+        }
+        return resultadoModificacion;        
+    }
+
+    @Override
+    public int obtenerIdUsuarioPorCorreo(String correo) {
+        int idUsuario=0;
+        PreparedStatement declaracion;
+        ResultSet resultado;
+        try {
+            conexion=BASE_DE_DATOS.getConexion();
+            declaracion=conexion.prepareStatement("Select idUsuario from Usuario where correo=?;");
+            declaracion.setString(1, correo);
+            resultado=declaracion.executeQuery();
+            while(resultado.next()){
+                idUsuario=resultado.getInt("idUsuario");
+            }
+            conexion.close();
+        }catch (SQLException ex) {
+            Logger.getLogger(DAOUsuario.class.getName()).log(Level.SEVERE, null, ex);            
+        }
+        return idUsuario;
+    }
     
     @Override
     public Usuario consultarUsuarioPorRFC(String rfc){
@@ -115,9 +240,11 @@ public class DAOUsuario implements UsuarioInterface {
             conexion.close();
         } catch (SQLException ex) {
             Logger.getLogger(DAOUsuario.class.getName()).log(Level.SEVERE, null, ex);
+            
         }
-        return usuario;
+        return usuario;                
     }
+
     
     @Override
     public int modificarUsuario(Usuario usuario) {
@@ -141,5 +268,6 @@ public class DAOUsuario implements UsuarioInterface {
         }
         return resultadoModificacion;
     }
-
+     
+ 
 }

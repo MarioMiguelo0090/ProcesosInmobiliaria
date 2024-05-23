@@ -1,5 +1,7 @@
 package logicaDeNegocio.Clases;
 
+import java.util.regex.Pattern;
+
 public class Usuario {
     private int idUsuario;
     private String nombre;
@@ -8,6 +10,10 @@ public class Usuario {
     private String telefono;
     private String correo;
     private String RFC;
+    private static final String SOLO_LETRAS_PATTERN = "^[\\p{L}\\sáéíóúÁÉÍÓÚüÜ]+(?:\\s[\\p{L}\\sáéíóúÁÉÍÓÚüÜ]+)*$";
+    private static final String EMAIL_PATTERN = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+    private static final String SOLO_NUMEROS_PATTERN = "\\d+";
+    private static final String RFC_PATTERN = "^[A-ZÑ&]{3,4}\\d{2}(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01])[A-Z\\d]{3}$";
 
     public Usuario() {
     }
@@ -17,7 +23,11 @@ public class Usuario {
     }
 
     public void setIdUsuario(int idUsuario) {
-        this.idUsuario = idUsuario;
+        if(Pattern.matches(SOLO_NUMEROS_PATTERN, String.valueOf(idUsuario))){
+            this.idUsuario = idUsuario;
+        }else{
+            throw new IllegalArgumentException();
+        }
     }
 
     public String getNombre() {
@@ -25,7 +35,11 @@ public class Usuario {
     }
 
     public void setNombre(String nombre) {
-        this.nombre = nombre;
+        if(nombre!=null&&Pattern.matches(SOLO_LETRAS_PATTERN, nombre.trim())&&nombre.trim().length()<=100){
+            this.nombre = nombre.trim().replaceAll("\\s+", " ");
+        }else{
+            throw new IllegalArgumentException();
+        }
     }
 
     public String getApellidoPaterno() {
@@ -33,7 +47,11 @@ public class Usuario {
     }
 
     public void setApellidoPaterno(String apellidoPaterno) {
-        this.apellidoPaterno = apellidoPaterno;
+        if(apellidoPaterno!=null&&Pattern.matches(SOLO_LETRAS_PATTERN, apellidoPaterno.trim())&&apellidoPaterno.trim().length()<=100){
+            this.apellidoPaterno = apellidoPaterno.trim().replaceAll("\\s+", " ");
+        }else{
+            throw new IllegalArgumentException();
+        }
     }
 
     public String getApellidoMaterno() {
@@ -41,7 +59,11 @@ public class Usuario {
     }
 
     public void setApellidoMaterno(String apellidoMaterno) {
-        this.apellidoMaterno = apellidoMaterno;
+        if(apellidoMaterno!=null&&Pattern.matches(SOLO_LETRAS_PATTERN, apellidoMaterno.trim())&&apellidoMaterno.trim().length()<=100){
+            this.apellidoMaterno = apellidoMaterno.trim().replaceAll("\\s+", " ");
+        }else{
+            throw new IllegalArgumentException();
+        }
     }
 
     public String getTelefono() {
@@ -49,7 +71,11 @@ public class Usuario {
     }
 
     public void setTelefono(String telefono) {
-        this.telefono = telefono;
+        if(Pattern.matches(SOLO_NUMEROS_PATTERN, String.valueOf(telefono))){
+            this.telefono = telefono;
+        }else{
+            throw new IllegalArgumentException();
+        }
     }
 
     public String getCorreo() {
@@ -57,7 +83,11 @@ public class Usuario {
     }
 
     public void setCorreo(String correo) {
-        this.correo = correo;
+        if(correo!=null&&Pattern.matches(EMAIL_PATTERN, correo.trim())&&correo.trim().length()<=100){
+            this.correo = correo.trim().replaceAll("\\s+", " ");
+        }else{
+            throw new IllegalArgumentException();
+        }
     }
 
     public String getRFC() {
@@ -65,7 +95,11 @@ public class Usuario {
     }
 
     public void setRFC(String RFC) {
-        this.RFC = RFC;
+        if(RFC!=null&&Pattern.matches(RFC_PATTERN, RFC.trim())&&RFC.trim().length()<=13){
+            this.RFC = RFC.trim().replaceAll("\\s+", " ");            
+        }else{
+            throw new IllegalArgumentException();            
+        }
     }            
     
     @Override
