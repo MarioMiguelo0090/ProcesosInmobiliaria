@@ -1,4 +1,4 @@
-package interfazDeUsuario.Alertas;
+package InterfazGrafica.Alertas;
 
 import java.util.Optional;
 import javafx.application.Application;
@@ -15,6 +15,15 @@ public class Alertas extends Application {
             Alert mensaje = new Alert(AlertType.ERROR);
             mensaje.setTitle("Usuario no encontrado");
             mensaje.setContentText("El usuario que ha ingresado no se encuentra registrado");
+            mensaje.showAndWait();
+        });
+    }
+    
+    public static void mostrarMensajeActualizacionExitosa(){
+        Platform.runLater(() -> {
+            Alert mensaje = new Alert(AlertType.INFORMATION);
+            mensaje.setTitle("Actualiyación exitosa");
+            mensaje.setContentText("Datos actualizados correctamente");
             mensaje.showAndWait();
         });
     }
@@ -46,11 +55,29 @@ public class Alertas extends Application {
         });
     }
     
+        public static void mostrarMensajeSinResultados(){
+        Platform.runLater(() ->{
+            Alert mensaje = new Alert(AlertType.WARNING);
+            mensaje.setTitle("AVISO");
+            mensaje.setContentText("No se encontraron resultados");
+            mensaje.showAndWait();
+        });
+    }
+    
     public static void mostrarMensajeDatosDuplicados(){
         Platform.runLater(() ->{
             Alert mensaje = new Alert(AlertType.WARNING);
             mensaje.setTitle("Duplicado de datos");
             mensaje.setContentText("Los datos que desea ingresar ya han sido previamente insertados");
+            mensaje.showAndWait();
+        });
+    }
+    
+    public static void mostrarMensajeIngresarCriterios(){
+        Platform.runLater(() ->{
+            Alert mensaje = new Alert(AlertType.WARNING);
+            mensaje.setTitle("AVISO");
+            mensaje.setContentText("Por favor ingresa un criterio de búsqueda.");
             mensaje.showAndWait();
         });
     }

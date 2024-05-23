@@ -1,7 +1,7 @@
 package InterfazGrafica.Controladores;
 
 
-import interfazDeUsuario.Alertas.Alertas;
+import InterfazGrafica.Alertas.Alertas;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;

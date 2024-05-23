@@ -1,4 +1,4 @@
-package interfazDeUsuario;
+package InterfazGrafica;
 
 import java.io.IOException;
 import javafx.application.Application;
@@ -13,7 +13,7 @@ public class NewFXMain extends Application {
     
     @Override
     public void start(Stage stage) throws IOException {
-        Parent root=FXMLLoader.load(getClass().getResource("/InterfazGrafica/Ventana_Propiedades.fxml"));
+        Parent root=FXMLLoader.load(getClass().getResource("/InterfazGrafica/Ventana_ConsultarAngenteInmobiliario.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);  
         stage.show();    
