@@ -77,6 +77,5 @@ public class Usuario {
         return correo.equals(usuarioTemporal.getCorreo())&&
                 RFC.equals(usuarioTemporal.getRFC());        
     }
-    
-    
+        
 }

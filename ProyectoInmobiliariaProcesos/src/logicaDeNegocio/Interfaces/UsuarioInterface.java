@@ -8,4 +8,5 @@ public interface UsuarioInterface {
     public List<Usuario> consultarUsuarios();
     public Usuario consultarUsuarioPorId(int idUsuario);   
     public Usuario consultarUsuarioPorRFC(String rfc);
+    public int modificarUsuario(Usuario usuario);
 }

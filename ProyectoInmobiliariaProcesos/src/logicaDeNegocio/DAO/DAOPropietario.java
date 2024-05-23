@@ -43,9 +43,9 @@ public class DAOPropietario implements PropietarioInterface {
         int resultadoModificacion = 0;
         try {
             conexion = BASE_DE_DATOS.getConexion();
-            sentencia = conexion.prepareStatement("UPDATE propietario SET estadoProfesor = ? where idPropietario = ?");
-            sentencia.setString(1, estado);
-            sentencia.setInt(2, propietario.getIdPropietario());
+            sentencia = conexion.prepareStatement("{ CALL actualizarEstadoPropietario(?, ?) }");
+            sentencia.setInt(1, propietario.getIdPropietario());
+            sentencia.setString(2, estado);
             resultadoModificacion = sentencia.executeUpdate();
             conexion.close();
         } catch (SQLException excepcion) {
@@ -54,6 +54,7 @@ public class DAOPropietario implements PropietarioInterface {
         }
         return resultadoModificacion;
     }
+
 
     @Override
     public int modificarNombrePropietario(Propietario propietario, String nombre) {
