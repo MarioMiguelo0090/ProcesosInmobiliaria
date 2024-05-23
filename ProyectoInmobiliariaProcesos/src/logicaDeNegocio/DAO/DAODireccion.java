@@ -81,9 +81,16 @@ public class DAODireccion implements DireccionInterface {
         int resultadoModificacion = 0;
         try{
             conexion = BASE_DE_DATOS.getConexion();
-            sentencia = conexion.prepareStatement("UPDATE ubicacion set estado = ? where idUbicacion = ?");
+            sentencia = conexion.prepareStatement("SELECT idUbicacion FROM ubicacion WHERE Estado = ?");
             sentencia.setString(1, estado);
-            sentencia.setInt(2, direccion.getUbicacion().getIdUbicacion());
+            ResultSet resultado = sentencia.executeQuery();
+            int idUbicacion=0;
+            if (resultado.next()) {
+                idUbicacion = resultado.getInt("idUbicacion");
+            }
+            sentencia = conexion.prepareStatement("UPDATE direccion set idUbicacion = ? where idDireccion = ?");
+            sentencia.setInt(1, idUbicacion);
+            sentencia.setInt(2,direccion.getIdDireccion());
             resultadoModificacion = sentencia.executeUpdate();
             conexion.close();
         }catch(SQLException excepcion){

@@ -12,7 +12,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Spinner;
-import javafx.scene.Parent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.fxml.Initializable;
@@ -21,7 +20,6 @@ import javafx.scene.Scene;
 import java.util.logging.Level;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.Button;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
 import logicaDeNegocio.Clases.Direccion;
@@ -75,10 +73,6 @@ public class Ventana_ModificarPropiedadControlador implements Initializable {
     private TextField txfd_RFCPropietario;
     @FXML
     private ComboBox<String> cmb_TipoDePropiedad;
-    @FXML
-    private Button btn_Cancelar;
-    @FXML
-    private Button btn_Guardar;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -161,13 +155,18 @@ public class Ventana_ModificarPropiedadControlador implements Initializable {
             direccion.setCodigoPostal(txfd_CodigoPostal.getText());
             direccion.setColonia(txfd_Colonia.getText());
             usuario = daoUsuario.consultarUsuarioPorRFC(txfd_RFCPropietario.getText());
-            propietario = daoPropietario.consultarPropietarioPorIDUsuario(usuario.getIdUsuario());
-            propiedad.setTipoDePropiedad(obtenerObjectoTipoPropiedad());
-            propiedad.setDireccion(direccion);
-            propiedad.setDireccion(obtenerUbicacion(propiedad.getDireccion()));
-            propiedad.setPropietario(propietario);
+            if(Objects.nonNull(usuario)){
+               propietario = daoPropietario.consultarPropietarioPorIDUsuario(usuario.getIdUsuario());
+                propiedad.setTipoDePropiedad(obtenerObjectoTipoPropiedad());
+                propiedad.setDireccion(direccion);
+                propiedad.setDireccion(obtenerUbicacion(propiedad.getDireccion()));
+                propiedad.setPropietario(propietario); 
+            }else{
+                propiedad = null;
+            }
         }catch(NullPointerException | IllegalArgumentException excepcion){
            Logger.getLogger(Ventana_RegistrarPropiedadControlador.class.getName()).log(Level.SEVERE, null, excepcion);
+           Alertas.mostrarMensajeDatosInvalidos();
            propiedad = null;
         }
         return propiedad;
@@ -228,7 +227,6 @@ public class Ventana_ModificarPropiedadControlador implements Initializable {
             regresarDeVentana();
         }else{
             Alertas.mostrarMensajeErrorEnLaConexion();
-            System.out.println(numModificaciones);
         }
         
     }
@@ -236,18 +234,22 @@ public class Ventana_ModificarPropiedadControlador implements Initializable {
     public void validarModificacion(){
        Propiedad propiedadNueva = obtenerDatosPropiedad();
        Propiedad propiedadAntigua = obtenerDatosPropiedadAAuxiliar();
-       if(!propiedadNueva.equals(propiedadAntigua)){
-           if (Objects.nonNull(propiedadNueva)) {
-               if(!Objects.isNull(propiedadNueva.getPropietario().getUsuario())){
-                   modificarDatos(propiedadNueva);
-               } else {
-                   Alertas.mostrarMensajeRFCoNoEncontrado();
-               }
-           }else{
-               Alertas.mostrarMensajeDatosInvalidos();
-           }
+       if(Objects.nonNull(propiedadNueva)){
+            if(!propiedadNueva.equals(propiedadAntigua)){
+                if (Objects.nonNull(propiedadNueva)) {
+                    if(!Objects.isNull(propiedadNueva.getPropietario().getUsuario())){
+                        modificarDatos(propiedadNueva);
+                    } else {
+                        Alertas.mostrarMensajeRFCoNoEncontrado();
+                    }
+                }else{
+                    Alertas.mostrarMensajeDatosInvalidos();
+                }
+            }else{
+                Alertas.mostrarMensajeDatosSinModificar();
+            }    
        }else{
-           Alertas.mostrarMensajeDatosSinModificar();
+           Alertas.mostrarMensajeErrorEnLaConexion();
        }
     }
     

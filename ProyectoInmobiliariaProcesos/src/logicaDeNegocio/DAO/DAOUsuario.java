@@ -240,7 +240,7 @@ public class DAOUsuario implements UsuarioInterface {
             conexion.close();
         } catch (SQLException ex) {
             Logger.getLogger(DAOUsuario.class.getName()).log(Level.SEVERE, null, ex);
-            
+            usuario=null;
         }
         return usuario;                
     }
