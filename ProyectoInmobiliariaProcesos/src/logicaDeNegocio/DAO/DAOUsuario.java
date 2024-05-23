@@ -244,7 +244,30 @@ public class DAOUsuario implements UsuarioInterface {
         }
         return usuario;                
     }
-     
 
+    
+    @Override
+    public int modificarUsuario(Usuario usuario) {
+        PreparedStatement sentencia;
+        int resultadoModificacion = 0;
+        try {
+            conexion = BASE_DE_DATOS.getConexion();
+            sentencia = conexion.prepareStatement("{ CALL actualizarUsuario(?, ?, ?, ?, ?, ?, ?) }");
+            sentencia.setInt(1, usuario.getIdUsuario());
+            sentencia.setString(2, usuario.getNombre());
+            sentencia.setString(3, usuario.getApellidoPaterno());
+            sentencia.setString(4, usuario.getApellidoMaterno());
+            sentencia.setString(5, usuario.getTelefono());
+            sentencia.setString(6, usuario.getCorreo());
+            sentencia.setString(7, usuario.getRFC());
+            resultadoModificacion = sentencia.executeUpdate();
+            conexion.close();
+        } catch (SQLException excepcion) {
+            Logger.getLogger(DAOUsuario.class.getName()).log(Level.SEVERE, null, excepcion);
+            resultadoModificacion = -1;
+        }
+        return resultadoModificacion;
+    }
+     
  
 }

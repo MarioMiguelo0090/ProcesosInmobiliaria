@@ -15,5 +15,7 @@ public interface UsuarioInterface {
     public int modificarRFCPorIdUsuario(int idUsuario,String RFC);
     public int obtenerIdUsuarioPorCorreo(String correo);      
     public Usuario consultarUsuarioPorRFC(String rfc);
+    public int modificarUsuario(Usuario usuario);
+
 
 }
