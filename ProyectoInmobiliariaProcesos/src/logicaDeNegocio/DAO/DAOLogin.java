@@ -6,6 +6,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import logicaDeNegocio.Clases.Login;
 import logicaDeNegocio.Interfaces.ILogin;
 
@@ -15,6 +17,7 @@ public class DAOLogin implements ILogin{
     private Connection conexion;
     private final String ACCESO_EXISTENTE = "SELECT COUNT(*) FROM login WHERE usuario = ? AND contraseña = ?";
     private static final String OBTENER_ACCESO = "SELECT * FROM login WHERE usuario = ?";
+    private static final String OBTENER_LOGIN = "SELECT * FROM loginchris where idUsuario = ?";
 
     private static final String INSERTAR_LOGIN = """
             INSERT INTO login (usuario, contraseña, idUsuario, tipoUsuario)
@@ -79,5 +82,28 @@ public class DAOLogin implements ILogin{
         }
 
         return tipoUsuario;
+    }
+    
+    @Override
+    public Login obtenerLoginPorIdUsuario(int idUsuario){
+        Login login = new Login();
+        try{
+            String consulta = OBTENER_LOGIN;
+            conexion=BASE_DE_DATOS.getConexion();
+            PreparedStatement statement = conexion.prepareStatement(consulta);
+            statement.setInt(1, idUsuario);
+            ResultSet resultado = statement.executeQuery();
+            if (resultado.next()) {
+                login.setContrasenia(resultado.getString("contraseña"));
+                login.setIUsuario(resultado.getInt("idUsuario"));
+                login.setIdLogin(resultado.getInt("idLogin"));
+                login.setTipoUsuario(resultado.getString("tipoUsuario"));
+                login.setUsuario(resultado.getString("usuario"));
+            }
+        }catch(SQLException excepcion){
+            Logger.getLogger(DAOLogin.class.getName()).log(Level.SEVERE, null, excepcion);
+            login = null;
+        }
+        return login;
     }
 }

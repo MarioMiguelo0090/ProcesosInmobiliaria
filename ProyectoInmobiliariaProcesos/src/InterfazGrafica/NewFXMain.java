@@ -20,14 +20,6 @@ public class NewFXMain extends Application {
                            
     }
     
-        
-     public void mostrarVentanaLogin (Stage stage) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/sdgcoilvic/interfazDeUsuario/Login.fxml"));
-        Scene scene = new Scene (root);
-        stage.setScene(scene);
-        stage.show();
-    }
-    
     public void mostrarVentanaAdministradorMenu(Stage stage) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("Ventana_MenuPrincipalAdministrador.fxml"));
         Scene scene = new Scene (root);
@@ -36,7 +28,7 @@ public class NewFXMain extends Application {
     }
     
     public void mostrarVentanaCliente (Stage stage) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource(""));
+        Parent root = FXMLLoader.load(getClass().getResource("Ventana_Propiedades.fxml"));
         Scene scene = new Scene (root);
         stage.setScene(scene);
         stage.show();

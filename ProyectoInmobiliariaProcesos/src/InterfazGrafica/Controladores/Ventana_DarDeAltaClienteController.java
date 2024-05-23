@@ -1,6 +1,6 @@
 package InterfazGrafica.Controladores;
 
-import interfazGrafica.Alertas.Alertas;
+import InterfazGrafica.Alertas.Alertas;
 import java.math.BigDecimal;
 import javafx.scene.control.TextField;
 import java.net.URL;

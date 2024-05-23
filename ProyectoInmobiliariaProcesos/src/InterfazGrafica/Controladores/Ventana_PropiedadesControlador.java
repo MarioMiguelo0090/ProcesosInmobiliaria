@@ -29,11 +29,14 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import logicaDeNegocio.Clases.Login;
+import logicaDeNegocio.Clases.LoginSingleton;
 import logicaDeNegocio.Clases.Propiedad;
 import logicaDeNegocio.Clases.TipoPropiedad;
 import logicaDeNegocio.Clases.Ubicacion;
 import logicaDeNegocio.ClasesAuxiliares.PropiedadAuxiliar;
 import logicaDeNegocio.DAO.DAOCliente;
+import logicaDeNegocio.DAO.DAOLogin;
 import logicaDeNegocio.DAO.DAOPropiedad;
 import logicaDeNegocio.DAO.DAOTipoPropiedad;
 import logicaDeNegocio.DAO.DAOUbicacion;
@@ -79,6 +82,8 @@ public class Ventana_PropiedadesControlador implements Initializable {
     @FXML
     private TableColumn<Propiedad, Void> column_Modificar;
     @FXML
+    private Button btn_RegistrarPropiedad;
+    @FXML
     private ComboBox<String> cmb_tipoDePropiedad;
     private static final String SOLO_LETRAS_PATTERN = "^[\\p{L}\\sáéíóúÁÉÍÓÚüÜ]+$";
     
@@ -98,6 +103,13 @@ public class Ventana_PropiedadesControlador implements Initializable {
             tiposDePropiedad.add(tipo.getTipo());
         }
         cmb_tipoDePropiedad.setItems(tiposDePropiedad);
+        DAOLogin daoLogin = new DAOLogin();
+        LoginSingleton login = LoginSingleton.getInstance();
+        Login loginUsuario = daoLogin.obtenerLoginPorIdUsuario(login.getIdUsuario());
+        if(loginUsuario.getTipoUsuario().equals("Cliente")){
+            column_Modificar.setVisible(false);
+            btn_RegistrarPropiedad.setVisible(false);
+        }
     }
     
     public void mostrarPropiedadesPorEstado(){
