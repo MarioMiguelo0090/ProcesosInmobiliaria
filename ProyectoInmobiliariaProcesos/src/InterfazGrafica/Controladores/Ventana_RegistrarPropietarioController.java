@@ -4,11 +4,17 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import logicaDeNegocio.Clases.Propietario;
 import logicaDeNegocio.DAO.DAOPropietario;
 import logicaDeNegocio.Clases.Usuario;
+import java.io.IOException;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 public class Ventana_RegistrarPropietarioController implements Initializable {
 
@@ -36,6 +42,7 @@ public class Ventana_RegistrarPropietarioController implements Initializable {
 
     @FXML
     private void realizarRegistro() {
+        Stage stage = (Stage) btn_Guardar.getScene().getWindow();
         String rfc = txfd_RFC.getText().trim();
         String nombre = txfd_Nombre.getText().trim();
         String apellidoP = txfd_ApellidoP.getText().trim();
@@ -44,25 +51,46 @@ public class Ventana_RegistrarPropietarioController implements Initializable {
         String correo = txfd_Correo.getText().trim();
 
         Usuario usuario = new Usuario();
+        usuario.setNombre(nombre);
+        usuario.setApellidoPaterno(apellidoP);
+        usuario.setApellidoMaterno(apellidoM);
+        usuario.setTelefono(telefono);
+        usuario.setCorreo(correo);
+        usuario.setRFC(rfc);
 
         Propietario propietario = new Propietario();
+        propietario.setUsuario(usuario);
 
         DAOPropietario daoPropietario = new DAOPropietario();
         int resultado = daoPropietario.agregarNuevoPropietario(propietario);
 
         if (resultado > 0) {
-            System.out.println("Propietario registrado correctamente.");
-            // Alert exitoso
+            mostrarAlerta("Éxito", "El propietario se ha registrado correctamente.");
         } else {
-            // Error al guardar el propietario
-            //alert fallido
-            // Aquí puedes manejar el error, mostrar un mensaje de error o realizar alguna otra acción necesaria
+            mostrarAlerta("Error", "Ha ocurrido un error al intentar registrar el propietario.");
         }
     }
 
     @FXML
     private void regresarDeVentana() {
-        // Aquí puedes definir la acción a realizar al presionar el botón de cancelar
-        // Por ejemplo, cerrar la ventana actual
+        Stage stage = (Stage) btn_Cancelar.getScene().getWindow();
+        stage.close();     
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Ventana_ConsultarPropietarios.fxml"));
+            Parent root = loader.load();
+            Stage newStage = new Stage();
+            newStage.setScene(new Scene(root));
+            newStage.show();
+        } catch (IOException e) {
+            mostrarAlerta("Error", "No se pudo cargar la ventana ActualizarPropietarioController.");
+        }
+    }
+
+    private void mostrarAlerta(String titulo, String mensaje) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(titulo);
+        alert.setHeaderText(null);
+        alert.setContentText(mensaje);
+        alert.showAndWait();
     }
 }
