@@ -17,7 +17,6 @@ public class DAOLogin implements ILogin{
     private Connection conexion;
     private final String ACCESO_EXISTENTE = "SELECT COUNT(*) FROM login WHERE usuario = ? AND contraseña = ?";
     private static final String OBTENER_ACCESO = "SELECT * FROM login WHERE usuario = ?";
-    private static final String OBTENER_LOGIN = "SELECT * FROM loginchris where idUsuario = ?";
 
     private static final String INSERTAR_LOGIN = """
             INSERT INTO login (usuario, contraseña, idUsuario, tipoUsuario)
@@ -88,7 +87,7 @@ public class DAOLogin implements ILogin{
     public Login obtenerLoginPorIdUsuario(int idUsuario){
         Login login = new Login();
         try{
-            String consulta = OBTENER_LOGIN;
+            String consulta = "SELECT * FROM login where idUsuario = ?";;
             conexion=BASE_DE_DATOS.getConexion();
             PreparedStatement statement = conexion.prepareStatement(consulta);
             statement.setInt(1, idUsuario);

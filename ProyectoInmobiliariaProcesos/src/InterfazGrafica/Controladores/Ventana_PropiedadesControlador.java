@@ -92,6 +92,13 @@ public class Ventana_PropiedadesControlador implements Initializable {
         cargarComboboxs();
         mostrarPropiedades();
         asignarBotonesDeModificarPropiedad();
+        DAOLogin daoLogin = new DAOLogin();
+        LoginSingleton login = LoginSingleton.getInstance();
+        Login loginUsuario = daoLogin.obtenerLoginPorIdUsuario(login.getIdUsuario());
+        if(loginUsuario.getTipoUsuario().equals("Cliente")){
+            column_Modificar.setVisible(false);
+            btn_RegistrarPropiedad.setVisible(false);
+        }
     }    
     
     public void cargarComboboxs(){
@@ -103,13 +110,6 @@ public class Ventana_PropiedadesControlador implements Initializable {
             tiposDePropiedad.add(tipo.getTipo());
         }
         cmb_tipoDePropiedad.setItems(tiposDePropiedad);
-        DAOLogin daoLogin = new DAOLogin();
-        LoginSingleton login = LoginSingleton.getInstance();
-        Login loginUsuario = daoLogin.obtenerLoginPorIdUsuario(login.getIdUsuario());
-        if(loginUsuario.getTipoUsuario().equals("Cliente")){
-            column_Modificar.setVisible(false);
-            btn_RegistrarPropiedad.setVisible(false);
-        }
     }
     
     public void mostrarPropiedadesPorEstado(){
