@@ -1,10 +1,15 @@
 package InterfazGrafica.Controladores;
 
+import java.io.IOException;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.stage.Stage;
 import logicaDeNegocio.Clases.Propietario;
 import logicaDeNegocio.Clases.Usuario;
 import logicaDeNegocio.DAO.DAOPropietario;
@@ -86,6 +91,21 @@ public class Ventana_ActualizarPropietarioController {
             }
         } catch (NumberFormatException e) {
             mostrarAlerta("Error", "ID de propietario inválido");
+        }
+    }
+    
+    @FXML
+    private void regresarDeVentana() {
+        Stage stage = (Stage) btn_Cancelar.getScene().getWindow();
+        stage.close();     
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Ventana_ConsultarPropietarios.fxml"));
+            Parent root = loader.load();
+            Stage newStage = new Stage();
+            newStage.setScene(new Scene(root));
+            newStage.show();
+        } catch (IOException e) {
+            mostrarAlerta("Error", "No se pudo cargar la ventana ActualizarPropietarioController.");
         }
     }
 

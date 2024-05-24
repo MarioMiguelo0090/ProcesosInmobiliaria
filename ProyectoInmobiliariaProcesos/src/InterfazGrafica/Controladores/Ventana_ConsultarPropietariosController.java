@@ -148,8 +148,17 @@ public class Ventana_ConsultarPropietariosController implements Initializable {
     }
 
     @FXML
-    private void regresar(ActionEvent event) {
-        // Lógica para regresar a la ventana anterior
-        // Podrías cerrar la ventana actual o cargar una ventana previa
+    private void regresarDeVentana() {
+        Stage stage = (Stage) btn_Regresar.getScene().getWindow();
+        stage.close();     
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Ventana_MenuPrincipaldministrador.fxml"));
+            Parent root = loader.load();
+            Stage newStage = new Stage();
+            newStage.setScene(new Scene(root));
+            newStage.show();
+        } catch (IOException e) {
+            
+        }
     }
 }
