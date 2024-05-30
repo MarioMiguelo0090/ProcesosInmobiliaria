@@ -10,12 +10,11 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane id="AnchorPane" prefHeight="409.0" prefWidth="746.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="InterfazGrafica.Controladores.Ventana_RegistrarPropietarioController">
-
+<AnchorPane fx:id="pane_Principal" prefHeight="409.0" prefWidth="746.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="InterfazGrafica.Controladores.Ventana_RegistrarPropietarioController">
    <children>
       <Pane fx:id="pane_ColorSuperior" prefHeight="88.0" prefWidth="748.0" style="-fx-background-color: #53d4ff;">
          <children>
-            <Label fx:id="lbl_Titulo" layoutX="191.0" layoutY="18.0" text="Modificar Propietario" textFill="WHITE">
+            <Label fx:id="lbl_Titulo" layoutX="191.0" layoutY="18.0" text="Registrar Propietario" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="39.0" />
                </font>
@@ -72,7 +71,7 @@
             <TextField fx:id="txfd_Correo" layoutX="88.0" layoutY="189.0" prefHeight="26.0" prefWidth="295.0" style="-fx-background-radius: 13;" />
          </children>
       </Pane>
-      <Button fx:id="btn_Guardar" layoutX="396.0" layoutY="358.0" mnemonicParsing="false" onAction="#actualizarAgente" prefHeight="26.0" prefWidth="91.0" style="-fx-background-color: green;" text="Guardar" textFill="WHITE">
+      <Button fx:id="btn_Guardar" layoutX="396.0" layoutY="358.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="91.0" style="-fx-background-color: green;" text="Guardar" textFill="WHITE">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>

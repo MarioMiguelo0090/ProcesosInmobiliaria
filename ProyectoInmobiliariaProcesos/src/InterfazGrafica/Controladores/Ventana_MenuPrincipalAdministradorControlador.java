@@ -37,10 +37,16 @@ public class Ventana_MenuPrincipalAdministradorControlador implements Initializa
         btn_GestionAgente.setOnAction(event->abrirVentanaAgentes());
         btn_ConsultarCliente.setOnAction(event->abrirVentanaConsultarClientes());
         btn_RegistrarCliente.setOnAction(event->abrirVentanaRegistrarCliente());
+        btn_GestionPropietario.setOnAction(event->abrirVentanaPropietarios());
     }
     
     public void abrirVentanaPropiedades(){
          String rutaVentanaFXML="/interfazGrafica/Ventana_Propiedades.fxml";
+        desplegarVentanaCorrespondiente(rutaVentanaFXML);
+    }
+    
+    public void abrirVentanaPropietarios(){
+         String rutaVentanaFXML="/interfazGrafica/Ventana_ConsultarPropietarios.fxml";
         desplegarVentanaCorrespondiente(rutaVentanaFXML);
     }
     

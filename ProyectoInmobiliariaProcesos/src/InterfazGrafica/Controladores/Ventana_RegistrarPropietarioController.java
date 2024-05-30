@@ -12,13 +12,20 @@ import logicaDeNegocio.Clases.Propietario;
 import logicaDeNegocio.DAO.DAOPropietario;
 import logicaDeNegocio.Clases.Usuario;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import logicaDeNegocio.DAO.DAOCliente;
 
 public class Ventana_RegistrarPropietarioController implements Initializable {
-
+    
+    private Stage escenario;
+    @FXML
+    private AnchorPane pane_Principal;
     @FXML
     private TextField txfd_RFC;
     @FXML
@@ -71,18 +78,26 @@ public class Ventana_RegistrarPropietarioController implements Initializable {
         }
     }
 
-    @FXML
-    private void regresarDeVentana() {
-        Stage stage = (Stage) btn_Cancelar.getScene().getWindow();
-        stage.close();     
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("Ventana_ConsultarPropietarios.fxml"));
-            Parent root = loader.load();
-            Stage newStage = new Stage();
-            newStage.setScene(new Scene(root));
-            newStage.show();
-        } catch (IOException e) {
-            mostrarAlerta("Error", "No se pudo cargar la ventana ActualizarPropietarioController.");
+    public void regresarDeVentana(){
+        String rutaVentanaFXML="/interfazGrafica/Ventana_ConsultarPropietarios.fxml";
+        desplegarVentanaCorrespondiente(rutaVentanaFXML);
+    }
+    
+    public void cerrarVentana(){
+        escenario = (Stage)pane_Principal.getScene().getWindow();
+        escenario.close();
+    }
+    
+    public void desplegarVentanaCorrespondiente(String rutaVentanaFXML){
+        try{
+            Parent root=FXMLLoader.load(getClass().getResource(rutaVentanaFXML));
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.show();
+            cerrarVentana();
+        }catch(IOException excepcion){
+            Logger.getLogger(DAOCliente.class.getName()).log(Level.SEVERE, null, excepcion);
         }
     }
 
