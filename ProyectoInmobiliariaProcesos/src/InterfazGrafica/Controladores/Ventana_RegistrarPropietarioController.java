@@ -1,5 +1,6 @@
 package InterfazGrafica.Controladores;
 
+import InterfazGrafica.Alertas.Alertas;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -58,16 +59,15 @@ public class Ventana_RegistrarPropietarioController implements Initializable {
         usuario.setCorreo(correo);
         usuario.setRFC(rfc);
 
-        Propietario propietario = new Propietario();
-        propietario.setUsuario(usuario);
+        
 
         DAOPropietario daoPropietario = new DAOPropietario();
-        int resultado = daoPropietario.agregarNuevoPropietario(propietario);
+        int resultado = daoPropietario.agregarNuevoPropietario(usuario);
 
         if (resultado > 0) {
-            mostrarAlerta("Éxito", "El propietario se ha registrado correctamente.");
+            Alertas.propietarioRegistradoCorrectamente();    
         } else {
-            mostrarAlerta("Error", "Ha ocurrido un error al intentar registrar el propietario.");
+            Alertas.mostrarMensajeErrorEnLaConexion();
         }
     }
 

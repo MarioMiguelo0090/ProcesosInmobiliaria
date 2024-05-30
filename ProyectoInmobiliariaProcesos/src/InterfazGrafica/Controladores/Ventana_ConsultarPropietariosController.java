@@ -1,5 +1,6 @@
 package InterfazGrafica.Controladores;
 
+import InterfazGrafica.Alertas.Alertas;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -20,8 +21,15 @@ import javafx.event.ActionEvent;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import logicaDeNegocio.Clases.Usuario;
+import logicaDeNegocio.DAO.DAOAgenteInmobiliario;
+import logicaDeNegocio.DAO.DAOUsuario;
 
 public class Ventana_ConsultarPropietariosController implements Initializable {
 
@@ -67,7 +75,7 @@ public class Ventana_ConsultarPropietariosController implements Initializable {
         column_Nombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         column_ApellidoP.setCellValueFactory(new PropertyValueFactory<>("apellidoPaterno"));
         column_ApellidoM.setCellValueFactory(new PropertyValueFactory<>("apellidoMaterno"));
-        column_RFC.setCellValueFactory(new PropertyValueFactory<>("rfc"));
+        column_RFC.setCellValueFactory(new PropertyValueFactory<>("RFC"));
         column_Telefono.setCellValueFactory(new PropertyValueFactory<>("telefono"));
         column_Correo.setCellValueFactory(new PropertyValueFactory<>("correo"));
 
@@ -75,14 +83,17 @@ public class Ventana_ConsultarPropietariosController implements Initializable {
         addButtonToTable();
 
         // Cargar los datos de la base de datos
-        cargarDatos();
+        obtenerPropietarios();
     }
 
-    private void cargarDatos() {
-        DAOPropietario daoPropietario = new DAOPropietario();
-        List<Propietario> propietarios = daoPropietario.consultarPropietarios();
-        listaPropietarios = FXCollections.observableArrayList(propietarios);
-        tableView_Propiedades.setItems(listaPropietarios);
+    
+    
+    public List<Usuario> obtenerPropietarios(){
+        DAOPropietario daoPropietario=new DAOPropietario();
+            
+            List<Usuario> usuarios=new ArrayList<>();
+            usuarios=daoPropietario.consultarPropietarios();
+        return usuarios;
     }
 
     private void addButtonToTable() {
