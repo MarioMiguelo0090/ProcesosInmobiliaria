@@ -187,7 +187,20 @@ public class DAOPropietario implements PropietarioInterface {
         DAOUsuario daoUsuario = new DAOUsuario();
         try {
             conexion = BASE_DE_DATOS.getConexion();
-            sentencia = conexion.prepareStatement("SELECT * FROM propietario");
+            sentencia = conexion.prepareStatement("SELECT \n" +
+                                                                    
+                                                                    "    usuario.idUsuario,\n" +
+                                                                    "    usuario.nombre,\n" +
+                                                                    "    usuario.apellidoPaterno,\n" +
+                                                                    "    usuario.apellidoMaterno,\n" +
+                                                                    "    usuario.telefono,\n" +
+                                                                    "    usuario.correo,\n" +
+                                                                    "    usuario.RFC,\n" +
+                                                                    "    propietario.estadoPropietario\n" +
+                                                                    "FROM \n" +
+                                                                    "    propietario\n" +
+                                                                    "INNER JOIN \n" +
+                                                                    "    usuario ON propietario.Usuario_idCliente = usuario.idUsuario;");
             resultado = sentencia.executeQuery();
             if (resultado.isBeforeFirst()) {
                 while (resultado.next()) {
