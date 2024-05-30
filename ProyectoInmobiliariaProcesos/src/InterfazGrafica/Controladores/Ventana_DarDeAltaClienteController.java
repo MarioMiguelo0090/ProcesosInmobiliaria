@@ -1,15 +1,20 @@
 package InterfazGrafica.Controladores;
 
+import InterfazGrafica.Alertas.Alertas;
 import java.math.BigDecimal;
 import javafx.scene.control.TextField;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import logicaDeNegocio.Clases.Cliente;
 import logicaDeNegocio.Clases.TipoPropiedad;
 import logicaDeNegocio.Clases.Ubicacion;
@@ -56,12 +61,21 @@ public class Ventana_DarDeAltaClienteController implements Initializable {
     @FXML
     private TextField txfd_Telefono;
     
+    @FXML
+    private AnchorPane anchor_DarDeAltaCliente;
+    private Stage stage_ventana;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         llenarComboBoxEstado();
         llenarComboBoxTipoPropiedad();
     }    
     
+    public void cerrarVentana(){
+        stage_ventana=(Stage) anchor_DarDeAltaCliente.getScene().getWindow();
+        stage_ventana.close();
+    }
+        
     public Usuario obtenerUsuario(){
         Usuario usuario=new Usuario();
         try{
@@ -73,7 +87,7 @@ public class Ventana_DarDeAltaClienteController implements Initializable {
             usuario.setRFC(txfd_RFC.getText());
         }catch(IllegalArgumentException excepcion){
             usuario=null;
-            System.out.println("Error usuario");
+            Logger.getLogger(Ventana_DarDeAltaClienteController.class.getName()).log(Level.SEVERE, null, excepcion);                        
         }
         return usuario;                        
     }
@@ -99,8 +113,7 @@ public class Ventana_DarDeAltaClienteController implements Initializable {
             cliente.setTipoPropiedad(tipoPropiedad);            
         }catch(IllegalArgumentException excepcion){
             cliente=null;
-            //Intercambiar por alerta
-            System.out.println("Error cliente"); 
+            Logger.getLogger(Ventana_DarDeAltaClienteController.class.getName()).log(Level.SEVERE, null, excepcion);                        
         }
         return cliente;        
     }
@@ -118,19 +131,22 @@ public class Ventana_DarDeAltaClienteController implements Initializable {
     public void llenarComboBoxTipoPropiedad(){
         DAOTipoPropiedad daoTipoPropiedad=new DAOTipoPropiedad();
         List<TipoPropiedad> tiposPropiedad=daoTipoPropiedad.consultarTiposPropiedad();
-        ObservableList<String> tiposPropiedadVisibles = FXCollections.observableArrayList();
-        for(TipoPropiedad tipoPropiedad : tiposPropiedad){
-            tiposPropiedadVisibles.add(tipoPropiedad.getTipo());
-        }
-        cmb_TipoPropiedad.setItems(tiposPropiedadVisibles);
+        if(tiposPropiedad.isEmpty()){
+            Alertas.mostrarMensajeErrorEnLaConexion();
+        }else{
+            ObservableList<String> tiposPropiedadVisibles = FXCollections.observableArrayList();
+            for(TipoPropiedad tipoPropiedad : tiposPropiedad){
+                tiposPropiedadVisibles.add(tipoPropiedad.getTipo());
+            }
+            cmb_TipoPropiedad.setItems(tiposPropiedadVisibles);        
+        }        
     }
     
     public void registrarCliente(){
         Usuario usuario=obtenerUsuario();
         Cliente cliente=obtenerCliente();
         if(usuario==null||cliente==null){
-            //Intercambiar por alerta
-            System.out.println("Datos invalidos");
+            Alertas.mostrarMensajeDatosInvalidos();
             return;            
         }
         cliente.setEstadoCliente("Activo");
@@ -144,19 +160,15 @@ public class Ventana_DarDeAltaClienteController implements Initializable {
                 DAOCliente daoCliente=new DAOCliente();
                 int resultadoInsercionCliente=daoCliente.registrarCliente(cliente);
                 if(resultadoInsercionCliente==1){
-                    //Intercambiar por alerta
-                    System.out.println("Cliente registrado");
-                }else{
-                    //Intercambiar por alerta
-                    System.out.println("Error de conexion");
+                    Alertas.clienteRegistradoCorrectamente();                       
+                }else{                    
+                    Alertas.mostrarMensajeErrorEnLaConexion();
                 }   break;
             case 0:
-                //Intercambiar por alerta
-                System.out.println("Datos duplicados");
+                Alertas.mostrarMensajeDatosDuplicados();                
                 break;
             default:
-                //Intercambiar por alerta
-                System.out.println("Error de conexion");
+                Alertas.mostrarMensajeErrorEnLaConexion();                
                 break;
         }        
     }

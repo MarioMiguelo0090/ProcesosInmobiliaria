@@ -6,6 +6,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import logicaDeNegocio.Clases.Login;
 import logicaDeNegocio.Interfaces.ILogin;
 
@@ -79,5 +81,28 @@ public class DAOLogin implements ILogin{
         }
 
         return tipoUsuario;
+    }
+    
+    @Override
+    public Login obtenerLoginPorIdUsuario(int idUsuario){
+        Login login = new Login();
+        try{
+            String consulta = "SELECT * FROM login where idUsuario = ?";;
+            conexion=BASE_DE_DATOS.getConexion();
+            PreparedStatement statement = conexion.prepareStatement(consulta);
+            statement.setInt(1, idUsuario);
+            ResultSet resultado = statement.executeQuery();
+            if (resultado.next()) {
+                login.setContrasenia(resultado.getString("contraseña"));
+                login.setIUsuario(resultado.getInt("idUsuario"));
+                login.setIdLogin(resultado.getInt("idLogin"));
+                login.setTipoUsuario(resultado.getString("tipoUsuario"));
+                login.setUsuario(resultado.getString("usuario"));
+            }
+        }catch(SQLException excepcion){
+            Logger.getLogger(DAOLogin.class.getName()).log(Level.SEVERE, null, excepcion);
+            login = null;
+        }
+        return login;
     }
 }

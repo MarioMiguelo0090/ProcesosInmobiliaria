@@ -1,10 +1,13 @@
 package InterfazGrafica.Controladores;
 
+import InterfazGrafica.Alertas.Alertas;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.fxml.FXML;
@@ -58,8 +61,13 @@ public class Ventana_ConsultaDeClientesController implements Initializable {
         column_ApellidoMaterno.setCellValueFactory(new PropertyValueFactory<>("apellidoMaterno"));
         column_Correo.setCellValueFactory(new PropertyValueFactory<>("correo"));
         List<Usuario> usuarios=obtenerClientes();
-        taleView_Clientes.getItems().addAll(usuarios);
-        agregarBoton();
+        if(usuarios.isEmpty()){
+            Alertas.mostrarMensajeErrorEnLaConexion();        
+        }else{
+            taleView_Clientes.getItems().addAll(usuarios);
+            agregarBoton();        
+        }
+       
     }    
     
     public List<Usuario> obtenerClientes(){
@@ -84,8 +92,7 @@ public class Ventana_ConsultaDeClientesController implements Initializable {
                     btn_Detalles.setOnAction((ActionEvent event) -> {
                         Usuario usuario=getTableView().getItems().get(getIndex());
                         int idUsuario=usuario.getIdUsuario();
-                        desplegarVentanaDetallesDeCliente(idUsuario);
-                       
+                        desplegarVentanaDetallesDeCliente(idUsuario);                       
                     });
                 }                
                 @Override
@@ -116,8 +123,8 @@ public class Ventana_ConsultaDeClientesController implements Initializable {
             stage.show();
             cerrarVentana();
         }catch(IOException excepcion){
-            System.out.println(excepcion);
-            System.out.println("Error de conexion de BD");
+            Logger.getLogger(Ventana_ConsultaDeClientesController.class.getName()).log(Level.SEVERE, null, excepcion);
+            Alertas.mostrarMensajeErrorEnLaConexion();
         }                        
     }
     

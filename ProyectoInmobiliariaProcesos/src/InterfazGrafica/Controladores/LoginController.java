@@ -83,7 +83,7 @@ public class LoginController {
         Stage myStage = (Stage) btn_Ingresar.getScene().getWindow();
         NewFXMain newFXMain = new NewFXMain();
         try {
-            newFXMain.mostrarVentanaAdministradorMenu(myStage);
+            newFXMain.mostrarVentanaCliente(myStage);
         } catch (IOException | NullPointerException ex) {
            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         

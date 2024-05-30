@@ -12,7 +12,7 @@
    <children>
       <ImageView fitHeight="384.0" fitWidth="411.0" layoutX="323.0" layoutY="41.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../recursos/ofwhvdsk.png" />
+            <Image url="@Recursos/ofwhvdsk.png" />
          </image>
       </ImageView>
       <Pane fx:id="pane_ColorSuperior" prefHeight="88.0" prefWidth="748.0" style="-fx-background-color: #53d4ff;">
@@ -31,7 +31,7 @@
       </Pane>
       <ImageView fitHeight="523.0" fitWidth="260.0" layoutX="24.0" layoutY="107.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../recursos/logo.png" />
+            <Image url="@Recursos/logo.png" />
          </image>
       </ImageView>
       <Button fx:id="btn_GestionPropiedad" layoutX="353.0" layoutY="107.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="130.0" style="-fx-background-color: #c95c7a; -fx-border-color: #933D5C;" styleClass="Button" stylesheets="@../../../../SistemaDeGestionCOILVIC/src/interfazDeUsuario/EstiloBoton.css" text="Gestión de propiedad" textAlignment="CENTER" textFill="WHITE" wrapText="true">

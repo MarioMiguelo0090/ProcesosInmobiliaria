@@ -1,5 +1,6 @@
 package InterfazGrafica.Controladores;
 
+import InterfazGrafica.Alertas.Alertas;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
@@ -106,11 +107,15 @@ public class Ventana_DetallesDeClienteController implements Initializable {
     public void llenarComboBoxEstado(){
         DAOUbicacion daoUbicacion=new DAOUbicacion();
         List<Ubicacion> ubicaciones=daoUbicacion.consultarUbicaciones();
-        ObservableList<String> ubicacionesVisibles = FXCollections.observableArrayList();
-        for(Ubicacion ubicacion : ubicaciones){
-            ubicacionesVisibles.add(ubicacion.getEstado());            
-        }
-        cmb_Estado.setItems(ubicacionesVisibles);        
+        if(ubicaciones.isEmpty()){
+            Alertas.mostrarMensajeErrorEnLaConexion();        
+        }else{
+            ObservableList<String> ubicacionesVisibles = FXCollections.observableArrayList();
+            for(Ubicacion ubicacion : ubicaciones){
+                ubicacionesVisibles.add(ubicacion.getEstado());            
+            }
+            cmb_Estado.setItems(ubicacionesVisibles);
+        }                
     }
     
     public void llenarComboBoxTipoPropiedad(){
@@ -124,6 +129,7 @@ public class Ventana_DetallesDeClienteController implements Initializable {
     }
     
     public void actualizar(){
+        boolean valor=true;
         DAOUsuario daoUsuario=new DAOUsuario();
         Usuario usuarioAntiguo=daoUsuario.consultarUsuarioPorId(idUsuario);
         DAOCliente daoCliente=new DAOCliente();
@@ -134,6 +140,7 @@ public class Ventana_DetallesDeClienteController implements Initializable {
         DAOTipoPropiedad daoTipoPropiedad=new DAOTipoPropiedad();
         DAOUbicacion daoUbicacion=new DAOUbicacion();
         if(usuarioActualizado==null||clienteActualizado==null){
+            Alertas.mostrarMensajeDatosInvalidos();
             return;
         }
         if(!usuarioActualizado.getNombre().equals(usuarioAntiguo.getNombre())){
@@ -147,14 +154,14 @@ public class Ventana_DetallesDeClienteController implements Initializable {
         }
         if(!usuarioActualizado.getCorreo().equals(usuarioAntiguo.getCorreo())){
             int resultadoCorreo=daoUsuario.modificarCorreoPorIdUsuario(idUsuario, usuarioActualizado.getCorreo());
-            if(resultadoCorreo!=1){
-                System.out.println("Correo repetido");
+            if(resultadoCorreo!=1){                 
+                valor=false;
             }
         }
         if(!usuarioActualizado.getRFC().equals(usuarioAntiguo.getRFC())){
             int resultadoRFC=daoUsuario.modificarRFCPorIdUsuario(idUsuario, usuarioActualizado.getRFC());
-            if(resultadoRFC!=1){
-                System.out.println("RFC repetido");
+            if(resultadoRFC!=1){                
+                valor=false;
             }
         }
         if(!usuarioActualizado.getTelefono().equals(usuarioAntiguo.getTelefono())){
@@ -180,7 +187,11 @@ public class Ventana_DetallesDeClienteController implements Initializable {
             int idUbicacion=daoUbicacion.consultarIdUbicacionPorEstado(clienteActualizado.getUbicacion().getEstado());
             daoCliente.modificarUbicacionPorId(idCliente, idUbicacion);            
         }
-        System.out.println("Termino de actualizar");
+        if(valor){
+            Alertas.mostrarMensajeDatosModificados();        
+        }else{
+            Alertas.mostrarMensajeDatosDuplicados();            
+        }
     }
     
     public Usuario obtenerUsuario(){
@@ -193,8 +204,8 @@ public class Ventana_DetallesDeClienteController implements Initializable {
             usuario.setTelefono(txfd_Telefono.getText());
             usuario.setRFC(txfd_RFC.getText());
         }catch(IllegalArgumentException excepcion){
-            usuario=null;
-            System.out.println("Error usuario");
+            Logger.getLogger(Ventana_DetallesDeClienteController.class.getName()).log(Level.SEVERE, null, excepcion);                        
+            usuario=null;            
         }
         return usuario;                        
     }
@@ -220,16 +231,17 @@ public class Ventana_DetallesDeClienteController implements Initializable {
             cliente.setTipoPropiedad(tipoPropiedad);            
         }catch(IllegalArgumentException excepcion){
             cliente=null;
-            System.out.println(excepcion);
-            System.out.println("Error cliente"); 
+            Logger.getLogger(Ventana_DetallesDeClienteController.class.getName()).log(Level.SEVERE, null, excepcion);                        
         }
         return cliente;        
     }
     
     public void eliminarCliente(){
-        DAOCliente daoCliente=new DAOCliente();
-        daoCliente.archivarClientePorIdUsario(idUsuario); 
-        salirDeLaVentana();
+        if(Alertas.confirmarEliminacion()){
+            DAOCliente daoCliente=new DAOCliente();
+            daoCliente.archivarClientePorIdUsario(idUsuario); 
+            salirDeLaVentana();        
+        }        
     }
     
     public void salirDeLaVentana(){
@@ -250,7 +262,5 @@ public class Ventana_DetallesDeClienteController implements Initializable {
     public void cerrarVentana(){
         stage_ventana=(Stage) anchor_DetallesDeCliente.getScene().getWindow();
         stage_ventana.close();
-    }
-   
-    
+    }       
 }

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="anchor_Ventana" prefHeight="569.0" prefWidth="747.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="InterfazGrafica.Controladores.Ventana_ModificarPropiedadControlador">
+   <children>
+      <Pane fx:id="pane_ColorSuperior" prefHeight="88.0" prefWidth="747.0" style="-fx-background-color: #53d4ff;">
+         <children>
+            <Label layoutX="191.0" layoutY="18.0" text="Modificar Propiedad" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="39.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane fx:id="pane_Datos" layoutX="40.0" layoutY="115.0" prefHeight="176.0" prefWidth="666.0" style="-fx-border-color: #53d4ff; -fx-border-radius: 13;">
+         <children>
+            <Label fx:id="lbl_Antiguedad" layoutX="25.0" layoutY="126.0" text="Antiguedad (Años):">
+               <font>
+                  <Font name="System Bold Italic" size="16.0" />
+               </font>
+            </Label>
+            <Spinner fx:id="spn_Antiguedad" layoutX="181.0" layoutY="126.0" prefHeight="26.0" prefWidth="82.0" style="-fx-background-radius: 13;" />
+            <Label fx:id="lbl_MetrosDeTerreno" layoutX="282.0" layoutY="127.0" text="Metros de terreno:">
+               <font>
+                  <Font name="System Bold Italic" size="16.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txfd_MetrosDeTerreno" layoutX="425.0" layoutY="127.0" prefHeight="26.0" prefWidth="70.0" style="-fx-background-radius: 13;" />
+            <Label fx:id="lbl_NoPisos" layoutX="509.0" layoutY="126.0" text="Precio:">
+               <font>
+                  <Font name="System Bold Italic" size="16.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txfd_Precio" layoutX="570.0" layoutY="126.0" prefHeight="26.0" prefWidth="82.0" style="-fx-background-radius: 13;" />
+            <Label fx:id="lbl_Nombre" layoutX="26.0" layoutY="92.0" text="No.Habitaciones:">
+               <font>
+                  <Font name="System Bold Italic" size="16.0" />
+               </font>
+            </Label>
+            <Spinner fx:id="spn_NoHabitaciones" layoutX="170.0" layoutY="91.0" prefHeight="26.0" prefWidth="82.0" style="-fx-background-radius: 13;" />
+            <Label fx:id="lbl_NoBanios" layoutX="295.0" layoutY="91.0" text="No.Baños:">
+               <font>
+                  <Font name="System Bold Italic" size="16.0" />
+               </font>
+            </Label>
+            <Spinner fx:id="spn_NoBanios" layoutX="378.0" layoutY="91.0" prefHeight="26.0" prefWidth="82.0" style="-fx-background-radius: 13;" />
+            <Label id="lbl_NoPisos" layoutX="491.0" layoutY="91.0" text="No.Pisos:">
+               <font>
+                  <Font name="System Bold Italic" size="16.0" />
+               </font>
+            </Label>
+            <Spinner fx:id="spn_NoPisos" layoutX="570.0" layoutY="89.0" prefHeight="26.0" prefWidth="82.0" style="-fx-background-radius: 13;" />
+            <Label id="lbl_Nombre" layoutX="25.0" layoutY="52.0" text="Nombre:">
+               <font>
+                  <Font name="System Bold Italic" size="16.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txfd_Nombre" layoutX="98.0" layoutY="52.0" prefHeight="26.0" prefWidth="275.0" style="-fx-background-radius: 13;" />
+            <Label fx:id="lbl_EstadoPropiedad" layoutX="384.0" layoutY="52.0" text="Estado de la propiedad:">
+               <font>
+                  <Font name="System Bold Italic" size="16.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="cmb_EstadoPropiedad" layoutX="570.0" layoutY="52.0" prefHeight="26.0" prefWidth="82.0" promptText="Estado" />
+            <Label fx:id="lbl_DatosDeLaPropiedad" layoutX="25.0" layoutY="14.0" text="Datos de la propiedad">
+               <font>
+                  <Font name="System Bold" size="19.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="cmb_TipoDePropiedad" layoutX="509.0" layoutY="13.0" prefHeight="31.0" prefWidth="145.0" promptText="Tipo de propiedad" />
+         </children>
+      </Pane>
+      <Pane fx:id="pane_Direccion" layoutX="40.0" layoutY="305.0" prefHeight="158.0" prefWidth="666.0" style="-fx-border-color: #53d4ff; -fx-border-radius: 13;">
+         <children>
+            <Label fx:id="lbl_DireccionDeLaPropiedad" layoutX="25.0" layoutY="14.0" text="Dirección de la propiedad">
+               <font>
+                  <Font name="System Bold" size="19.0" />
+               </font>
+            </Label>
+            <Label fx:id="lbl_CodigoPostal" layoutX="66.0" layoutY="55.0" text="Codigo Postal:">
+               <font>
+                  <Font name="System Bold Italic" size="16.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txfd_CodigoPostal" layoutX="183.0" layoutY="55.0" prefHeight="26.0" prefWidth="123.0" style="-fx-background-radius: 13;" />
+            <Label fx:id="lbl_Colonia" layoutX="320.0" layoutY="56.0" text="Colonia:">
+               <font>
+                  <Font name="System Bold Italic" size="16.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txfd_Colonia" layoutX="391.0" layoutY="56.0" prefHeight="26.0" prefWidth="216.0" style="-fx-background-radius: 13;" />
+            <Label fx:id="lbl_Ciudad" layoutX="66.0" layoutY="88.0" text="Ciudad:">
+               <font>
+                  <Font name="System Bold Italic" size="16.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txfd_Ciudad" layoutX="140.0" layoutY="88.0" prefHeight="26.0" prefWidth="197.0" style="-fx-background-radius: 13;" />
+            <Label fx:id="lbl_Estado" layoutX="441.0" layoutY="120.0" text="Estado:">
+               <font>
+                  <Font name="System Bold Italic" size="16.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="cmb_Estado" layoutX="501.0" layoutY="119.0" prefHeight="26.0" prefWidth="100.0" promptText="Estado" />
+            <Label fx:id="lbl_RFCPropietario" layoutX="66.0" layoutY="119.0" text="RFC del propietario:">
+               <font>
+                  <Font name="System Bold Italic" size="16.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txfd_RFCPropietario" layoutX="221.0" layoutY="120.0" prefHeight="25.0" prefWidth="216.0" style="-fx-background-radius: 13;" />
+            <Label fx:id="lbl_Calle" layoutX="351.0" layoutY="88.0" text="Calle:">
+               <font>
+                  <Font name="System Bold Italic" size="16.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txfd_Calle" layoutX="400.0" layoutY="88.0" prefHeight="26.0" prefWidth="206.0" style="-fx-background-radius: 13;" />
+         </children>
+      </Pane>
+      <Button fx:id="btn_Cancelar" layoutX="288.0" layoutY="522.0" onAction="#regresarDeVentana" mnemonicParsing="false" prefHeight="26.0" prefWidth="91.0" style="-fx-background-color: red;" text="Cancelar" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Button>
+      <Button fx:id="btn_Guardar" layoutX="395.0" layoutY="522.0" mnemonicParsing="false" onAction="#validarModificacion" prefHeight="26.0" prefWidth="91.0" style="-fx-background-color: green;" text="Guardar" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

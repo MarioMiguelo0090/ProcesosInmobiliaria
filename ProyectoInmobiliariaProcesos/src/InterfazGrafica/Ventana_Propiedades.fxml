@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="pane_Principal" prefHeight="663.0" prefWidth="1478.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="InterfazGrafica.Controladores.Ventana_PropiedadesControlador">
+<AnchorPane fx:id="pane_Principal" prefHeight="682.0" prefWidth="1478.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="InterfazGrafica.Controladores.Ventana_PropiedadesControlador">
    <children>
       <Pane fx:id="pane_Contenedor" layoutX="-7.0" layoutY="19.0" prefHeight="620.0" prefWidth="1239.0" AnchorPane.bottomAnchor="24.0" AnchorPane.leftAnchor="-7.0" AnchorPane.rightAnchor="41.0" AnchorPane.topAnchor="19.0">
          <children>
@@ -29,14 +29,6 @@
                         <Font name="Arial Black" size="27.0" />
                      </font>
                   </Label>
-                  <Button fx:id="btn_Regresar" layoutX="27.0" layoutY="33.0" mnemonicParsing="false" style="-fx-background-color: #f03c02;" text="Regresar" textFill="WHITE">
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                     <font>
-                        <Font name="System Bold" size="20.0" />
-                     </font>
-                  </Button>
                   <Label fx:id="lbl_subtitulo" layoutX="576.0" layoutY="80.0" prefHeight="28.0" prefWidth="331.0" text="Inmobiliaria &quot;EL ENCANTO&quot;" textFill="WHITE">
                      <font>
                         <Font name="Arial Black" size="19.0" />
@@ -44,7 +36,7 @@
                   </Label>
                </children>
             </Pane>
-            <TextField fx:id="txfd_EstadoPropiedad" layoutX="571.0" layoutY="104.0" prefHeight="25.0" prefWidth="316.0" promptText="Ej: Veracruz" style="-fx-background-radius: 13;">
+            <TextField fx:id="txfd_EstadoPropiedad" layoutX="571.0" layoutY="104.0" prefHeight="25.0" prefWidth="316.0" promptText="Ej: Nuevo Leon" style="-fx-background-radius: 13;">
                <font>
                   <Font size="15.0" />
                </font>
@@ -73,7 +65,7 @@
                   <TableColumn fx:id="column_Modificar" prefWidth="75.0" text="Modificar" />
                </columns>
             </TableView>
-            <Button fx:id="btn_Buscar" layoutX="899.0" layoutY="104.0" mnemonicParsing="false" prefWidth="68.0" style="-fx-background-color: #04c9fa;" text="Buscar" textFill="WHITE" onAction="#mostrarPropiedadesPorEstado" >
+            <Button fx:id="btn_Buscar" layoutX="899.0" layoutY="104.0" mnemonicParsing="false" onAction="#mostrarPropiedadesPorEstado" prefWidth="68.0" style="-fx-background-color: #04c9fa;" text="Buscar" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
@@ -82,10 +74,18 @@
                </cursor>
             </Button>
             <Label layoutX="260.0" layoutY="102.0" />
-            <ComboBox fx:id="cmb_tipoDePropiedad" layoutX="981.0" layoutY="104.0" prefHeight="31.0" prefWidth="146.0" promptText="Tipo de propiedad" style="-fx-background-color: #04c9fa;" onAction="#mostrarPropiedadesPorFiltro" />
+            <ComboBox fx:id="cmb_tipoDePropiedad" layoutX="981.0" layoutY="104.0" onAction="#mostrarPropiedadesPorFiltro" prefHeight="31.0" prefWidth="146.0" promptText="Tipo de propiedad" style="-fx-background-color: #04c9fa;" />
             <Button fx:id="btn_RegistrarPropiedad" layoutX="1145.0" layoutY="104.0" mnemonicParsing="false" onAction="#registrarPropiedad" prefHeight="31.0" prefWidth="163.0" style="-fx-background-color: green;" text="Registrar Propiedad" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="15.0" />
+               </font>
+            </Button>
+            <Button fx:id="btn_Regresar" layoutX="691.0" layoutY="610.0" mnemonicParsing="false" style="-fx-background-color: #f03c02;" text="Regresar" textFill="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <font>
+                  <Font name="System Bold" size="20.0" />
                </font>
             </Button>
          </children>

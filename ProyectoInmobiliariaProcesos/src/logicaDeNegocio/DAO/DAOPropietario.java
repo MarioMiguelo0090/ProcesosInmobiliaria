@@ -7,28 +7,56 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import logicaDeNegocio.Clases.Usuario;
+import static logicaDeNegocio.DAO.DAOAgenteInmobiliario.BASE_DE_DATOS;
 
 public class DAOPropietario implements PropietarioInterface {
 
     public static final ManejadorBaseDatos BASE_DE_DATOS = new ManejadorBaseDatos();
     private Connection conexion;
-
+    private static final String AGREGAR_USUARIO = """
+                                                     INSERT INTO usuario (nombre, apellidoPaterno, apellidoMaterno, telefono, correo, RFC)
+                                                            VALUES
+                                                            (?, ?, ?, ?, ?, ?);""";
     @Override
-    public int agregarNuevoPropietario(Propietario propietario) {
+    public int agregarNuevoPropietario(Usuario usuario) {
         PreparedStatement declaracion;
         int numeroFilasAfectadas=0;
+        int idUsuarioGenerado = -1;
         try {
             conexion=BASE_DE_DATOS.getConexion();
-            declaracion=conexion.prepareStatement("Insert into propietario "
-                    + "(Usuario_idCliente,estadoPropietario)"
-                    + " values (?,?);");
-            declaracion.setInt(1, propietario.getUsuario().getIdUsuario());
-            declaracion.setString(2, propietario.getEstadoPropietario());
-            numeroFilasAfectadas = declaracion.executeUpdate();
+            
+       
+
+                conexion=BASE_DE_DATOS.getConexion();
+                PreparedStatement statement = conexion.prepareStatement(AGREGAR_USUARIO, Statement.RETURN_GENERATED_KEYS);
+                statement.setString(1, usuario.getNombre());
+                statement.setString(2, usuario.getApellidoPaterno());
+                statement.setString(3, usuario.getApellidoMaterno());
+                statement.setString(4, usuario.getTelefono());
+                statement.setString(5, usuario.getCorreo());
+                statement.setString(6, usuario.getRFC());
+                numeroFilasAfectadas = statement.executeUpdate();
+                
+                ResultSet generatedKeys = statement.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    idUsuarioGenerado = generatedKeys.getInt(1);
+                    usuario.setIdUsuario(idUsuarioGenerado);
+                }
+                    declaracion=conexion.prepareStatement("Insert into propietario "
+                        + "(Usuario_idCliente,estadoPropietario)"
+                        + " values (?,?);");
+                declaracion.setInt(1, idUsuarioGenerado);
+                declaracion.setString(2,"Activo");
+                numeroFilasAfectadas = declaracion.executeUpdate();
+               
+      
+    
             conexion.close();
         } catch (SQLException ex) {
             Logger.getLogger(DAOCliente.class.getName()).log(Level.SEVERE, null, ex);
@@ -152,10 +180,10 @@ public class DAOPropietario implements PropietarioInterface {
     }
 
     @Override
-    public List<Propietario> consultarPropietarios() {
+    public List<Usuario> consultarPropietarios() {
         PreparedStatement sentencia;
         ResultSet resultado;
-        List<Propietario> propietariosObtenidos = new ArrayList();
+        List<Usuario> propietariosObtenidos = new ArrayList();
         DAOUsuario daoUsuario = new DAOUsuario();
         try {
             conexion = BASE_DE_DATOS.getConexion();
@@ -163,12 +191,15 @@ public class DAOPropietario implements PropietarioInterface {
             resultado = sentencia.executeQuery();
             if (resultado.isBeforeFirst()) {
                 while (resultado.next()) {
-                    Propietario propietario = new Propietario();
-                    propietario.setIdPropietario(resultado.getInt("idPropietario"));
-                    propietario.setEstadoPropietario(resultado.getString("estadoPropietario"));
-                    int idUsuario = resultado.getInt("Usuario_idCliente");
-                    propietario.setUsuario(daoUsuario.consultarUsuarioPorId(idUsuario));
-                    propietariosObtenidos.add(propietario);
+                    Usuario usuario = new Usuario();
+                        usuario.setIdUsuario(resultado.getInt("idUsuario"));
+                        usuario.setNombre(resultado.getString("nombre"));
+                        usuario.setApellidoPaterno(resultado.getString("apellidoPaterno"));
+                        usuario.setApellidoMaterno(resultado.getString("apellidoMaterno"));
+                        usuario.setTelefono(resultado.getString("telefono"));
+                        usuario.setCorreo(resultado.getString("correo"));
+                        usuario.setRFC(resultado.getString("RFC"));
+                        propietariosObtenidos.add(usuario);
                 }
             }
             conexion.close();

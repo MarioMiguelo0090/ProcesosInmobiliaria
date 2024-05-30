@@ -12,7 +12,7 @@ public class ManejadorBaseDatos {
     private Connection conexion;
     private static final String NOMBRE_BASE_DE_DATOS="jdbc:mysql://localhost/inmobiliaria";;
     private final String USUARIO_BASE_DE_DATOS="root";
-    private final String CONTRASENA_BASE_DE_DATOS="1234";
+    private final String CONTRASENA_BASE_DE_DATOS="ChrisVZ2500";
 
     
     public Connection getConexion()throws SQLException{

@@ -9,4 +9,5 @@ public interface ILogin {
    public int isertarLogin(Login login) throws SQLException;
    public String obtenerTipoUsuario(String usuario)throws SQLException ; 
    public int obtenerIdUsuario(String usuario) throws SQLException ;
+   public Login obtenerLoginPorIdUsuario(int idUsuario);
 }

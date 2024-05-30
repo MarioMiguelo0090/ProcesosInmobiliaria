@@ -1,12 +1,11 @@
 package InterfazGrafica.Controladores;
 
-
 import InterfazGrafica.Alertas.Alertas;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,11 +29,14 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import logicaDeNegocio.Clases.Login;
+import logicaDeNegocio.Clases.LoginSingleton;
 import logicaDeNegocio.Clases.Propiedad;
 import logicaDeNegocio.Clases.TipoPropiedad;
 import logicaDeNegocio.Clases.Ubicacion;
 import logicaDeNegocio.ClasesAuxiliares.PropiedadAuxiliar;
 import logicaDeNegocio.DAO.DAOCliente;
+import logicaDeNegocio.DAO.DAOLogin;
 import logicaDeNegocio.DAO.DAOPropiedad;
 import logicaDeNegocio.DAO.DAOTipoPropiedad;
 import logicaDeNegocio.DAO.DAOUbicacion;
@@ -45,8 +47,6 @@ public class Ventana_PropiedadesControlador implements Initializable {
     private Stage escenario;
     @FXML
     private AnchorPane pane_Principal;
-    @FXML
-    private Button btn_Regresar;
     @FXML
     private TextField txfd_EstadoPropiedad;
     @FXML
@@ -82,7 +82,7 @@ public class Ventana_PropiedadesControlador implements Initializable {
     @FXML
     private TableColumn<Propiedad, Void> column_Modificar;
     @FXML
-    private Button btn_Buscar;
+    private Button btn_RegistrarPropiedad;
     @FXML
     private ComboBox<String> cmb_tipoDePropiedad;
     private static final String SOLO_LETRAS_PATTERN = "^[\\p{L}\\sáéíóúÁÉÍÓÚüÜ]+$";
@@ -92,6 +92,13 @@ public class Ventana_PropiedadesControlador implements Initializable {
         cargarComboboxs();
         mostrarPropiedades();
         asignarBotonesDeModificarPropiedad();
+        DAOLogin daoLogin = new DAOLogin();
+        LoginSingleton login = LoginSingleton.getInstance();
+        Login loginUsuario = daoLogin.obtenerLoginPorIdUsuario(login.getIdUsuario());
+        if(loginUsuario.getTipoUsuario().equals("Cliente")){
+            column_Modificar.setVisible(false);
+            btn_RegistrarPropiedad.setVisible(false);
+        }
     }    
     
     public void cargarComboboxs(){
@@ -106,7 +113,6 @@ public class Ventana_PropiedadesControlador implements Initializable {
     }
     
     public void mostrarPropiedadesPorEstado(){
-        tableView_Propiedades.getItems().clear();
         String estado = txfd_EstadoPropiedad.getText();
         if(estado!=null&&Pattern.matches(SOLO_LETRAS_PATTERN, String.valueOf(estado))){
             DAOUbicacion daoUbicacion = new DAOUbicacion();
@@ -131,7 +137,6 @@ public class Ventana_PropiedadesControlador implements Initializable {
         String seleccion = (String) cmb_tipoDePropiedad.getSelectionModel().getSelectedItem();
         DAOPropiedad daoPropiedad = new DAOPropiedad();
         List<Propiedad> propiedadesObtenidas = daoPropiedad.consultarPropiedadPorTipo(seleccion);
-        tableView_Propiedades.getItems().clear();
         if(!propiedadesObtenidas.isEmpty()){
             mostrarPropiedades(propiedadesObtenidas);
         }else{
