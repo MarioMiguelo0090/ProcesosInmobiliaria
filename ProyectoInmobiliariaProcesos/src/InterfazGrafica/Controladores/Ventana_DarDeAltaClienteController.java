@@ -21,6 +21,9 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import logicaDeNegocio.Clases.Cliente;
+import logicaDeNegocio.Clases.EnviosDeCorreoElectronico;
+import logicaDeNegocio.Clases.GeneradorDeContrasenias;
+import logicaDeNegocio.Clases.Login;
 import logicaDeNegocio.Clases.TipoPropiedad;
 import logicaDeNegocio.Clases.Ubicacion;
 import logicaDeNegocio.Clases.Usuario;
@@ -171,7 +174,8 @@ public class Ventana_DarDeAltaClienteController implements Initializable {
     public void registrarCliente(){
         Usuario usuario=obtenerUsuario();
         Cliente cliente=obtenerCliente();
-        if(usuario==null||cliente==null){
+        Login login=crearAcceso();
+        if(usuario==null||cliente==null||login==null){
             Alertas.mostrarMensajeDatosInvalidos();
             return;            
         }
@@ -183,10 +187,13 @@ public class Ventana_DarDeAltaClienteController implements Initializable {
                 int idUsuario=daoUsuario.obtenerIdUsuarioPorCorreo(usuario.getCorreo());
                 usuario.setIdUsuario(idUsuario);
                 cliente.setUsuario(usuario);
-                DAOCliente daoCliente=new DAOCliente();
-                int resultadoInsercionCliente=daoCliente.registrarCliente(cliente);
+                DAOCliente daoCliente=new DAOCliente();                
+                login.setIUsuario(idUsuario);
+                int resultadoInsercionCliente=daoCliente.registrarCliente(cliente,login);
                 if(resultadoInsercionCliente==1){
-                    Alertas.clienteRegistradoCorrectamente();                       
+                    enviarCorreo(usuario, login);
+                    Alertas.clienteRegistradoCorrectamente();  
+                    regresarVentanaPrincipal();
                 }else{                    
                     Alertas.mostrarMensajeErrorEnLaConexion();
                 }   break;
@@ -199,5 +206,26 @@ public class Ventana_DarDeAltaClienteController implements Initializable {
         }        
     }
     
+    public Login crearAcceso() {
+        Login login = new Login();
+          try{
+        login.setUsuario(txfd_Correo.getText());
+        login.setContrasenia(GeneradorDeContrasenias.generarContraseña());
+         }catch(IllegalArgumentException excepcion){
+            login=null;
+        }
+        return login;
+    }
+    
+    private boolean enviarCorreo(Usuario usuario, Login login) {
+        String mensaje = "Estimado cliente " + usuario.getNombre() + ",\n\n" +
+                "Lo hemos registrado exitosamente como cliente en el sistema de gestion inmobiliaria el encanto. A continuación se muestran tus credenciales de acceso:\n\n" +
+                "Usuario: " + login.getUsuario() + "\n" +
+                "Contraseña: " + login.getContrasenia() + "\n\n" +
+                "¡Gracias por ser parte de esto!\n" +
+                "Sistema de gestion inmobiliaria el encanto";
+        
+        return EnviosDeCorreoElectronico.verificarEnvioCorreo(usuario.getCorreo(), "Credenciales de acceso", mensaje);
+    }
     
 }

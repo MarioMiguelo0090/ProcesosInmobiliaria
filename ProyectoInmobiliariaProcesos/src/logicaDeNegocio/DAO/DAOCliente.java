@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import logicaDeNegocio.Clases.Cliente;
+import logicaDeNegocio.Clases.Login;
 import logicaDeNegocio.Clases.TipoPropiedad;
 import logicaDeNegocio.Clases.Ubicacion;
 import logicaDeNegocio.Clases.Usuario;
@@ -19,11 +20,14 @@ import logicaDeNegocio.Interfaces.ClienteInterface;
 public class DAOCliente implements ClienteInterface{
     public static final ManejadorBaseDatos BASE_DE_DATOS=new ManejadorBaseDatos();
     private Connection conexion;
-
+    private static final String AGREGAR_LOGIN = """
+                                                  INSERT INTO login (usuario, contraseña, idUsuario,tipoUsuario )
+                                                  VALUES (?, ?, ?,?);"""; 
     
     @Override
-    public int registrarCliente(Cliente cliente) {
+    public int registrarCliente(Cliente cliente,Login login) {
         PreparedStatement declaracion;
+        PreparedStatement loginDeclaracion;
         int numeroFilasAfectadas=0;
         try {
             conexion=BASE_DE_DATOS.getConexion();
@@ -38,7 +42,14 @@ public class DAOCliente implements ClienteInterface{
             declaracion.setInt(6, cliente.getUbicacion().getIdUbicacion());
             declaracion.setInt(7, cliente.getTipoPropiedad().getIdTipoPropiedad());
             declaracion.setString(8, cliente.getCiudad());
-            numeroFilasAfectadas=declaracion.executeUpdate();
+            declaracion.executeUpdate();
+            
+            loginDeclaracion=conexion.prepareStatement(AGREGAR_LOGIN);
+            loginDeclaracion.setString(1, login.getUsuario());
+            loginDeclaracion.setString(2, login.getContrasenia());
+            loginDeclaracion.setInt(3, login.getIdUsuario());
+            loginDeclaracion.setString(4, "Cliente");
+            numeroFilasAfectadas=loginDeclaracion.executeUpdate();            
             conexion.close();
         } catch (SQLException ex) {
             Logger.getLogger(DAOCliente.class.getName()).log(Level.SEVERE, null, ex);                        
