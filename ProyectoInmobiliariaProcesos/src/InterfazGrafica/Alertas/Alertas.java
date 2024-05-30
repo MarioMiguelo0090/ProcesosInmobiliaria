@@ -150,6 +150,15 @@ public class Alertas extends Application {
         });
     }
     
+    public static void propietarioRegistradoCorrectamente(){
+        Platform.runLater(() ->{
+            Alert mensaje = new Alert(AlertType.CONFIRMATION);
+            mensaje.setTitle("Uusario Registrado");
+            mensaje.setContentText("El usuario fue registrado correctamante");
+            mensaje.showAndWait();        
+        });
+    }
+    
     public static void clienteRegistradoCorrectamente(){
          Platform.runLater(() ->{
             Alert mensaje = new Alert(AlertType.INFORMATION);

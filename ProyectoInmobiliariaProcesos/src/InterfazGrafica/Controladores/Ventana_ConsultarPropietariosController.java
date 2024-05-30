@@ -42,31 +42,31 @@ public class Ventana_ConsultarPropietariosController implements Initializable {
     private Button btn_Regresar;
 
     @FXML
-    private TableView<Propietario> tableView_Propiedades;
+    private TableView<Usuario> tableView_Propiedades;
 
     @FXML
-    private TableColumn<Propietario, Integer> column_idPropietario;
+    private TableColumn<Usuario, Integer> column_idPropietario;
 
     @FXML
-    private TableColumn<Propietario, String> column_Nombre;
+    private TableColumn<Usuario, String> column_Nombre;
 
     @FXML
-    private TableColumn<Propietario, String> column_ApellidoP;
+    private TableColumn<Usuario, String> column_ApellidoP;
 
     @FXML
-    private TableColumn<Propietario, String> column_ApellidoM;
+    private TableColumn<Usuario, String> column_ApellidoM;
 
     @FXML
-    private TableColumn<Propietario, String> column_RFC;
+    private TableColumn<Usuario, String> column_RFC;
 
     @FXML
-    private TableColumn<Propietario, String> column_Telefono;
+    private TableColumn<Usuario, String> column_Telefono;
 
     @FXML
-    private TableColumn<Propietario, String> column_Correo;
+    private TableColumn<Usuario, String> column_Correo;
 
     @FXML
-    private TableColumn<Propietario, Void> column_Actualizar;
+    private TableColumn<Usuario, Void> column_Actualizar;
 
     @FXML
     private Button btn_RegistrarPropietario;
@@ -75,7 +75,9 @@ public class Ventana_ConsultarPropietariosController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // Configurar las columnas de la tabla
+        addButtonToTable();
+        List<Usuario> propietarios = obtenerPropietarios();
+        tableView_Propiedades.getItems().addAll(propietarios);
         column_idPropietario.setCellValueFactory(new PropertyValueFactory<>("idPropietario"));
         column_Nombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         column_ApellidoP.setCellValueFactory(new PropertyValueFactory<>("apellidoPaterno"));
@@ -83,7 +85,6 @@ public class Ventana_ConsultarPropietariosController implements Initializable {
         column_RFC.setCellValueFactory(new PropertyValueFactory<>("RFC"));
         column_Telefono.setCellValueFactory(new PropertyValueFactory<>("telefono"));
         column_Correo.setCellValueFactory(new PropertyValueFactory<>("correo"));
-
         // Añadir botones a la columna "Actualizar"
         addButtonToTable();
 
@@ -104,17 +105,17 @@ public class Ventana_ConsultarPropietariosController implements Initializable {
     }
 
     private void addButtonToTable() {
-        Callback<TableColumn<Propietario, Void>, TableCell<Propietario, Void>> cellFactory = new Callback<>() {
+        Callback<TableColumn<Usuario, Void>, TableCell<Usuario, Void>> cellFactory = new Callback<>() {
             @Override
-            public TableCell<Propietario, Void> call(final TableColumn<Propietario, Void> param) {
-                final TableCell<Propietario, Void> cell = new TableCell<>() {
+            public TableCell<Usuario, Void> call(final TableColumn<Usuario, Void> param) {
+                final TableCell<Usuario, Void> cell = new TableCell<Usuario,Void>() {
 
                     private final Button btn = new Button("Actualizar");
 
                     {
                         btn.setOnAction((ActionEvent event) -> {
-                            Propietario propietario = getTableView().getItems().get(getIndex());
-                            abrirVentanaActualizarPropietario(propietario.getIdPropietario());
+                            Usuario usuario = getTableView().getItems().get(getIndex());
+                            abrirVentanaActualizarPropietario(usuario.getIdUsuario());
                         });
                     }
 
