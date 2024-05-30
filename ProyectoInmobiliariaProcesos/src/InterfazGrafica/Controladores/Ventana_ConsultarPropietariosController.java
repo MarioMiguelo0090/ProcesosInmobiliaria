@@ -27,12 +27,17 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.layout.AnchorPane;
 import logicaDeNegocio.Clases.Usuario;
 import logicaDeNegocio.DAO.DAOAgenteInmobiliario;
+import logicaDeNegocio.DAO.DAOCliente;
 import logicaDeNegocio.DAO.DAOUsuario;
 
 public class Ventana_ConsultarPropietariosController implements Initializable {
-
+    
+    private Stage escenario;
+    @FXML
+    private AnchorPane pane_Principal;
     @FXML
     private Button btn_Regresar;
 
@@ -84,6 +89,8 @@ public class Ventana_ConsultarPropietariosController implements Initializable {
 
         // Cargar los datos de la base de datos
         obtenerPropietarios();
+        btn_Regresar.setOnAction(event->regresarVentanaPrincipal());
+        btn_RegistrarPropietario.setOnAction(event->registrarPropietario());
     }
 
     
@@ -129,47 +136,35 @@ public class Ventana_ConsultarPropietariosController implements Initializable {
     }
 
     private void abrirVentanaActualizarPropietario(int idPropietario) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/InterfazGrafica/Vistas/Ventana_ActualizarPropietario.fxml"));
-            Parent root = loader.load();
-
-            Ventana_ActualizarPropietarioController controlador = loader.getController();
-            controlador.cargarDatosPropietario(idPropietario);
-
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        String rutaVentanaFXML="/interfazGrafica/Ventana_ActualizarPropietario.fxml";
+        desplegarVentanaCorrespondiente(rutaVentanaFXML);
     }
 
-    @FXML
-    private void registrarPropiedad(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/InterfazGrafica/Vistas/Ventana_RegistrarPropietario.fxml"));
-            Parent root = loader.load();
-
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void registrarPropietario(){
+        String rutaVentanaFXML="/interfazGrafica/Ventana_RegistrarPropietario.fxml";
+        desplegarVentanaCorrespondiente(rutaVentanaFXML); 
     }
 
-    @FXML
-    private void regresarDeVentana() {
-        Stage stage = (Stage) btn_Regresar.getScene().getWindow();
-        stage.close();     
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("Ventana_MenuPrincipaldministrador.fxml"));
-            Parent root = loader.load();
-            Stage newStage = new Stage();
-            newStage.setScene(new Scene(root));
-            newStage.show();
-        } catch (IOException e) {
-            
+     public void regresarVentanaPrincipal(){
+        String rutaVentanaFXML="/interfazGrafica/Ventana_MenuPrincipalAdministrador.fxml";
+        desplegarVentanaCorrespondiente(rutaVentanaFXML); 
+    }
+   
+    public void cerrarVentana(){
+        escenario = (Stage)pane_Principal.getScene().getWindow();
+        escenario.close();
+    }
+   
+    public void desplegarVentanaCorrespondiente(String rutaVentanaFXML){
+        try{
+            Parent root=FXMLLoader.load(getClass().getResource(rutaVentanaFXML));
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.show();
+            cerrarVentana();
+        }catch(IOException excepcion){
+            Logger.getLogger(DAOCliente.class.getName()).log(Level.SEVERE, null, excepcion);
         }
     }
 }

@@ -102,6 +102,7 @@ public class Ventana_PropiedadesControlador implements Initializable {
             btn_RegistrarPropiedad.setVisible(false);
         }
         btn_Regresar.setOnAction(event->regresarVentanaPrincipal());
+        btn_RegistrarPropiedad.setOnAction(event->registrarPropiedad());
     }    
     
     public void cargarComboboxs(){
@@ -249,7 +250,7 @@ public class Ventana_PropiedadesControlador implements Initializable {
         escenario = (Stage)pane_Principal.getScene().getWindow();
         escenario.close();
     }
-    
+   
     public void desplegarVentanaCorrespondiente(String rutaVentanaFXML){
         try{
             Parent root=FXMLLoader.load(getClass().getResource(rutaVentanaFXML));
