@@ -85,6 +85,8 @@ public class Ventana_PropiedadesControlador implements Initializable {
     private Button btn_RegistrarPropiedad;
     @FXML
     private ComboBox<String> cmb_tipoDePropiedad;
+    @FXML
+    private Button btn_Regresar;
     private static final String SOLO_LETRAS_PATTERN = "^[\\p{L}\\sáéíóúÁÉÍÓÚüÜ]+$";
     
     @Override
@@ -99,6 +101,8 @@ public class Ventana_PropiedadesControlador implements Initializable {
             column_Modificar.setVisible(false);
             btn_RegistrarPropiedad.setVisible(false);
         }
+        btn_Regresar.setOnAction(event->regresarVentanaPrincipal());
+        btn_RegistrarPropiedad.setOnAction(event->registrarPropiedad());
     }    
     
     public void cargarComboboxs(){
@@ -236,12 +240,17 @@ public class Ventana_PropiedadesControlador implements Initializable {
         String rutaVentanaFXML="/interfazGrafica/Ventana_RegistrarPropiedad.fxml";
         desplegarVentanaCorrespondiente(rutaVentanaFXML); 
     }
+    
+    public void regresarVentanaPrincipal(){
+        String rutaVentanaFXML="/interfazGrafica/Ventana_MenuPrincipalAdministrador.fxml";
+        desplegarVentanaCorrespondiente(rutaVentanaFXML); 
+    }
    
     public void cerrarVentana(){
         escenario = (Stage)pane_Principal.getScene().getWindow();
         escenario.close();
     }
-    
+   
     public void desplegarVentanaCorrespondiente(String rutaVentanaFXML){
         try{
             Parent root=FXMLLoader.load(getClass().getResource(rutaVentanaFXML));

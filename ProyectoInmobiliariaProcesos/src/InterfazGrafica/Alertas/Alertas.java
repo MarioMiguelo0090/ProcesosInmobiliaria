@@ -177,6 +177,15 @@ public class Alertas extends Application {
         return resultado.isPresent() && resultado.get() == ButtonType.OK;
     }
     
+    public static void propietarioRegistradoCorrectamente(){
+        Platform.runLater(() ->{
+            Alert mensaje = new Alert(AlertType.CONFIRMATION);
+            mensaje.setTitle("Uusario Registrado");
+            mensaje.setContentText("El usuario fue registrado correctamante");
+            mensaje.showAndWait();        
+        });
+    }
+    
     @Override
     public void start(Stage stage){
         try{

@@ -52,6 +52,9 @@ public class Ventana_ConsultaDeClientesController implements Initializable {
     private TableView<Usuario> taleView_Clientes;
     @FXML
     private AnchorPane anchor_ConsultaClientes;
+    @FXML
+    private Button btn_Regresar;
+    
     private Stage stage_ventana;
 
     @Override
@@ -67,7 +70,7 @@ public class Ventana_ConsultaDeClientesController implements Initializable {
             taleView_Clientes.getItems().addAll(usuarios);
             agregarBoton();        
         }
-       
+       btn_Regresar.setOnAction(event->regresarVentanaPrincipal());
     }    
     
     public List<Usuario> obtenerClientes(){
@@ -126,6 +129,24 @@ public class Ventana_ConsultaDeClientesController implements Initializable {
             Logger.getLogger(Ventana_ConsultaDeClientesController.class.getName()).log(Level.SEVERE, null, excepcion);
             Alertas.mostrarMensajeErrorEnLaConexion();
         }                        
+    }
+    
+    public void regresarVentanaPrincipal(){
+        String rutaVentanaFXML="/interfazGrafica/Ventana_MenuPrincipalAdministrador.fxml";
+        desplegarVentanaCorrespondiente(rutaVentanaFXML); 
+    }
+    
+     public void desplegarVentanaCorrespondiente(String rutaVentanaFXML){
+        try{
+            Parent root=FXMLLoader.load(getClass().getResource(rutaVentanaFXML));
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.show();
+            cerrarVentana();
+        }catch(IOException excepcion){
+            Logger.getLogger(DAOCliente.class.getName()).log(Level.SEVERE, null, excepcion);
+        }
     }
     
     public void cerrarVentana(){

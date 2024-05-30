@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #DADADA;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="InterfazGrafica.Controladores.Ventana_MenuPrincipalAdministradorControlador">
+<AnchorPane fx:id="pane_Principal" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #DADADA;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="InterfazGrafica.Controladores.Ventana_MenuPrincipalAdministradorControlador">
    <children>
       <ImageView fitHeight="384.0" fitWidth="411.0" layoutX="323.0" layoutY="41.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -34,27 +34,27 @@
             <Image url="@Recursos/logo.png" />
          </image>
       </ImageView>
-      <Button fx:id="btn_GestionPropiedad" layoutX="353.0" layoutY="107.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="130.0" style="-fx-background-color: #c95c7a; -fx-border-color: #933D5C;" styleClass="Button" stylesheets="@../../../../SistemaDeGestionCOILVIC/src/interfazDeUsuario/EstiloBoton.css" text="Gestión de propiedad" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+      <Button fx:id="btn_GestionPropiedad" layoutX="353.0" layoutY="107.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="130.0" style="-fx-background-color: #c95c7a; -fx-border-color: #933D5C;" text="Gestión de propiedad" textAlignment="CENTER" textFill="WHITE" wrapText="true">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
       </Button>
-      <Button fx:id="btn_GestionAgente" layoutX="586.0" layoutY="107.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="130.0" style="-fx-background-color: #0026FA; -fx-border-color: #001AAB;" styleClass="Button" stylesheets="@../../../../SistemaDeGestionCOILVIC/src/interfazDeUsuario/EstiloBoton.css" text="Gestión de Agente Inmobiliario" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+      <Button fx:id="btn_GestionAgente" layoutX="586.0" layoutY="107.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="130.0" style="-fx-background-color: #0026FA; -fx-border-color: #001AAB;" text="Gestión de Agente Inmobiliario" textAlignment="CENTER" textFill="WHITE" wrapText="true">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
       </Button>
-      <Button fx:id="btn_GestionPropietario" layoutX="353.0" layoutY="215.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="130.0" style="-fx-background-color: #de9153; -fx-border-color: #B36F3E;" styleClass="Button" stylesheets="@../../../../SistemaDeGestionCOILVIC/src/interfazDeUsuario/EstiloBoton.css" text="Gestion de propietario" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+      <Button fx:id="btn_GestionPropietario" layoutX="353.0" layoutY="215.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="130.0" style="-fx-background-color: #de9153; -fx-border-color: #B36F3E;" text="Gestion de propietario" textAlignment="CENTER" textFill="WHITE" wrapText="true">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
       </Button>
-      <Button fx:id="btn_ConsultarCliente" layoutX="585.0" layoutY="215.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="131.0" style="-fx-background-color: #A24BFA; -fx-border-color: #7B38C4;" styleClass="Button" stylesheets="@../../../../SistemaDeGestionCOILVIC/src/interfazDeUsuario/EstiloBoton.css" text="Consultar Cliente" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+      <Button fx:id="btn_ConsultarCliente" layoutX="585.0" layoutY="215.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="131.0" style="-fx-background-color: #A24BFA; -fx-border-color: #7B38C4;" text="Consultar Cliente" textAlignment="CENTER" textFill="WHITE" wrapText="true">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
       </Button>
-      <Button fx:id="btn_RegistrarCliente" layoutX="468.0" layoutY="306.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="131.0" style="-fx-background-color: #14888b; -fx-border-color: #0E5E5E;" styleClass="Button" stylesheets="@../../../../SistemaDeGestionCOILVIC/src/interfazDeUsuario/EstiloBoton.css" text="Registrar Cliente" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+      <Button fx:id="btn_RegistrarCliente" layoutX="468.0" layoutY="306.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="131.0" style="-fx-background-color: #14888b; -fx-border-color: #0E5E5E;" text="Registrar Cliente" textAlignment="CENTER" textFill="WHITE" wrapText="true">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
