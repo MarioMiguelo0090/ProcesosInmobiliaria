@@ -185,8 +185,8 @@ public class Ventana_ConsultarAgenteControlador implements Initializable{
         try {
             DAOAgenteInmobiliario daoAgenteInmobiliario = new DAOAgenteInmobiliario();
             
-            List<Usuario> profesoresEncontrados = daoAgenteInmobiliario.obtenerListaAgentesPorNombre(criterioBusqueda);
-            actualizarTablaConProfesoresEncontrados(profesoresEncontrados);
+            List<Usuario> agentesEncontrados = daoAgenteInmobiliario.obtenerListaAgentesPorNombre(criterioBusqueda);
+            actualizarTablaConAgentesEncontrados(agentesEncontrados);
             
             
             
@@ -197,7 +197,7 @@ public class Ventana_ConsultarAgenteControlador implements Initializable{
         
     }
     
-    private void actualizarTablaConProfesoresEncontrados(List<Usuario> agentesEncontrados) {
+    private void actualizarTablaConAgentesEncontrados(List<Usuario> agentesEncontrados) {
         if (agentesEncontrados.isEmpty()) {
             Alertas.mostrarMensajeSinResultados();
             return;
