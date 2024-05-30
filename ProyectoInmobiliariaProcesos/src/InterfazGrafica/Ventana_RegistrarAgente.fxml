@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchor_Ventana"  prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="InterfazGrafica.Controladores.Ventana_RegistrarAgenteControlador">
+<AnchorPane fx:id="anchor_Ventana" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="InterfazGrafica.Controladores.Ventana_RegistrarAgenteControlador">
    <children>
       <Pane prefHeight="69.0" prefWidth="756.0" style="-fx-background-color: linear-gradient(to right, #53D4FE, #53D4FE);">
          <children>
@@ -69,11 +69,5 @@
           <font>
             <Font name="System Bold Italic" size="12.0" />
          </font></Button>
-      <Label layoutX="118.0" layoutY="358.0" text="Contraseña:">
-         <font>
-            <Font name="System Bold Italic" size="15.0" />
-         </font>
-      </Label>
-      <TextField fx:id="txfd_Contrasenia" layoutX="208.0" layoutY="356.0" prefHeight="25.0" prefWidth="413.0" />
    </children>
 </AnchorPane>

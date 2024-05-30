@@ -15,6 +15,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import logicaDeNegocio.Clases.EnviosDeCorreoElectronico;
+import logicaDeNegocio.Clases.GeneradorDeContrasenias;
 import logicaDeNegocio.Clases.Login;
 import logicaDeNegocio.Clases.Usuario;
 import logicaDeNegocio.DAO.DAOAgenteInmobiliario;
@@ -55,7 +57,7 @@ public class Ventana_RegistrarAgenteControlador implements Initializable  {
         Login login = new Login();
           try{
         login.setUsuario(txfd_Correo.getText());
-        login.setContrasenia(txfd_Contrasenia.getText());
+        login.setContrasenia(GeneradorDeContrasenias.generarContraseña());
          }catch(IllegalArgumentException excepcion){
             login=null;
         }
@@ -98,7 +100,8 @@ public class Ventana_RegistrarAgenteControlador implements Initializable  {
             if (!daoAgenteInmobiliario.verificarSiExisteRFC(usuario.getRFC())) {
                 if (!daoAgenteInmobiliario.verificarSiExisteElCorreo(usuario.getCorreo())) {
                     if (daoAgenteInmobiliario.insertarAgenteInmobiliario(usuario, login ) == 3) {
-                         Alertas.mostrarMensajeDatosIngresados();
+                        enviarCorreo(usuario, login); 
+                        Alertas.mostrarMensajeDatosIngresados();
                             regresarDeVentana();
                     } 
                 } else {
@@ -112,6 +115,17 @@ public class Ventana_RegistrarAgenteControlador implements Initializable  {
             Logger.getLogger(Ventana_RegistrarAgenteControlador.class.getName()).log(Level.SEVERE, null, ex);
         }
                    
+    }
+    
+    private boolean enviarCorreo(Usuario usuario, Login login) {
+        String mensaje = "Estimado agente inmobiliario " + usuario.getNombre() + ",\n\n" +
+                "Lo hemos registrado exitosamente como profesor. A continuación se muestran tus credenciales de acceso:\n\n" +
+                "Usuario: " + login.getUsuario() + "\n" +
+                "Contraseña: " + login.getContrasenia() + "\n\n" +
+                "¡Gracias por su solicitud!\n" +
+                "SDGCOILVIC";
+        
+        return EnviosDeCorreoElectronico.verificarEnvioCorreo(usuario.getCorreo(), "Credenciales de acceso", mensaje);
     }
     
 }
