@@ -1,6 +1,7 @@
 package InterfazGrafica.Controladores;
 
 import InterfazGrafica.Alertas.Alertas;
+import java.io.IOException;
 import java.math.BigDecimal;
 import javafx.scene.control.TextField;
 import java.net.URL;
@@ -11,7 +12,11 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -63,13 +68,34 @@ public class Ventana_DarDeAltaClienteController implements Initializable {
     
     @FXML
     private AnchorPane anchor_DarDeAltaCliente;
+    @FXML
+    private Button btn_cancelar;
     private Stage stage_ventana;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         llenarComboBoxEstado();
         llenarComboBoxTipoPropiedad();
-    }    
+        btn_cancelar.setOnAction(event->regresarVentanaPrincipal());
+    }
+    
+    public void regresarVentanaPrincipal(){
+        String rutaVentanaFXML="/interfazGrafica/Ventana_MenuPrincipalAdministrador.fxml";
+        desplegarVentanaCorrespondiente(rutaVentanaFXML); 
+    }
+    
+     public void desplegarVentanaCorrespondiente(String rutaVentanaFXML){
+        try{
+            Parent root=FXMLLoader.load(getClass().getResource(rutaVentanaFXML));
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.show();
+            cerrarVentana();
+        }catch(IOException excepcion){
+            Logger.getLogger(DAOCliente.class.getName()).log(Level.SEVERE, null, excepcion);
+        }
+    }
     
     public void cerrarVentana(){
         stage_ventana=(Stage) anchor_DarDeAltaCliente.getScene().getWindow();
