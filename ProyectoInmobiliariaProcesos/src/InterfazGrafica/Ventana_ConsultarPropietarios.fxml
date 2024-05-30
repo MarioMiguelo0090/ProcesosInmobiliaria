@@ -53,7 +53,7 @@
                      </columns>
                   </TableView>
                   <Label layoutX="260.0" layoutY="102.0" />
-                  <Button fx:id="btn_RegistrarPropietario" layoutX="1145.0" layoutY="104.0" mnemonicParsing="false" onAction="registrarPropiedad" prefHeight="31.0" prefWidth="182.0" style="-fx-background-color: green;" text="Registrar Propietario" textFill="WHITE">
+                  <Button fx:id="btn_RegistrarPropietario" layoutX="1145.0" layoutY="104.0" mnemonicParsing="false" onAction="#registrarPropiedad" prefHeight="31.0" prefWidth="182.0" style="-fx-background-color: green;" text="Registrar Propietario" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>

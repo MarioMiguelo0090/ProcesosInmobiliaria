@@ -1,6 +1,6 @@
 package InterfazGrafica.Controladores;
 
-import interfazGrafica.Alertas.Alertas;
+import InterfazGrafica.Alertas.Alertas;
 import java.math.BigDecimal;
 import javafx.scene.control.TextField;
 import java.net.URL;
@@ -75,8 +75,7 @@ public class Ventana_DarDeAltaClienteController implements Initializable {
         stage_ventana=(Stage) anchor_DarDeAltaCliente.getScene().getWindow();
         stage_ventana.close();
     }
-    
-    
+        
     public Usuario obtenerUsuario(){
         Usuario usuario=new Usuario();
         try{
@@ -140,8 +139,7 @@ public class Ventana_DarDeAltaClienteController implements Initializable {
                 tiposPropiedadVisibles.add(tipoPropiedad.getTipo());
             }
             cmb_TipoPropiedad.setItems(tiposPropiedadVisibles);        
-        }
-        
+        }        
     }
     
     public void registrarCliente(){
