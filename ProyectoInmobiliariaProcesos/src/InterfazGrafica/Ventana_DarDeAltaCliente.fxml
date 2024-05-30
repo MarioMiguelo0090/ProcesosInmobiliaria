@@ -98,7 +98,7 @@
          </font>
       </Label>
       <TextField fx:id="txfd_MinimoMetros" layoutX="298.0" layoutY="386.0" prefHeight="25.0" prefWidth="141.0" />
-      <Button layoutX="212.0" layoutY="431.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="79.0" style="-fx-background-color: red;" text="Cancelar" textFill="WHITE">
+      <Button fx:id="btn_cancelar" layoutX="212.0" layoutY="431.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="79.0" style="-fx-background-color: red;" text="Cancelar" textFill="WHITE">
          <font>
             <Font name="System Bold Italic" size="12.0" />
          </font></Button>

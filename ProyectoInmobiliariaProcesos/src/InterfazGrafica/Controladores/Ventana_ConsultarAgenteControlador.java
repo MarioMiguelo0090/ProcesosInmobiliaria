@@ -62,6 +62,7 @@ public class Ventana_ConsultarAgenteControlador implements Initializable{
         };
 
         textField.setTextFormatter(new TextFormatter<>(filtro));
+        button_Regresar.setOnAction(event->button_Regresar());
     }
 
     @Override
@@ -168,7 +169,9 @@ public class Ventana_ConsultarAgenteControlador implements Initializable{
     }
     
     public void button_Regresar(){
-
+        String rutaVentanaFXML="/interfazGrafica/Ventana_MenuPrincipalAdministrador.fxml";
+        desplegarVentanaCorrespondiente(rutaVentanaFXML); 
+        cerrarVentana();
     }
     
     @FXML
