@@ -1,8 +1,8 @@
 package logicaDeNegocio.DAO;
 
 import logicaDeNegocio.Clases.Propietario;
-import logicaDeNegocio.Interfaces.PropietarioInterface;
 import AccesoADatos.ManejadorBaseDatos;
+import com.mysql.cj.jdbc.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,57 +13,92 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import logicaDeNegocio.Clases.Usuario;
-import static logicaDeNegocio.DAO.DAOAgenteInmobiliario.BASE_DE_DATOS;
+import logicaDeNegocio.Interfaces.IPropietarioInterface;
 
-public class DAOPropietario implements PropietarioInterface {
+public class DAOPropietario implements IPropietarioInterface {
 
     public static final ManejadorBaseDatos BASE_DE_DATOS = new ManejadorBaseDatos();
     private Connection conexion;
-    private static final String AGREGAR_USUARIO = """
-                                                     INSERT INTO usuario (nombre, apellidoPaterno, apellidoMaterno, telefono, correo, RFC)
-                                                            VALUES
-                                                            (?, ?, ?, ?, ?, ?);""";
-    @Override
-    public int agregarNuevoPropietario(Usuario usuario) {
-        PreparedStatement declaracion;
-        int numeroFilasAfectadas=0;
-        int idUsuarioGenerado = -1;
-        try {
-            conexion=BASE_DE_DATOS.getConexion();
-            
-       
 
-                conexion=BASE_DE_DATOS.getConexion();
-                PreparedStatement statement = conexion.prepareStatement(AGREGAR_USUARIO, Statement.RETURN_GENERATED_KEYS);
-                statement.setString(1, usuario.getNombre());
-                statement.setString(2, usuario.getApellidoPaterno());
-                statement.setString(3, usuario.getApellidoMaterno());
-                statement.setString(4, usuario.getTelefono());
-                statement.setString(5, usuario.getCorreo());
-                statement.setString(6, usuario.getRFC());
-                numeroFilasAfectadas = statement.executeUpdate();
-                
-                ResultSet generatedKeys = statement.getGeneratedKeys();
-                if (generatedKeys.next()) {
-                    idUsuarioGenerado = generatedKeys.getInt(1);
-                    usuario.setIdUsuario(idUsuarioGenerado);
-                }
-                    declaracion=conexion.prepareStatement("Insert into propietario "
-                        + "(Usuario_idCliente,estadoPropietario)"
-                        + " values (?,?);");
-                declaracion.setInt(1, idUsuarioGenerado);
-                declaracion.setString(2,"Activo");
-                numeroFilasAfectadas = declaracion.executeUpdate();
-               
-      
+    private static final String VERIFICAR_EXISTENCIA_CORREO = """
+        SELECT COUNT(*) AS number_of_matches FROM usuario WHERE correo = ?""";
+    private static final String VERIFICAR_EXISTENCIA_RFC = """
+        SELECT COUNT(*) AS number_of_matches FROM usuario WHERE RFC = ?""";
     
-            conexion.close();
+    @Override
+    public int agregarNuevoPropietario(Usuario usuario) throws SQLException {
+        int filasAfectadas = -1;
+        try {
+            conexion = BASE_DE_DATOS.getConexion();
+            // Inserta al usuario y obtiene el ID
+            String insertarUsuario = """
+                INSERT INTO usuario (nombre, apellidoPaterno, apellidoMaterno, telefono, correo, RFC)
+                VALUES (?, ?, ?, ?, ?, ?)
+            """;
+            PreparedStatement statementUsuario = conexion.prepareStatement(insertarUsuario, Statement.RETURN_GENERATED_KEYS);
+            statementUsuario.setString(1, usuario.getNombre());
+            statementUsuario.setString(2, usuario.getApellidoPaterno());
+            statementUsuario.setString(3, usuario.getApellidoMaterno());
+            statementUsuario.setString(4, usuario.getTelefono());
+            statementUsuario.setString(5, usuario.getCorreo());
+            statementUsuario.setString(6, usuario.getRFC());
+            statementUsuario.executeUpdate();
+            ResultSet generatedKeys = statementUsuario.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                int idUsuario = generatedKeys.getInt(1);
+                // Inserta al propietario con el ID del usuario recién creado
+                String insertarPropietario = """
+                    INSERT INTO propietario (Usuario_idCliente, estadoPropietario)
+                    VALUES (?, ?)
+                """;
+                PreparedStatement statementPropietario = conexion.prepareStatement(insertarPropietario);
+                statementPropietario.setInt(1, idUsuario);
+                statementPropietario.setString(2, "Activo"); // Asigna el estado apropiado
+                filasAfectadas = statementPropietario.executeUpdate();
+            }
         } catch (SQLException ex) {
-            Logger.getLogger(DAOCliente.class.getName()).log(Level.SEVERE, null, ex);
-            numeroFilasAfectadas = -1;
+            Logger.getLogger(DAOPropietario.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (conexion != null) {
+                conexion.close();
+            }
         }
-        return numeroFilasAfectadas; 
+        return filasAfectadas;
     }
+
+
+    @Override
+    public boolean verificarSiExisteElCorreo(String correo) throws SQLException {
+        boolean existeCorreo = true;
+        conexion = BASE_DE_DATOS.getConexion();
+        CallableStatement statement = (CallableStatement) conexion.prepareCall(VERIFICAR_EXISTENCIA_CORREO);
+        statement.setString(1, correo);
+        ResultSet resultado = statement.executeQuery();
+
+        if (resultado.next()) {
+            existeCorreo = resultado.getInt("number_of_matches") > 0;
+        }
+        conexion.close();
+        return existeCorreo;
+    }
+
+    @Override
+    public boolean verificarSiExisteRFC(String RFC) throws SQLException {
+        boolean existeRFC = true;
+        conexion = BASE_DE_DATOS.getConexion();
+        CallableStatement statement = (CallableStatement) conexion.prepareCall(VERIFICAR_EXISTENCIA_RFC);
+        statement.setString(1, RFC);
+        ResultSet resultado = statement.executeQuery();
+
+        if (resultado.next()) {
+            existeRFC = resultado.getInt("number_of_matches") > 0;
+        }
+        conexion.close();
+        return existeRFC;
+    }
+
+
+
 
     @Override
     public int cambiarEstadoPropietario(Propietario propietario, String estado) {
@@ -188,19 +223,20 @@ public class DAOPropietario implements PropietarioInterface {
         try {
             conexion = BASE_DE_DATOS.getConexion();
             sentencia = conexion.prepareStatement("SELECT \n" +
-                                                                    
-                                                                    "    usuario.idUsuario,\n" +
-                                                                    "    usuario.nombre,\n" +
-                                                                    "    usuario.apellidoPaterno,\n" +
-                                                                    "    usuario.apellidoMaterno,\n" +
-                                                                    "    usuario.telefono,\n" +
-                                                                    "    usuario.correo,\n" +
-                                                                    "    usuario.RFC,\n" +
-                                                                    "    propietario.estadoPropietario\n" +
-                                                                    "FROM \n" +
-                                                                    "    propietario\n" +
-                                                                    "INNER JOIN \n" +
-                                                                    "    usuario ON propietario.Usuario_idCliente = usuario.idUsuario;");
+
+"    usuario.idUsuario,\n" +
+"    usuario.nombre,\n" +
+"    usuario.apellidoPaterno,\n" +
+"    usuario.apellidoMaterno,\n" +
+"    usuario.telefono,\n" +
+"    usuario.correo,\n" +
+"    usuario.RFC,\n" +
+"    propietario.estadoPropietario\n" +
+"FROM \n" +
+"    propietario\n" +
+"INNER JOIN \n" +
+"    usuario ON propietario.Usuario_idCliente = usuario.idUsuario;");
+
             resultado = sentencia.executeQuery();
             if (resultado.isBeforeFirst()) {
                 while (resultado.next()) {

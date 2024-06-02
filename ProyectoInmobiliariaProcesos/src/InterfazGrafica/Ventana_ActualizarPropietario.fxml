@@ -71,6 +71,7 @@
                      </font>
                   </Label>
                   <TextField fx:id="txfd_Correo" layoutX="88.0" layoutY="189.0" prefHeight="26.0" prefWidth="295.0" style="-fx-background-radius: 13;" />
+                  <TextField fx:id="txt_EstadoPropietario" layoutX="100" layoutY="350" />
                </children>
             </Pane>
             <Button fx:id="btn_Guardar" layoutX="396.0" layoutY="358.0" mnemonicParsing="false" onAction="#realizarRegistro" prefHeight="31.0" prefWidth="104.0" style="-fx-background-color: green;" text="Actualizar" textFill="WHITE">

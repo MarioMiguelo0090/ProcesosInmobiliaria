@@ -75,33 +75,26 @@ public class Ventana_ConsultarPropietariosController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        addButtonToTable();
-        List<Usuario> propietarios = obtenerPropietarios();
-        tableView_Propiedades.getItems().addAll(propietarios);
-        column_idPropietario.setCellValueFactory(new PropertyValueFactory<>("idPropietario"));
+
+        List<Usuario> usuarios = obtenerPropietarios();
+        btn_Regresar.setOnAction(event -> regresarVentanaPrincipal());
+        btn_RegistrarPropietario.setOnAction(event -> registrarPropietario());
+        tableView_Propiedades.getItems().addAll(usuarios);
+
+        column_idPropietario.setCellValueFactory(new PropertyValueFactory<>("idUsuario"));
         column_Nombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         column_ApellidoP.setCellValueFactory(new PropertyValueFactory<>("apellidoPaterno"));
         column_ApellidoM.setCellValueFactory(new PropertyValueFactory<>("apellidoMaterno"));
         column_RFC.setCellValueFactory(new PropertyValueFactory<>("RFC"));
         column_Telefono.setCellValueFactory(new PropertyValueFactory<>("telefono"));
         column_Correo.setCellValueFactory(new PropertyValueFactory<>("correo"));
-        // Añadir botones a la columna "Actualizar"
-        addButtonToTable();
 
-        // Cargar los datos de la base de datos
-        obtenerPropietarios();
-        btn_Regresar.setOnAction(event->regresarVentanaPrincipal());
-        btn_RegistrarPropietario.setOnAction(event->registrarPropietario());
+        addButtonToTable();
     }
 
-    
-    
     public List<Usuario> obtenerPropietarios(){
-        DAOPropietario daoPropietario=new DAOPropietario();
-            
-            List<Usuario> usuarios=new ArrayList<>();
-            usuarios=daoPropietario.consultarPropietarios();
-        return usuarios;
+        DAOPropietario daoPropietario = new DAOPropietario();
+        return daoPropietario.consultarPropietarios();
     }
 
     private void addButtonToTable() {
@@ -115,7 +108,8 @@ public class Ventana_ConsultarPropietariosController implements Initializable {
                     {
                         btn.setOnAction((ActionEvent event) -> {
                             Usuario usuario = getTableView().getItems().get(getIndex());
-                            abrirVentanaActualizarPropietario(usuario.getIdUsuario());
+                            actualizarPropietario(usuario.getIdUsuario());
+
                         });
                     }
 
@@ -132,13 +126,24 @@ public class Ventana_ConsultarPropietariosController implements Initializable {
                 return cell;
             }
         };
-
         column_Actualizar.setCellFactory(cellFactory);
-    }
+    }   
+    
+    public void actualizarPropietario(int idUsuario){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/interfazGrafica/Ventana_ActualizarPropietario.fxml"));
+            Parent root = loader.load();
+            Ventana_ActualizarPropietarioController controller = loader.getController();
+            controller.cargarDatosPropietario(idUsuario);
 
-    private void abrirVentanaActualizarPropietario(int idPropietario) {
-        String rutaVentanaFXML="/interfazGrafica/Ventana_ActualizarPropietario.fxml";
-        desplegarVentanaCorrespondiente(rutaVentanaFXML);
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.show();
+            cerrarVentana();
+        } catch (IOException excepcion) {
+            Logger.getLogger(Ventana_ConsultarPropietariosController.class.getName()).log(Level.SEVERE, null, excepcion);
+        }
     }
 
     public void registrarPropietario(){

@@ -10,6 +10,9 @@ public class Usuario {
     private String telefono;
     private String correo;
     private String RFC;
+    
+    private int idPropietario;
+    
     private static final String SOLO_LETRAS_PATTERN = "^[\\p{L}\\sáéíóúÁÉÍÓÚüÜ]+(?:\\s[\\p{L}\\sáéíóúÁÉÍÓÚüÜ]+)*$";
     private static final String EMAIL_PATTERN = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
     private static final String SOLO_NUMEROS_PATTERN = "\\d+";
@@ -105,6 +108,15 @@ public class Usuario {
         Usuario usuarioTemporal=(Usuario)obj;
         return correo.equals(usuarioTemporal.getCorreo())&&
                 RFC.equals(usuarioTemporal.getRFC());        
+    }
+
+    
+    public int getIdPropietario() {
+        return idPropietario;
+    }
+
+    public void setIdPropietario(int idPropietario) {
+        this.idPropietario = idPropietario;
     }
         
 }

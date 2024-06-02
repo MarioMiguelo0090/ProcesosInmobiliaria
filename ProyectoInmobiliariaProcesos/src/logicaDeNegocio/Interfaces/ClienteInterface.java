@@ -3,9 +3,10 @@ package logicaDeNegocio.Interfaces;
 import java.math.BigDecimal;
 import java.util.List;
 import logicaDeNegocio.Clases.Cliente;
+import logicaDeNegocio.Clases.Login;
 
 public interface ClienteInterface {
-    public int registrarCliente(Cliente cliente);    
+    public int registrarCliente(Cliente cliente,Login login) ;    
     public List<Cliente> consultarClientes();    
     public Cliente consultarClientePorId(int idCliente);    
     public int modificarRangoDePrecioMinimoPorId(int idCliente,BigDecimal rangoDePrecioMinimo);
