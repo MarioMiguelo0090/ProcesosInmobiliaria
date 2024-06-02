@@ -75,6 +75,7 @@ public class Ventana_ConsultarPropietariosController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
         List<Usuario> usuarios = obtenerPropietarios();
         btn_Regresar.setOnAction(event -> regresarVentanaPrincipal());
         btn_RegistrarPropietario.setOnAction(event -> registrarPropietario());
@@ -108,6 +109,7 @@ public class Ventana_ConsultarPropietariosController implements Initializable {
                         btn.setOnAction((ActionEvent event) -> {
                             Usuario usuario = getTableView().getItems().get(getIndex());
                             actualizarPropietario(usuario.getIdUsuario());
+
                         });
                     }
 

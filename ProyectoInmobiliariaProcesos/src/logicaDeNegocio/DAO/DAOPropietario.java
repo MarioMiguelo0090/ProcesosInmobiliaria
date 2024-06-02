@@ -223,6 +223,7 @@ public class DAOPropietario implements IPropietarioInterface {
         try {
             conexion = BASE_DE_DATOS.getConexion();
             sentencia = conexion.prepareStatement("SELECT \n" +
+
 "    usuario.idUsuario,\n" +
 "    usuario.nombre,\n" +
 "    usuario.apellidoPaterno,\n" +
@@ -235,6 +236,7 @@ public class DAOPropietario implements IPropietarioInterface {
 "    propietario\n" +
 "INNER JOIN \n" +
 "    usuario ON propietario.Usuario_idCliente = usuario.idUsuario;");
+
             resultado = sentencia.executeQuery();
             if (resultado.isBeforeFirst()) {
                 while (resultado.next()) {
