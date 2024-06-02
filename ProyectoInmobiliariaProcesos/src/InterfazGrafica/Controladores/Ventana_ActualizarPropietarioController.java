@@ -42,11 +42,11 @@ public class Ventana_ActualizarPropietarioController {
 
     @FXML
     private void initialize() {
-        btn_Guardar.setOnAction(event -> guardarPropietario());
+        btn_Guardar.setOnAction(event -> realizarRegistro());
     }
 
-    public void cargarDatosPropietario(int idPropietario) {
-        propietario = daoPropietario.consultarPropietarioPorID(idPropietario);
+    public void cargarDatosPropietario(int idUsuario) {
+        propietario = daoPropietario.consultarPropietarioPorIDUsuario(idUsuario);
         if (propietario != null) {
             Usuario usuario = propietario.getUsuario();
             txfd_Nombre.setText(usuario.getNombre());
@@ -61,7 +61,8 @@ public class Ventana_ActualizarPropietarioController {
         }
     }
 
-    private void guardarPropietario() {
+    @FXML
+    private void realizarRegistro() {
         try {
             String nombre = txfd_Nombre.getText();
             String apellidoPaterno = txfd_ApellidoP.getText();
@@ -99,7 +100,7 @@ public class Ventana_ActualizarPropietarioController {
         Stage stage = (Stage) btn_Cancelar.getScene().getWindow();
         stage.close();     
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("Ventana_ConsultarPropietarios.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/interfazGrafica/Ventana_ConsultarPropietarios.fxml"));
             Parent root = loader.load();
             Stage newStage = new Stage();
             newStage.setScene(new Scene(root));

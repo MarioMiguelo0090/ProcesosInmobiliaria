@@ -42,31 +42,31 @@ public class Ventana_ConsultarPropietariosController implements Initializable {
     private Button btn_Regresar;
 
     @FXML
-    private TableView<Propietario> tableView_Propiedades;
+    private TableView<Usuario> tableView_Propiedades;
 
     @FXML
-    private TableColumn<Propietario, Integer> column_idPropietario;
+    private TableColumn<Usuario, Integer> column_idPropietario;
 
     @FXML
-    private TableColumn<Propietario, String> column_Nombre;
+    private TableColumn<Usuario, String> column_Nombre;
 
     @FXML
-    private TableColumn<Propietario, String> column_ApellidoP;
+    private TableColumn<Usuario, String> column_ApellidoP;
 
     @FXML
-    private TableColumn<Propietario, String> column_ApellidoM;
+    private TableColumn<Usuario, String> column_ApellidoM;
 
     @FXML
-    private TableColumn<Propietario, String> column_RFC;
+    private TableColumn<Usuario, String> column_RFC;
 
     @FXML
-    private TableColumn<Propietario, String> column_Telefono;
+    private TableColumn<Usuario, String> column_Telefono;
 
     @FXML
-    private TableColumn<Propietario, String> column_Correo;
+    private TableColumn<Usuario, String> column_Correo;
 
     @FXML
-    private TableColumn<Propietario, Void> column_Actualizar;
+    private TableColumn<Usuario, Void> column_Actualizar;
 
     @FXML
     private Button btn_RegistrarPropietario;
@@ -75,8 +75,12 @@ public class Ventana_ConsultarPropietariosController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // Configurar las columnas de la tabla
-        column_idPropietario.setCellValueFactory(new PropertyValueFactory<>("idPropietario"));
+        List<Usuario> usuarios = obtenerPropietarios();
+        btn_Regresar.setOnAction(event -> regresarVentanaPrincipal());
+        btn_RegistrarPropietario.setOnAction(event -> registrarPropietario());
+        tableView_Propiedades.getItems().addAll(usuarios);
+
+        column_idPropietario.setCellValueFactory(new PropertyValueFactory<>("idUsuario"));
         column_Nombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         column_ApellidoP.setCellValueFactory(new PropertyValueFactory<>("apellidoPaterno"));
         column_ApellidoM.setCellValueFactory(new PropertyValueFactory<>("apellidoMaterno"));
@@ -84,37 +88,26 @@ public class Ventana_ConsultarPropietariosController implements Initializable {
         column_Telefono.setCellValueFactory(new PropertyValueFactory<>("telefono"));
         column_Correo.setCellValueFactory(new PropertyValueFactory<>("correo"));
 
-        // Añadir botones a la columna "Actualizar"
         addButtonToTable();
-
-        // Cargar los datos de la base de datos
-        obtenerPropietarios();
-        btn_Regresar.setOnAction(event->regresarVentanaPrincipal());
-        btn_RegistrarPropietario.setOnAction(event->registrarPropietario());
     }
 
-    
-    
     public List<Usuario> obtenerPropietarios(){
-        DAOPropietario daoPropietario=new DAOPropietario();
-            
-            List<Usuario> usuarios=new ArrayList<>();
-            usuarios=daoPropietario.consultarPropietarios();
-        return usuarios;
+        DAOPropietario daoPropietario = new DAOPropietario();
+        return daoPropietario.consultarPropietarios();
     }
 
     private void addButtonToTable() {
-        Callback<TableColumn<Propietario, Void>, TableCell<Propietario, Void>> cellFactory = new Callback<>() {
+        Callback<TableColumn<Usuario, Void>, TableCell<Usuario, Void>> cellFactory = new Callback<>() {
             @Override
-            public TableCell<Propietario, Void> call(final TableColumn<Propietario, Void> param) {
-                final TableCell<Propietario, Void> cell = new TableCell<>() {
+            public TableCell<Usuario, Void> call(final TableColumn<Usuario, Void> param) {
+                final TableCell<Usuario, Void> cell = new TableCell<Usuario,Void>() {
 
                     private final Button btn = new Button("Actualizar");
 
                     {
                         btn.setOnAction((ActionEvent event) -> {
-                            Propietario propietario = getTableView().getItems().get(getIndex());
-                            abrirVentanaActualizarPropietario(propietario.getIdPropietario());
+                            Usuario usuario = getTableView().getItems().get(getIndex());
+                            actualizarPropietario(usuario.getIdUsuario());
                         });
                     }
 
@@ -131,13 +124,24 @@ public class Ventana_ConsultarPropietariosController implements Initializable {
                 return cell;
             }
         };
-
         column_Actualizar.setCellFactory(cellFactory);
-    }
+    }   
+    
+    public void actualizarPropietario(int idUsuario){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/interfazGrafica/Ventana_ActualizarPropietario.fxml"));
+            Parent root = loader.load();
+            Ventana_ActualizarPropietarioController controller = loader.getController();
+            controller.cargarDatosPropietario(idUsuario);
 
-    private void abrirVentanaActualizarPropietario(int idPropietario) {
-        String rutaVentanaFXML="/interfazGrafica/Ventana_ActualizarPropietario.fxml";
-        desplegarVentanaCorrespondiente(rutaVentanaFXML);
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.show();
+            cerrarVentana();
+        } catch (IOException excepcion) {
+            Logger.getLogger(Ventana_ConsultarPropietariosController.class.getName()).log(Level.SEVERE, null, excepcion);
+        }
     }
 
     public void registrarPropietario(){
