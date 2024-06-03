@@ -7,12 +7,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import logicaDeNegocio.Clases.TipoPropiedad;
 import logicaDeNegocio.Interfaces.TipoPropiedadInterface;
 
 public class DAOTipoPropiedad implements TipoPropiedadInterface {
+    private static final org.apache.log4j.Logger LOG=org.apache.log4j.Logger.getLogger(DAOTipoPropiedad.class);
 
     public static final ManejadorBaseDatos BASE_DE_DATOS = new ManejadorBaseDatos();
     private Connection conexion;
@@ -28,7 +27,7 @@ public class DAOTipoPropiedad implements TipoPropiedadInterface {
             numeroFilasAfectadas = declaracion.executeUpdate();
             conexion.close();
         } catch (SQLException ex) {
-            Logger.getLogger(DAOTipoPropiedad.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.fatal(ex);
         }
         return numeroFilasAfectadas;
     }
@@ -50,7 +49,7 @@ public class DAOTipoPropiedad implements TipoPropiedadInterface {
             }
             conexion.close();
         } catch (SQLException ex) {
-            Logger.getLogger(DAOTipoPropiedad.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.fatal(ex);
         }
         return tiposPropiedad;
     }
@@ -71,7 +70,7 @@ public class DAOTipoPropiedad implements TipoPropiedadInterface {
             }
             conexion.close();
         } catch (SQLException ex) {
-            Logger.getLogger(DAOTipoPropiedad.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.fatal(ex);
         }
         return tipoPropiedad;
     }
@@ -92,7 +91,7 @@ public class DAOTipoPropiedad implements TipoPropiedadInterface {
             }
             conexion.close();
         } catch (SQLException ex) {
-            Logger.getLogger(DAOTipoPropiedad.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.error(ex);
             idTipoPropiedad=-1;
         }
         return idTipoPropiedad;
@@ -114,7 +113,7 @@ public class DAOTipoPropiedad implements TipoPropiedadInterface {
             }
             conexion.close();
         } catch (SQLException ex) {
-            Logger.getLogger(DAOTipoPropiedad.class.getName()).log(Level.SEVERE, null, ex);            
+            LOG.error(ex);
         }
         return tipoPropiedad;        
 

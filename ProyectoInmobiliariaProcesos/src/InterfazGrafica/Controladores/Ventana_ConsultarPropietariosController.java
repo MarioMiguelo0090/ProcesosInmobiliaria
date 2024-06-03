@@ -15,18 +15,12 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import logicaDeNegocio.Clases.Propietario;
 import logicaDeNegocio.DAO.DAOPropietario;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.scene.layout.AnchorPane;
 import logicaDeNegocio.Clases.Usuario;
 import logicaDeNegocio.DAO.DAOAgenteInmobiliario;
@@ -34,6 +28,7 @@ import logicaDeNegocio.DAO.DAOCliente;
 import logicaDeNegocio.DAO.DAOUsuario;
 
 public class Ventana_ConsultarPropietariosController implements Initializable {
+    private static final org.apache.log4j.Logger LOG=org.apache.log4j.Logger.getLogger(Ventana_ConsultarPropietariosController.class);
     
     private Stage escenario;
     @FXML
@@ -142,7 +137,7 @@ public class Ventana_ConsultarPropietariosController implements Initializable {
             stage.show();
             cerrarVentana();
         } catch (IOException excepcion) {
-            Logger.getLogger(Ventana_ConsultarPropietariosController.class.getName()).log(Level.SEVERE, null, excepcion);
+            LOG.error(excepcion);
         }
     }
 
@@ -170,7 +165,7 @@ public class Ventana_ConsultarPropietariosController implements Initializable {
             stage.show();
             cerrarVentana();
         }catch(IOException excepcion){
-            Logger.getLogger(DAOCliente.class.getName()).log(Level.SEVERE, null, excepcion);
+            LOG.error(excepcion);
         }
     }
 }

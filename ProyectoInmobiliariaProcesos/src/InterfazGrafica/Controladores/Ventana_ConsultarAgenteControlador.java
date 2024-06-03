@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.function.UnaryOperator;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -39,6 +37,7 @@ import logicaDeNegocio.DAO.DAOUsuario;
 
 
 public class Ventana_ConsultarAgenteControlador implements Initializable{
+    private static final org.apache.log4j.Logger LOG=org.apache.log4j.Logger.getLogger(Ventana_ConsultarAgenteControlador.class);
         
     @FXML private TableColumn<Usuario, String> column_Nombre;
     @FXML private TableColumn<Usuario, String> column_ApellidoMaterno;
@@ -92,7 +91,7 @@ public class Ventana_ConsultarAgenteControlador implements Initializable{
             
         } catch (SQLException ex) {
             Alertas.mostrarMensajeErrorEnLaConexion();
-            Logger.getLogger(Ventana_ConsultarAgenteControlador.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.error(ex);
         }
         return usuarios;
     }
@@ -139,7 +138,7 @@ public class Ventana_ConsultarAgenteControlador implements Initializable{
             stage.show();
             cerrarVentana();
         }catch(IOException excepcion){
-            System.out.println(excepcion);
+            LOG.error(excepcion);
             System.out.println("Error de conexion de BD");
         }                        
     }
@@ -164,7 +163,7 @@ public class Ventana_ConsultarAgenteControlador implements Initializable{
             stage.show();
             cerrarVentana();
         }catch(IOException excepcion){
-            Logger.getLogger(DAOCliente.class.getName()).log(Level.SEVERE, null, excepcion);
+            LOG.error(excepcion);
         }
     }
     
@@ -194,8 +193,8 @@ public class Ventana_ConsultarAgenteControlador implements Initializable{
             
             
         } catch (SQLException ex) {
-            Logger.getLogger(Ventana_ConsultarAgenteControlador.class.getName()).log(Level.SEVERE, null, ex);
-       Alertas.mostrarMensajeErrorEnLaConexion();
+            LOG.error(ex);
+            Alertas.mostrarMensajeErrorEnLaConexion();
         }
         
     }

@@ -6,13 +6,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import logicaDeNegocio.Clases.Login;
 import logicaDeNegocio.Interfaces.ILogin;
 
 
 public class DAOLogin implements ILogin{
+    private static final org.apache.log4j.Logger LOG=org.apache.log4j.Logger.getLogger(DAOLogin.class);
     public static final ManejadorBaseDatos BASE_DE_DATOS=new ManejadorBaseDatos();
     private Connection conexion;
     private final String ACCESO_EXISTENTE = "SELECT COUNT(*) FROM login WHERE usuario = ? AND contraseña = ?";
@@ -100,7 +99,7 @@ public class DAOLogin implements ILogin{
                 login.setUsuario(resultado.getString("usuario"));
             }
         }catch(SQLException excepcion){
-            Logger.getLogger(DAOLogin.class.getName()).log(Level.SEVERE, null, excepcion);
+            LOG.error(excepcion);
             login = null;
         }
         return login;

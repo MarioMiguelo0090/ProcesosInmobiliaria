@@ -9,12 +9,11 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import logicaDeNegocio.Clases.Usuario;
 import logicaDeNegocio.Interfaces.UsuarioInterface;
 
 public class DAOUsuario implements UsuarioInterface {
+    private static final org.apache.log4j.Logger LOG=org.apache.log4j.Logger.getLogger(DAOUsuario.class);
     public static final ManejadorBaseDatos BASE_DE_DATOS=new ManejadorBaseDatos();
     private Connection conexion;
 
@@ -35,7 +34,7 @@ public class DAOUsuario implements UsuarioInterface {
             resultadoInsercion=sentencia.getInt(7);
             conexion.close();            
         } catch (SQLException ex) {
-            Logger.getLogger(DAOUsuario.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.fatal(ex);
             resultadoInsercion=-1;
         }
         return resultadoInsercion;
@@ -63,7 +62,7 @@ public class DAOUsuario implements UsuarioInterface {
             }
             conexion.close();
         } catch (SQLException ex) {
-            Logger.getLogger(DAOUsuario.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.fatal(ex);
         }
         return usuarios;
     }
@@ -89,7 +88,7 @@ public class DAOUsuario implements UsuarioInterface {
             }
             conexion.close();
         } catch (SQLException ex) {
-            Logger.getLogger(DAOUsuario.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.error(ex);
         }
         return usuario;        
     }
@@ -105,7 +104,7 @@ public class DAOUsuario implements UsuarioInterface {
             declaracion.setInt(2, idUsuario);
             numeroFilasAfectadas=declaracion.executeUpdate();
         } catch (SQLException ex) {
-            Logger.getLogger(DAOUsuario.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.error(ex);
         }
         return numeroFilasAfectadas;        
     }
@@ -121,7 +120,7 @@ public class DAOUsuario implements UsuarioInterface {
             declaracion.setInt(2, idUsuario);
             numeroFilasAfectadas=declaracion.executeUpdate();
         } catch (SQLException ex) {
-            Logger.getLogger(DAOUsuario.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.error(ex);
         }
         return numeroFilasAfectadas;        
     }
@@ -137,7 +136,7 @@ public class DAOUsuario implements UsuarioInterface {
             declaracion.setInt(2, idUsuario);
             numeroFilasAfectadas=declaracion.executeUpdate();
         } catch (SQLException ex) {
-            Logger.getLogger(DAOUsuario.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.error(ex);
         }
         return numeroFilasAfectadas;
     }
@@ -153,7 +152,7 @@ public class DAOUsuario implements UsuarioInterface {
             declaracion.setInt(2, idUsuario);
             numeroFilasAfectadas=declaracion.executeUpdate();
         } catch (SQLException ex) {
-            Logger.getLogger(DAOUsuario.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.error(ex);
         }
         return numeroFilasAfectadas;
     }
@@ -172,7 +171,7 @@ public class DAOUsuario implements UsuarioInterface {
             resultadoModificacion=declaracion.getInt(3);
             conexion.close();
         } catch (SQLException ex) {
-            Logger.getLogger(DAOUsuario.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.error(ex);
             resultadoModificacion=-1;
         }
         return resultadoModificacion;        
@@ -192,7 +191,7 @@ public class DAOUsuario implements UsuarioInterface {
             resultadoModificacion=declaracion.getInt(3);
             conexion.close();
         } catch (SQLException ex) {
-            Logger.getLogger(DAOUsuario.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.error(ex);
             resultadoModificacion=-1;
         }
         return resultadoModificacion;        
@@ -213,7 +212,7 @@ public class DAOUsuario implements UsuarioInterface {
             }
             conexion.close();
         }catch (SQLException ex) {
-            Logger.getLogger(DAOUsuario.class.getName()).log(Level.SEVERE, null, ex);            
+            LOG.error(ex);
         }
         return idUsuario;
     }
@@ -239,7 +238,7 @@ public class DAOUsuario implements UsuarioInterface {
             }
             conexion.close();
         } catch (SQLException ex) {
-            Logger.getLogger(DAOUsuario.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.error(ex);
             usuario=null;
         }
         return usuario;                
@@ -263,7 +262,7 @@ public class DAOUsuario implements UsuarioInterface {
             resultadoModificacion = sentencia.executeUpdate();
             conexion.close();
         } catch (SQLException excepcion) {
-            Logger.getLogger(DAOUsuario.class.getName()).log(Level.SEVERE, null, excepcion);
+            LOG.error(excepcion);
             resultadoModificacion = -1;
         }
         return resultadoModificacion;

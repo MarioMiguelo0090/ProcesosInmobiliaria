@@ -8,8 +8,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import logicaDeNegocio.Clases.Cliente;
 import logicaDeNegocio.Clases.Login;
 import logicaDeNegocio.Clases.TipoPropiedad;
@@ -18,6 +16,7 @@ import logicaDeNegocio.Clases.Usuario;
 import logicaDeNegocio.Interfaces.ClienteInterface;
 
 public class DAOCliente implements ClienteInterface{
+    private static final org.apache.log4j.Logger LOG=org.apache.log4j.Logger.getLogger(DAOCliente.class);
     public static final ManejadorBaseDatos BASE_DE_DATOS=new ManejadorBaseDatos();
     private Connection conexion;
     private static final String AGREGAR_LOGIN = """
@@ -52,7 +51,7 @@ public class DAOCliente implements ClienteInterface{
             numeroFilasAfectadas=loginDeclaracion.executeUpdate();            
             conexion.close();
         } catch (SQLException ex) {
-            Logger.getLogger(DAOCliente.class.getName()).log(Level.SEVERE, null, ex);                        
+            LOG.fatal(ex);
             numeroFilasAfectadas=-1;
         }
         return numeroFilasAfectadas;        
@@ -87,7 +86,7 @@ public class DAOCliente implements ClienteInterface{
             }
             conexion.close();
         } catch (SQLException ex) {
-            Logger.getLogger(DAOCliente.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.fatal(ex);
         }
         return clientes;
     }
@@ -120,7 +119,7 @@ public class DAOCliente implements ClienteInterface{
             }
             conexion.close();
         } catch (SQLException ex) {
-            Logger.getLogger(DAOCliente.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.fatal(ex);
         }
         return cliente;                
     }
@@ -137,7 +136,7 @@ public class DAOCliente implements ClienteInterface{
             numeroFilasAfectadas=declaracion.executeUpdate();
             conexion.close();
         } catch (SQLException ex) {
-            Logger.getLogger(DAOCliente.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.error(ex);
             numeroFilasAfectadas=-1;
         }
         return numeroFilasAfectadas;        
@@ -155,7 +154,7 @@ public class DAOCliente implements ClienteInterface{
             numeroFilasAfectadas=declaracion.executeUpdate();
             conexion.close();
         } catch (SQLException ex) {
-            Logger.getLogger(DAOCliente.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.error(ex);
             numeroFilasAfectadas=-1;
         }
         return numeroFilasAfectadas;
@@ -173,7 +172,7 @@ public class DAOCliente implements ClienteInterface{
             numeroFilasAfectadas=declaracion.executeUpdate();
             conexion.close();
         } catch (SQLException ex) {
-            Logger.getLogger(DAOCliente.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.error(ex);
             numeroFilasAfectadas=-1;
         }
         return numeroFilasAfectadas;        
@@ -191,7 +190,7 @@ public class DAOCliente implements ClienteInterface{
             numeroFilasAfectadas=declaracion.executeUpdate();
             conexion.close();
         } catch (SQLException ex) {
-            Logger.getLogger(DAOCliente.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.error(ex);
             numeroFilasAfectadas=-1;
         }
         return numeroFilasAfectadas;        
@@ -209,7 +208,7 @@ public class DAOCliente implements ClienteInterface{
             numeroFilasAfectadas=declaracion.executeUpdate();
             conexion.close();
         } catch (SQLException ex) {
-            Logger.getLogger(DAOCliente.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.error(ex);
             numeroFilasAfectadas=-1;
         }
         return numeroFilasAfectadas;                 
@@ -227,7 +226,7 @@ public class DAOCliente implements ClienteInterface{
             numeroFilasAfectadas=declaracion.executeUpdate();
             conexion.close();
         } catch (SQLException ex) {
-            Logger.getLogger(DAOCliente.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.error(ex);
             numeroFilasAfectadas=-1;
         }
         return numeroFilasAfectadas;        
@@ -248,7 +247,7 @@ public class DAOCliente implements ClienteInterface{
             }
             conexion.close();
         } catch (SQLException ex) {
-            Logger.getLogger(DAOUsuario.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.fatal(ex);
             idCliente=-1;
         }
         return idCliente; 
@@ -269,7 +268,7 @@ public class DAOCliente implements ClienteInterface{
             }
             conexion.close();
         } catch (SQLException ex) {
-            Logger.getLogger(DAOCliente.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.fatal(ex);
         }
         return idUsuarios;        
     }
@@ -305,7 +304,7 @@ public class DAOCliente implements ClienteInterface{
             }
             conexion.close();
         } catch (SQLException ex) {
-            Logger.getLogger(DAOCliente.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.fatal(ex);
         }
         return cliente;                 
     }
@@ -321,7 +320,7 @@ public class DAOCliente implements ClienteInterface{
             numeroFilasAfectadas=declaracion.executeUpdate();
             conexion.close();
         } catch (SQLException ex) {
-            Logger.getLogger(DAOCliente.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.fatal(ex);
             numeroFilasAfectadas=-1;
         }
         return numeroFilasAfectadas;        

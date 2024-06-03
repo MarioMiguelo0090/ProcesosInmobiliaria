@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
-import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ComboBox;
@@ -16,7 +15,6 @@ import javafx.stage.Stage;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import java.util.logging.Level;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.SpinnerValueFactory;
@@ -38,6 +36,7 @@ import logicaDeNegocio.Enums.EnumPropiedad;
 
 
 public class Ventana_ModificarPropiedadControlador implements Initializable {
+    private static final org.apache.log4j.Logger LOG=org.apache.log4j.Logger.getLogger(Ventana_ModificarPropiedadControlador.class);
 
      private Stage escenario;
     @FXML
@@ -164,7 +163,7 @@ public class Ventana_ModificarPropiedadControlador implements Initializable {
                 propiedad = null;
             }
         }catch(NullPointerException | IllegalArgumentException excepcion){
-           Logger.getLogger(Ventana_RegistrarPropiedadControlador.class.getName()).log(Level.SEVERE, null, excepcion);
+           LOG.warn(excepcion);
            Alertas.mostrarMensajeDatosInvalidos();
            propiedad = null;
         }
@@ -271,7 +270,7 @@ public class Ventana_ModificarPropiedadControlador implements Initializable {
             stage.show();
             cerrarVentana();
         }catch(IOException excepcion){
-            Logger.getLogger(Ventana_ModificarPropiedadControlador.class.getName()).log(Level.SEVERE, null, excepcion);
+           LOG.error(excepcion);
         }
     }
 }

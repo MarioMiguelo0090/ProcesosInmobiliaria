@@ -5,8 +5,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -23,6 +21,7 @@ import logicaDeNegocio.DAO.DAOAgenteInmobiliario;
 import logicaDeNegocio.DAO.DAOCliente;
 
 public class Ventana_RegistrarAgenteControlador implements Initializable  {
+    private static final org.apache.log4j.Logger LOG=org.apache.log4j.Logger.getLogger(Ventana_RegistrarAgenteControlador.class);
     private Stage escenario;
     @FXML private AnchorPane anchor_Ventana;
     @FXML private TextField txfd_ApellidoMaterno;
@@ -49,6 +48,7 @@ public class Ventana_RegistrarAgenteControlador implements Initializable  {
             usuario.setRFC(txfd_RFC.getText());
         }catch(IllegalArgumentException excepcion){
             usuario=null;
+            LOG.info(excepcion);
         }
         return usuario;                        
     }
@@ -60,6 +60,7 @@ public class Ventana_RegistrarAgenteControlador implements Initializable  {
         login.setContrasenia(GeneradorDeContrasenias.generarContraseña());
          }catch(IllegalArgumentException excepcion){
             login=null;
+            LOG.warn(excepcion);
         }
         return login;
     }
@@ -83,7 +84,7 @@ public class Ventana_RegistrarAgenteControlador implements Initializable  {
             stage.show();
             cerrarVentana();
         }catch(IOException excepcion){
-            Logger.getLogger(DAOCliente.class.getName()).log(Level.SEVERE, null, excepcion);
+            LOG.error(excepcion);
         }
     }
     
@@ -112,7 +113,7 @@ public class Ventana_RegistrarAgenteControlador implements Initializable  {
             }
         } catch (SQLException ex) {
             Alertas.mostrarMensajeErrorEnLaConexion();
-            Logger.getLogger(Ventana_RegistrarAgenteControlador.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.warn(ex);
         }
                    
     }
