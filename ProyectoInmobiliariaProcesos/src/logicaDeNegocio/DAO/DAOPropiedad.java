@@ -10,14 +10,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import logicaDeNegocio.Clases.Direccion;
 import logicaDeNegocio.Clases.Propietario;
 import logicaDeNegocio.Clases.TipoPropiedad;
 
 public class DAOPropiedad implements PropiedadInterface{
-    
+    private static final org.apache.log4j.Logger LOG=org.apache.log4j.Logger.getLogger(DAOPropiedad.class);
     public static final ManejadorBaseDatos BASE_DE_DATOS=new ManejadorBaseDatos();
     private Connection conexion;
     
@@ -45,7 +43,7 @@ public class DAOPropiedad implements PropiedadInterface{
             numeroFilasAfectadas = declaracion.executeUpdate();
             conexion.close();
         } catch (SQLException ex) {
-            Logger.getLogger(DAOCliente.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.fatal(ex);
             numeroFilasAfectadas = -1;
         }
         return numeroFilasAfectadas; 
@@ -63,7 +61,7 @@ public class DAOPropiedad implements PropiedadInterface{
             resultadoModificacion = sentencia.executeUpdate();
             conexion.close();
         }catch(SQLException excepcion){
-              Logger.getLogger(DAOPropiedad.class.getName()).log(Level.SEVERE, null, excepcion);
+              LOG.error(excepcion);
               resultadoModificacion = -1;
         }
         return resultadoModificacion;
@@ -81,7 +79,7 @@ public class DAOPropiedad implements PropiedadInterface{
             resultadoModificacion = sentencia.executeUpdate();
             conexion.close();
         }catch(SQLException excepcion){
-              Logger.getLogger(DAOPropiedad.class.getName()).log(Level.SEVERE, null, excepcion);
+              LOG.error(excepcion);
               resultadoModificacion = -1;
         }
         return resultadoModificacion;
@@ -99,7 +97,7 @@ public class DAOPropiedad implements PropiedadInterface{
             resultadoModificacion = sentencia.executeUpdate();
             conexion.close();
         }catch(SQLException excepcion){
-              Logger.getLogger(DAOPropiedad.class.getName()).log(Level.SEVERE, null, excepcion);
+              LOG.error(excepcion);
               resultadoModificacion = -1;
         }
         return resultadoModificacion;
@@ -117,7 +115,7 @@ public class DAOPropiedad implements PropiedadInterface{
             resultadoModificacion = sentencia.executeUpdate();
             conexion.close();
         }catch(SQLException excepcion){
-              Logger.getLogger(DAOPropiedad.class.getName()).log(Level.SEVERE, null, excepcion);
+              LOG.error(excepcion);
               resultadoModificacion = -1;
         }
         return resultadoModificacion;
@@ -135,7 +133,7 @@ public class DAOPropiedad implements PropiedadInterface{
             resultadoModificacion = sentencia.executeUpdate();
             conexion.close();
         }catch(SQLException excepcion){
-              Logger.getLogger(DAOPropiedad.class.getName()).log(Level.SEVERE, null, excepcion);
+              LOG.error(excepcion);
               resultadoModificacion = -1;
         }
         return resultadoModificacion;
@@ -153,7 +151,7 @@ public class DAOPropiedad implements PropiedadInterface{
             resultadoModificacion = sentencia.executeUpdate();
             conexion.close();
         }catch(SQLException excepcion){
-              Logger.getLogger(DAOPropiedad.class.getName()).log(Level.SEVERE, null, excepcion);
+              LOG.error(excepcion);
               resultadoModificacion = -1;
         }
         return resultadoModificacion;
@@ -171,7 +169,7 @@ public class DAOPropiedad implements PropiedadInterface{
             resultadoModificacion = sentencia.executeUpdate();
             conexion.close();
         }catch(SQLException excepcion){
-              Logger.getLogger(DAOPropiedad.class.getName()).log(Level.SEVERE, null, excepcion);
+              LOG.error(excepcion);
               resultadoModificacion = -1;
         }
         return resultadoModificacion;
@@ -189,7 +187,7 @@ public class DAOPropiedad implements PropiedadInterface{
             resultadoModificacion = sentencia.executeUpdate();
             conexion.close();
         }catch(SQLException excepcion){
-              Logger.getLogger(DAOPropiedad.class.getName()).log(Level.SEVERE, null, excepcion);
+              LOG.error(excepcion);
               resultadoModificacion = -1;
         }
         return resultadoModificacion;
@@ -207,7 +205,7 @@ public class DAOPropiedad implements PropiedadInterface{
             resultadoModificacion = sentencia.executeUpdate();
             conexion.close();
         }catch(SQLException excepcion){
-              Logger.getLogger(DAOPropiedad.class.getName()).log(Level.SEVERE, null, excepcion);
+              LOG.error(excepcion);
               resultadoModificacion = -1;
         }
         return resultadoModificacion;
@@ -225,7 +223,7 @@ public class DAOPropiedad implements PropiedadInterface{
             resultadoModificacion = sentencia.executeUpdate();
             conexion.close();
         }catch(SQLException excepcion){
-              Logger.getLogger(DAOPropiedad.class.getName()).log(Level.SEVERE, null, excepcion);
+              LOG.error(excepcion);
               resultadoModificacion = -1;
         }
         return resultadoModificacion;
@@ -268,7 +266,7 @@ public class DAOPropiedad implements PropiedadInterface{
                 }
             }
         }catch(SQLException excepcion){
-             Logger.getLogger(DAOPropiedad.class.getName()).log(Level.SEVERE, null, excepcion);
+             LOG.fatal(excepcion);
              propiedadesObtenidas = null;
         }
         return propiedadesObtenidas;
@@ -314,7 +312,7 @@ public class DAOPropiedad implements PropiedadInterface{
                 }
             }
         }catch(SQLException excepcion){
-             Logger.getLogger(DAOPropiedad.class.getName()).log(Level.SEVERE, null, excepcion);
+             LOG.fatal(excepcion);
              propiedadesObtenidas = null;
         }
         return propiedadesObtenidas;
@@ -361,7 +359,7 @@ public class DAOPropiedad implements PropiedadInterface{
                 }
             }
         }catch(SQLException excepcion){
-             Logger.getLogger(DAOPropiedad.class.getName()).log(Level.SEVERE, null, excepcion);
+             LOG.error(excepcion);
              propiedadesObtenidas = null;
         }
         return propiedadesObtenidas;

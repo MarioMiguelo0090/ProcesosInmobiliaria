@@ -4,8 +4,6 @@ import InterfazGrafica.Alertas.Alertas;
 import InterfazGrafica.NewFXMain;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -18,6 +16,7 @@ import logicaDeNegocio.Clases.LoginSingleton;
 import logicaDeNegocio.DAO.DAOLogin;
 
 public class LoginController {
+    private static final org.apache.log4j.Logger LOG=org.apache.log4j.Logger.getLogger(LoginController.class);
 
     @FXML
     private TextField txfd_Usuario;
@@ -47,8 +46,7 @@ public class LoginController {
                 }
             } catch (SQLException sqlException) {
                 Alertas.mostrarMensajeErrorEnLaConexion();
-                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, sqlException);
-        
+                LOG.info(sqlException);        
                 }
         } else {
             Alertas.mostrarMensajeDatosVacios();
@@ -62,8 +60,7 @@ public class LoginController {
         try {
             newFXMain.mostrarVentanaAdministradorMenu(myStage);
         } catch (IOException | NullPointerException ex) {
-           Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-        
+           LOG.warn(ex);        
             Alertas.mostrarMensajeErrorCambioPantalla();
         }
     }
@@ -74,8 +71,7 @@ public class LoginController {
         try {
             newFXMain.mostrarVentanaAdministradorMenu(myStage);
         } catch (IOException | NullPointerException ex) {
-           Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-        
+           LOG.warn(ex);                
             Alertas.mostrarMensajeErrorCambioPantalla();
         }
     }
@@ -85,9 +81,8 @@ public class LoginController {
         try {
             newFXMain.mostrarVentanaCliente(myStage);
         } catch (IOException | NullPointerException ex) {
-           Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-        
-            Alertas.mostrarMensajeErrorCambioPantalla();
+           LOG.warn(ex);                
+           Alertas.mostrarMensajeErrorCambioPantalla();
         }
     }
 
@@ -111,10 +106,10 @@ public class LoginController {
                     }
                 } catch (SQLException sqlException) {
                     Alertas.mostrarMensajeErrorEnLaConexion();
-                    Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, sqlException);
+                    LOG.info(sqlException);        
                 }
             } catch (SQLException ex) {
-                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+                LOG.warn(ex);        
           }
         }
     }

@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TextField;
@@ -40,7 +38,7 @@ import logicaDeNegocio.DAO.DAOUsuario;
 import logicaDeNegocio.Enums.EnumPropiedad;
 
 public class Ventana_RegistrarPropiedadControlador implements Initializable {
-
+    private static final org.apache.log4j.Logger LOG=org.apache.log4j.Logger.getLogger(Ventana_RegistrarPropiedadControlador.class);
     private Stage escenario;
     @FXML
     private AnchorPane anchor_Ventana;
@@ -144,7 +142,7 @@ public class Ventana_RegistrarPropiedadControlador implements Initializable {
             propiedad.setDireccion(obtenerUbicacion(propiedad.getDireccion()));
             propiedad.setPropietario(propietario);
         }catch(NullPointerException | IllegalArgumentException excepcion){
-           Logger.getLogger(Ventana_RegistrarPropiedadControlador.class.getName()).log(Level.SEVERE, null, excepcion);
+           LOG.warn(excepcion);
            propiedad = null;
         }
         return propiedad;
@@ -205,7 +203,7 @@ public class Ventana_RegistrarPropiedadControlador implements Initializable {
             stage.show();
             cerrarVentana();
         }catch(IOException excepcion){
-            Logger.getLogger(DAOCliente.class.getName()).log(Level.SEVERE, null, excepcion);
+            LOG.error(excepcion);
         }
     }
 }

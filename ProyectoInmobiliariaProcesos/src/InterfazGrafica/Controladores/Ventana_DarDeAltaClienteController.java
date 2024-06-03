@@ -7,8 +7,6 @@ import javafx.scene.control.TextField;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -33,6 +31,7 @@ import logicaDeNegocio.DAO.DAOUbicacion;
 import logicaDeNegocio.DAO.DAOUsuario;
 
 public class Ventana_DarDeAltaClienteController implements Initializable {
+    private static final org.apache.log4j.Logger LOG=org.apache.log4j.Logger.getLogger(Ventana_DarDeAltaClienteController.class);
     @FXML
     private ComboBox cmb_Estado;
 
@@ -96,7 +95,7 @@ public class Ventana_DarDeAltaClienteController implements Initializable {
             stage.show();
             cerrarVentana();
         }catch(IOException excepcion){
-            Logger.getLogger(DAOCliente.class.getName()).log(Level.SEVERE, null, excepcion);
+            LOG.error(excepcion);
         }
     }
     
@@ -116,7 +115,7 @@ public class Ventana_DarDeAltaClienteController implements Initializable {
             usuario.setRFC(txfd_RFC.getText());
         }catch(IllegalArgumentException excepcion){
             usuario=null;
-            Logger.getLogger(Ventana_DarDeAltaClienteController.class.getName()).log(Level.SEVERE, null, excepcion);                        
+            LOG.info(excepcion);
         }
         return usuario;                        
     }
@@ -142,7 +141,7 @@ public class Ventana_DarDeAltaClienteController implements Initializable {
             cliente.setTipoPropiedad(tipoPropiedad);            
         }catch(IllegalArgumentException excepcion){
             cliente=null;
-            Logger.getLogger(Ventana_DarDeAltaClienteController.class.getName()).log(Level.SEVERE, null, excepcion);                        
+            LOG.info(excepcion);
         }
         return cliente;        
     }
@@ -213,6 +212,7 @@ public class Ventana_DarDeAltaClienteController implements Initializable {
         login.setContrasenia(GeneradorDeContrasenias.generarContraseña());
          }catch(IllegalArgumentException excepcion){
             login=null;
+            LOG.info(excepcion);
         }
         return login;
     }

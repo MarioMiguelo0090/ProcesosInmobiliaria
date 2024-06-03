@@ -6,8 +6,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.fxml.FXML;
@@ -32,6 +30,7 @@ import logicaDeNegocio.DAO.DAOUsuario;
 
 
 public class Ventana_ConsultaDeClientesController implements Initializable {
+    private static final org.apache.log4j.Logger LOG=org.apache.log4j.Logger.getLogger(Ventana_ConsultaDeClientesController.class);
             
     @FXML
     private TableColumn<Usuario, String> column_ApellidoMaterno;
@@ -126,7 +125,7 @@ public class Ventana_ConsultaDeClientesController implements Initializable {
             stage.show();
             cerrarVentana();
         }catch(IOException excepcion){
-            Logger.getLogger(Ventana_ConsultaDeClientesController.class.getName()).log(Level.SEVERE, null, excepcion);
+            LOG.error(excepcion);        
             Alertas.mostrarMensajeErrorEnLaConexion();
         }                        
     }
@@ -145,7 +144,7 @@ public class Ventana_ConsultaDeClientesController implements Initializable {
             stage.show();
             cerrarVentana();
         }catch(IOException excepcion){
-            Logger.getLogger(DAOCliente.class.getName()).log(Level.SEVERE, null, excepcion);
+            LOG.error(excepcion); 
         }
     }
     

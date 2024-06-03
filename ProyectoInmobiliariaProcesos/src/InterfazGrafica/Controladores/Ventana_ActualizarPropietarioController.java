@@ -16,6 +16,7 @@ import logicaDeNegocio.DAO.DAOPropietario;
 import logicaDeNegocio.DAO.DAOUsuario;
 
 public class Ventana_ActualizarPropietarioController {
+    private static final org.apache.log4j.Logger LOG=org.apache.log4j.Logger.getLogger(Ventana_ActualizarPropietarioController.class);
 
     @FXML
     private TextField txfd_Nombre;
@@ -92,6 +93,7 @@ public class Ventana_ActualizarPropietarioController {
             }
         } catch (NumberFormatException e) {
             mostrarAlerta("Error", "ID de propietario inválido");
+            LOG.info(e);
         }
     }
     
@@ -107,6 +109,7 @@ public class Ventana_ActualizarPropietarioController {
             newStage.show();
         } catch (IOException e) {
             mostrarAlerta("Error", "No se pudo cargar la ventana ActualizarPropietarioController.");
+            LOG.warn(e);        
         }
     }
 

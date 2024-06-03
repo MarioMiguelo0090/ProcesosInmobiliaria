@@ -7,12 +7,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import logicaDeNegocio.Clases.Ubicacion;
 import logicaDeNegocio.Interfaces.UbicacionInterface;
 
 public class DAOUbicacion implements UbicacionInterface {
+    private static final org.apache.log4j.Logger LOG=org.apache.log4j.Logger.getLogger(DAOUbicacion.class);
 
     public static final ManejadorBaseDatos BASE_DE_DATOS = new ManejadorBaseDatos();
     private Connection conexion;
@@ -28,7 +27,7 @@ public class DAOUbicacion implements UbicacionInterface {
             numeroFilasAfectadas = declaracion.executeUpdate();
             conexion.close();
         } catch (SQLException ex) {
-            Logger.getLogger(DAOUbicacion.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.fatal(ex);
         }
         return numeroFilasAfectadas;
     }
@@ -50,7 +49,7 @@ public class DAOUbicacion implements UbicacionInterface {
             }
             conexion.close();
         } catch (SQLException ex) {
-            Logger.getLogger(DAOUbicacion.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.fatal(ex);
         }
         return ubicaciones;
     }
@@ -71,7 +70,7 @@ public class DAOUbicacion implements UbicacionInterface {
             }
             conexion.close();
         } catch (SQLException ex) {
-            Logger.getLogger(DAOUbicacion.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.error(ex);
         }
         return ubicacion;
     }
@@ -91,7 +90,7 @@ public class DAOUbicacion implements UbicacionInterface {
           }
             conexion.close();
         } catch (SQLException ex) {
-            Logger.getLogger(DAOUbicacion.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.error(ex);
             idUbicacion=-1;
         }
         return idUbicacion;                
@@ -113,7 +112,7 @@ public class DAOUbicacion implements UbicacionInterface {
             }
                conexion.close();
         } catch (SQLException ex) {
-            Logger.getLogger(DAOUbicacion.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.error(ex);
         }
         return ubicacion;
     }
@@ -133,7 +132,7 @@ public class DAOUbicacion implements UbicacionInterface {
             }
             conexion.close();
         } catch (SQLException ex) {
-            Logger.getLogger(DAOUbicacion.class.getName()).log(Level.SEVERE, null, ex);            
+            LOG.error(ex);
         }
         return ubicacion;         
     }

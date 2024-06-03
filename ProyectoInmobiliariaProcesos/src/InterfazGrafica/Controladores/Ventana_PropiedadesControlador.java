@@ -7,8 +7,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -43,6 +41,7 @@ import logicaDeNegocio.DAO.DAOUbicacion;
 
 
 public class Ventana_PropiedadesControlador implements Initializable {
+    private static final org.apache.log4j.Logger LOG=org.apache.log4j.Logger.getLogger(Ventana_PropiedadesControlador.class);
 
     private Stage escenario;
     @FXML
@@ -205,7 +204,7 @@ public class Ventana_PropiedadesControlador implements Initializable {
             });
             
         }catch(IllegalArgumentException excepcion){
-            
+            LOG.warn(excepcion);            
         }
     }
     
@@ -260,7 +259,7 @@ public class Ventana_PropiedadesControlador implements Initializable {
             stage.show();
             cerrarVentana();
         }catch(IOException excepcion){
-            Logger.getLogger(DAOCliente.class.getName()).log(Level.SEVERE, null, excepcion);
+            LOG.error(excepcion);
         }
     }
 }

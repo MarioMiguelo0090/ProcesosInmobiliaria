@@ -6,8 +6,6 @@ import java.math.BigDecimal;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
@@ -29,6 +27,7 @@ import logicaDeNegocio.DAO.DAOUbicacion;
 import logicaDeNegocio.DAO.DAOUsuario;
 
 public class Ventana_DetallesDeClienteController implements Initializable {
+    private static final org.apache.log4j.Logger LOG=org.apache.log4j.Logger.getLogger(Ventana_DetallesDeClienteController.class);
     @FXML
     private AnchorPane anchor_DetallesDeCliente;
     private Stage stage_ventana;
@@ -204,7 +203,7 @@ public class Ventana_DetallesDeClienteController implements Initializable {
             usuario.setTelefono(txfd_Telefono.getText());
             usuario.setRFC(txfd_RFC.getText());
         }catch(IllegalArgumentException excepcion){
-            Logger.getLogger(Ventana_DetallesDeClienteController.class.getName()).log(Level.SEVERE, null, excepcion);                        
+            LOG.info(excepcion);
             usuario=null;            
         }
         return usuario;                        
@@ -231,7 +230,7 @@ public class Ventana_DetallesDeClienteController implements Initializable {
             cliente.setTipoPropiedad(tipoPropiedad);            
         }catch(IllegalArgumentException excepcion){
             cliente=null;
-            Logger.getLogger(Ventana_DetallesDeClienteController.class.getName()).log(Level.SEVERE, null, excepcion);                        
+            LOG.info(excepcion);
         }
         return cliente;        
     }
@@ -254,7 +253,7 @@ public class Ventana_DetallesDeClienteController implements Initializable {
             stage.setScene(scene);
             stage.show();
         }catch(IOException excepcion){
-            Logger.getLogger(Ventana_DetallesDeClienteController.class.getName()).log(Level.SEVERE, null, excepcion);
+            LOG.error(excepcion);
         }
         cerrarVentana();                
     }

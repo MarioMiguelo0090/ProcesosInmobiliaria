@@ -10,12 +10,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import logicaDeNegocio.Clases.Usuario;
 import logicaDeNegocio.Interfaces.IPropietarioInterface;
 
 public class DAOPropietario implements IPropietarioInterface {
+    private static final org.apache.log4j.Logger LOG=org.apache.log4j.Logger.getLogger(DAOPropietario.class);
 
     public static final ManejadorBaseDatos BASE_DE_DATOS = new ManejadorBaseDatos();
     private Connection conexion;
@@ -57,7 +56,7 @@ public class DAOPropietario implements IPropietarioInterface {
                 filasAfectadas = statementPropietario.executeUpdate();
             }
         } catch (SQLException ex) {
-            Logger.getLogger(DAOPropietario.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.fatal(ex);
         } finally {
             if (conexion != null) {
                 conexion.close();
@@ -112,7 +111,7 @@ public class DAOPropietario implements IPropietarioInterface {
             resultadoModificacion = sentencia.executeUpdate();
             conexion.close();
         } catch (SQLException excepcion) {
-            Logger.getLogger(DAOPropietario.class.getName()).log(Level.SEVERE, null, excepcion);
+            LOG.error(excepcion);
             resultadoModificacion = -1;
         }
         return resultadoModificacion;
@@ -132,7 +131,7 @@ public class DAOPropietario implements IPropietarioInterface {
             resultadoModificacion = sentencia.executeUpdate();
             conexion.close();
         } catch (SQLException excepcion) {
-            Logger.getLogger(DAOPropietario.class.getName()).log(Level.SEVERE, null, excepcion);
+            LOG.error(excepcion);
             resultadoModificacion = -1;
         }
         return resultadoModificacion;
@@ -151,7 +150,7 @@ public class DAOPropietario implements IPropietarioInterface {
             resultadoModificacion = sentencia.executeUpdate();
             conexion.close();
         } catch (SQLException excepcion) {
-            Logger.getLogger(DAOPropietario.class.getName()).log(Level.SEVERE, null, excepcion);
+            LOG.error(excepcion);
             resultadoModificacion = -1;
         }
         return resultadoModificacion;
@@ -170,7 +169,7 @@ public class DAOPropietario implements IPropietarioInterface {
             resultadoModificacion = sentencia.executeUpdate();
             conexion.close();
         } catch (SQLException excepcion) {
-            Logger.getLogger(DAOPropietario.class.getName()).log(Level.SEVERE, null, excepcion);
+            LOG.error(excepcion);
             resultadoModificacion = -1;
         }
         return resultadoModificacion;
@@ -189,7 +188,7 @@ public class DAOPropietario implements IPropietarioInterface {
             resultadoModificacion = sentencia.executeUpdate();
             conexion.close();
         } catch (SQLException excepcion) {
-            Logger.getLogger(DAOPropietario.class.getName()).log(Level.SEVERE, null, excepcion);
+            LOG.error(excepcion);
             resultadoModificacion = -1;
         }
         return resultadoModificacion;
@@ -208,7 +207,7 @@ public class DAOPropietario implements IPropietarioInterface {
             resultadoModificacion = sentencia.executeUpdate();
             conexion.close();
         } catch (SQLException excepcion) {
-            Logger.getLogger(DAOPropietario.class.getName()).log(Level.SEVERE, null, excepcion);
+            LOG.error(excepcion);
             resultadoModificacion = -1;
         }
         return resultadoModificacion;
@@ -253,7 +252,7 @@ public class DAOPropietario implements IPropietarioInterface {
             }
             conexion.close();
         } catch (SQLException excepcion) {
-            Logger.getLogger(DAOPropietario.class.getName()).log(Level.SEVERE, null, excepcion);
+            LOG.error(excepcion);
             propietariosObtenidos = null;
         }
         return propietariosObtenidos;
@@ -282,7 +281,7 @@ public class DAOPropietario implements IPropietarioInterface {
             }
             conexion.close();
         } catch (SQLException excepcion) {
-            Logger.getLogger(DAOPropietario.class.getName()).log(Level.SEVERE, null, excepcion);
+            LOG.error(excepcion);
             propietariosObtenidos = null;
         }
         return propietariosObtenidos;
@@ -307,7 +306,7 @@ public class DAOPropietario implements IPropietarioInterface {
             }
             conexion.close();
         } catch (SQLException excepcion) {
-            Logger.getLogger(DAOPropietario.class.getName()).log(Level.SEVERE, null, excepcion);
+            LOG.error(excepcion);
             propietarioObtenido = null;
         }
         return propietarioObtenido;
@@ -332,7 +331,7 @@ public class DAOPropietario implements IPropietarioInterface {
             }
             conexion.close();
         } catch (SQLException excepcion) {
-            Logger.getLogger(DAOPropietario.class.getName()).log(Level.SEVERE, null, excepcion);
+            LOG.error(excepcion);
             propietarioObtenido = null;
         }
         return propietarioObtenido;
