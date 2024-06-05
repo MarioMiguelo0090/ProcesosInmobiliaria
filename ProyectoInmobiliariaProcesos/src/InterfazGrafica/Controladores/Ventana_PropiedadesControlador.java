@@ -51,7 +51,7 @@ public class Ventana_PropiedadesControlador implements Initializable {
     @FXML
     private TableView<Propiedad> tableView_Propiedades;
     @FXML
-    private TableColumn<Propiedad, Integer> column_idPropiedad;
+    private TableColumn<Propiedad, String> column_Contacto;
     @FXML
     private TableColumn<Propiedad, String> column_Nombre;
     @FXML
@@ -92,13 +92,15 @@ public class Ventana_PropiedadesControlador implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         cargarComboboxs();
         mostrarPropiedades();
-        asignarBotonesDeModificarPropiedad();
         DAOLogin daoLogin = new DAOLogin();
         LoginSingleton login = LoginSingleton.getInstance();
         Login loginUsuario = daoLogin.obtenerLoginPorIdUsuario(login.getIdUsuario());
         if(loginUsuario.getTipoUsuario().equals("Cliente")){
-            column_Modificar.setVisible(false);
+            column_Modificar.setText("Ver detalles");
+            asignarBotonesVerDetallesPropiedad();
             btn_RegistrarPropiedad.setVisible(false);
+        }else if(loginUsuario.getTipoUsuario().equals("Administrador")){
+            asignarBotonesDeModificarPropiedad();
         }
         btn_Regresar.setOnAction(event->regresarVentanaPrincipal());
         btn_RegistrarPropiedad.setOnAction(event->registrarPropiedad());
@@ -161,7 +163,6 @@ public class Ventana_PropiedadesControlador implements Initializable {
         tableView_Propiedades.getItems().clear();
         try{
             tableView_Propiedades.getItems().addAll(propiedades);
-            column_idPropiedad.setCellValueFactory(new PropertyValueFactory<>("idPropiedad"));
             column_Nombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
             column_Metros.setCellValueFactory(new PropertyValueFactory<>("metrosDeTerreno"));
             column_Habitaciones.setCellValueFactory(new PropertyValueFactory<>("numeroDeHabitaciones"));
@@ -202,6 +203,11 @@ public class Ventana_PropiedadesControlador implements Initializable {
                 String nombreCompleto = nombre+" "+apellidoPaterno+" "+apellidoMaterno;
                 return new SimpleStringProperty(nombreCompleto);
             });
+            column_Contacto.setCellValueFactory(cellData->{
+                Propiedad propiedad = cellData.getValue();
+                String contacto = propiedad.getPropietario().getUsuario().getTelefono();
+                return new SimpleStringProperty(contacto);
+            });
             
         }catch(IllegalArgumentException excepcion){
             LOG.warn(excepcion);            
@@ -212,7 +218,7 @@ public class Ventana_PropiedadesControlador implements Initializable {
         Callback<TableColumn<Propiedad, Void>, TableCell<Propiedad, Void>> frabricaDeCelda = (final TableColumn<Propiedad, Void> param) -> {
                 final TableCell<Propiedad, Void> cell = new TableCell<Propiedad, Void>() {                
                     private final Button btn_Modificar = new Button();{
-                        btn_Modificar.setText("Actualizar perfil");
+                        btn_Modificar.setText("Actualizar");
                         btn_Modificar.setOnAction((ActionEvent event) -> {
                             Propiedad propiedadSeleccionada = getTableView().getItems().get(getIndex());
                             PropiedadAuxiliar.setInstancia(propiedadSeleccionada);
@@ -235,14 +241,49 @@ public class Ventana_PropiedadesControlador implements Initializable {
             column_Modificar.setCellFactory(frabricaDeCelda);
     }
     
+    public void asignarBotonesVerDetallesPropiedad(){
+        Callback<TableColumn<Propiedad, Void>, TableCell<Propiedad, Void>> frabricaDeCelda = (final TableColumn<Propiedad, Void> param) -> {
+                final TableCell<Propiedad, Void> cell = new TableCell<Propiedad, Void>() {                
+                    private final Button btn_verDetalles = new Button();{
+                        btn_verDetalles.setText("Detalles");
+                    }                
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        }else{ 
+                            setGraphic(btn_verDetalles);
+                        }
+                    }
+                };
+            return cell;
+            };
+            column_Modificar.setCellFactory(frabricaDeCelda);
+    }
+    
     public void registrarPropiedad(){
-        String rutaVentanaFXML="/interfazGrafica/Ventana_RegistrarPropiedad.fxml";
-        desplegarVentanaCorrespondiente(rutaVentanaFXML); 
+        String rutaVentanaFXML = "/interfazGrafica/Ventana_RegistrarPropiedad.fxml";
+        desplegarVentanaCorrespondiente(rutaVentanaFXML);
     }
     
     public void regresarVentanaPrincipal(){
-        String rutaVentanaFXML="/interfazGrafica/Ventana_MenuPrincipalAdministrador.fxml";
-        desplegarVentanaCorrespondiente(rutaVentanaFXML); 
+        DAOLogin daoLogin = new DAOLogin();
+        LoginSingleton login = LoginSingleton.getInstance();
+        Login loginUsuario = daoLogin.obtenerLoginPorIdUsuario(login.getIdUsuario());
+        if(loginUsuario.getTipoUsuario().equals("Cliente")){
+            boolean resultado = Alertas.mostrarConfirmacionDeAccion("¿Desea volver al inicio de sesion?");
+            if(resultado){
+                String rutaVentanaFXML="/interfazGrafica/Login.fxml";
+                desplegarVentanaCorrespondiente(rutaVentanaFXML);
+            }
+        }else{
+            boolean resultado = Alertas.mostrarConfirmacionDeAccion("¿Desea volver al menú principal?");
+            if(resultado){
+                String rutaVentanaFXML="/interfazGrafica/Ventana_RegistrarPropiedad.fxml";
+                desplegarVentanaCorrespondiente(rutaVentanaFXML);
+            }
+        } 
     }
    
     public void cerrarVentana(){

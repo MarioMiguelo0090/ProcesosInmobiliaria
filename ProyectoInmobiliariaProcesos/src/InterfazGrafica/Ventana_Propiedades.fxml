@@ -13,13 +13,13 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="pane_Principal" prefHeight="682.0" prefWidth="1478.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="InterfazGrafica.Controladores.Ventana_PropiedadesControlador">
+<AnchorPane fx:id="pane_Principal" prefHeight="682.0" prefWidth="1549.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="InterfazGrafica.Controladores.Ventana_PropiedadesControlador">
    <children>
       <Pane fx:id="pane_Contenedor" layoutX="-7.0" layoutY="19.0" prefHeight="620.0" prefWidth="1239.0" AnchorPane.bottomAnchor="24.0" AnchorPane.leftAnchor="-7.0" AnchorPane.rightAnchor="41.0" AnchorPane.topAnchor="19.0">
          <children>
-            <Pane layoutX="4.0" layoutY="-24.0" prefHeight="108.0" prefWidth="1484.0" style="-fx-background-color: #53d4ff;">
+            <Pane layoutX="4.0" layoutY="-24.0" prefHeight="108.0" prefWidth="1551.0" style="-fx-background-color: #53d4ff;">
                <children>
-                  <ImageView fitHeight="139.0" fitWidth="126.0" layoutX="1044.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="139.0" fitWidth="126.0" layoutX="1322.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../recursos/logo.png" />
                      </image>
@@ -46,23 +46,23 @@
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <TableView fx:id="tableView_Propiedades" layoutX="14.0" layoutY="156.0" prefHeight="449.0" prefWidth="1458.0">
+            <TableView fx:id="tableView_Propiedades" layoutX="14.0" layoutY="156.0" prefHeight="449.0" prefWidth="1534.0" stylesheets="@tabla.css">
                <columns>
-                  <TableColumn fx:id="column_idPropiedad" prefWidth="79.99999618530273" text="idPropiedad" />
                   <TableColumn fx:id="column_Nombre" minWidth="0.0" prefWidth="209.6000213623047" text="Nombre" />
-                  <TableColumn fx:id="column_TipoDePropiedad" prefWidth="109.60003662109375" text="Tipo de propiedad" />
-                  <TableColumn fx:id="column_Metros" prefWidth="71.9998779296875" text="Metros" />
-                  <TableColumn fx:id="column_Habitaciones" minWidth="0.0" prefWidth="83.20001220703125" text="Habitaciones" />
-                  <TableColumn fx:id="column_Pisos" prefWidth="50.39996337890625" text="Pisos" />
-                  <TableColumn fx:id="column_Banios" prefWidth="55.99993896484375" text="Baños" />
-                  <TableColumn fx:id="column_EstadoPropiedad" prefWidth="127.20001220703125" text="Estado de propiedad" />
-                  <TableColumn fx:id="column_Calle" prefWidth="88.79998779296875" text="Calle" />
-                  <TableColumn fx:id="column_CodigoPostal" prefWidth="75.0" text="C.P" />
-                  <TableColumn fx:id="column_Ciudad" prefWidth="75.0" text="Ciudad" />
-                  <TableColumn fx:id="column_Estado" prefWidth="104.7999267578125" text="Estado" />
-                  <TableColumn fx:id="column_Precio" prefWidth="92.0" text="Precio" />
+                  <TableColumn fx:id="column_TipoDePropiedad" prefWidth="109.60003662109375" text="Tipo " />
+                  <TableColumn fx:id="column_Metros" prefWidth="98.4000244140625" text="Metros (m2)" />
+                  <TableColumn fx:id="column_Habitaciones" minWidth="0.0" prefWidth="82.4000244140625" text="Habitaciones" />
+                  <TableColumn fx:id="column_Pisos" prefWidth="54.4000244140625" text="Pisos" />
+                  <TableColumn fx:id="column_Banios" prefWidth="57.60003662109375" text="Baños" />
+                  <TableColumn fx:id="column_EstadoPropiedad" prefWidth="129.59991455078125" text="Estado Propiedad" />
+                  <TableColumn fx:id="column_Calle" prefWidth="92.0" text="Calle" />
+                  <TableColumn fx:id="column_CodigoPostal" prefWidth="61.5999755859375" text="C.P" />
+                  <TableColumn fx:id="column_Ciudad" prefWidth="79.20001220703125" text="Ciudad" />
+                  <TableColumn fx:id="column_Estado" prefWidth="87.20001220703125" text="Estado" />
+                  <TableColumn fx:id="column_Precio" prefWidth="86.39990234375" text="Precio" />
                   <TableColumn fx:id="column_Propietario" prefWidth="155.1998291015625" text="Propietario" />
-                  <TableColumn fx:id="column_Modificar" prefWidth="75.0" text="Modificar" />
+                  <TableColumn fx:id="column_Contacto" prefWidth="127.2000732421875" text="Contacto" />
+                  <TableColumn fx:id="column_Modificar" prefWidth="75.199951171875" text="Modificar" />
                </columns>
             </TableView>
             <Button fx:id="btn_Buscar" layoutX="899.0" layoutY="104.0" mnemonicParsing="false" onAction="#mostrarPropiedadesPorEstado" prefWidth="68.0" style="-fx-background-color: #04c9fa;" text="Buscar" textFill="WHITE">

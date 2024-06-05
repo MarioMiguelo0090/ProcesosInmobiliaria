@@ -35,7 +35,7 @@
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <TableView fx:id="tableView_Agentes" layoutX="95.0" layoutY="156.0" prefHeight="352.0" prefWidth="1070.0">
+            <TableView fx:id="tableView_Agentes" layoutX="95.0" layoutY="156.0" prefHeight="352.0" prefWidth="1070.0" stylesheets="@tabla.css">
                <columns>
                   <TableColumn fx:id="column_Nombre" prefWidth="146.0" text="Nombre(s)" />
                   <TableColumn fx:id="column_ApellidoPaterno" minWidth="0.0" prefWidth="155.0" text="Apellido Paterno" />

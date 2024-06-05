@@ -10,23 +10,23 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="anchor_ConsultaClientes" prefHeight="400.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="InterfazGrafica.Controladores.Ventana_ConsultaDeClientesController">
+<AnchorPane id="AnchorPane" fx:id="anchor_ConsultaClientes" prefHeight="400.0" prefWidth="772.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="InterfazGrafica.Controladores.Ventana_ConsultaDeClientesController">
    <children>
-      <Pane prefHeight="73.0" prefWidth="750.0" style="-fx-background-color: linear-gradient(to right, #53D4FE, #53D4FE);">
+      <Pane prefHeight="74.0" prefWidth="772.0" style="-fx-background-color: linear-gradient(to right, #53D4FE, #53D4FE);">
          <children>
             <Label layoutX="262.0" layoutY="19.0" text="Consulta de clientes">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>
             </Label>
-            <ImageView fitHeight="73.0" fitWidth="98.0" layoutX="652.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="73.0" fitWidth="98.0" layoutX="685.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../busqueda-de-datos.png" />
                </image>
             </ImageView>
          </children>
       </Pane>
-      <TableView fx:id="taleView_Clientes" layoutX="23.0" layoutY="82.0" prefHeight="200.0" prefWidth="713.0">
+      <TableView fx:id="taleView_Clientes" layoutX="23.0" layoutY="82.0" prefHeight="200.0" prefWidth="734.0" stylesheets="@tabla.css">
         <columns>
           <TableColumn fx:id="column_Nombre" prefWidth="147.99999237060547" text="Nombre" />
           <TableColumn fx:id="column_ApellidoPaterno" prefWidth="134.66664123535156" text="Apellido paterno" />
