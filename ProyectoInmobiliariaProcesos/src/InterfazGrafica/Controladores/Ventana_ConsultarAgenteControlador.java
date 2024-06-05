@@ -32,7 +32,6 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import logicaDeNegocio.Clases.Usuario;
 import logicaDeNegocio.DAO.DAOAgenteInmobiliario;
-import logicaDeNegocio.DAO.DAOCliente;
 import logicaDeNegocio.DAO.DAOUsuario;
 
 
@@ -77,6 +76,14 @@ public class Ventana_ConsultarAgenteControlador implements Initializable{
         tableView_Agentes.getItems().addAll(usuarios);
         agregarBoton();
     }
+    
+    public void inicializar(Stage stage) {
+        this.escenario = stage;
+        escenario.setOnCloseRequest(event -> {
+            event.consume();
+        });
+    }
+
     
     public List<Usuario> obtenerAgentes(){
         DAOAgenteInmobiliario daoAgenteInmobiliario=new DAOAgenteInmobiliario();
@@ -126,27 +133,37 @@ public class Ventana_ConsultarAgenteControlador implements Initializable{
         column_Modificar.setCellFactory(cellFactory);       
     }
          
-    public void desplegarVentanaDetallesDeCliente(int idUsuario){
-        try{
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/InterfazGrafica/Ventana_ModificarAgente.fxml"));
-            Parent root = loader.load();
-            Ventana_ModificarAgenteControlador controlador= loader.getController();
-            controlador.inicializar(idUsuario);
-            Scene scene = new Scene(root);
-            Stage stage = new Stage();
-            stage.setScene(scene);
-            stage.show();
-            cerrarVentana();
-        }catch(IOException excepcion){
-            LOG.error(excepcion);
-            System.out.println("Error de conexion de BD");
-        }                        
+public void desplegarVentanaDetallesDeCliente(int idUsuario) {
+    try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/InterfazGrafica/Ventana_ModificarAgente.fxml"));
+        Parent root = loader.load();
+        Ventana_ModificarAgenteControlador controlador = loader.getController();
+        Stage stage = new Stage();
+        controlador.inicializar(idUsuario, stage);
+        stage.setScene(new Scene(root));
+        stage.show();
+        cerrarVentana();
+    } catch (IOException excepcion) {
+        LOG.error(excepcion);
+        System.out.println("Error de conexion de BD");
     }
+}
+
     
     public void button_RegistrarAgente(){
-        String rutaVentanaFXML="/interfazGrafica/Ventana_RegistrarAgente.fxml";
-        desplegarVentanaCorrespondiente(rutaVentanaFXML); 
+        try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/InterfazGrafica/Ventana_RegistrarAgente.fxml"));
+        Parent root = loader.load();
+        Ventana_RegistrarAgenteControlador controlador = loader.getController();
+        Stage stage = new Stage();
+        controlador.inicializar(stage);
+        stage.setScene(new Scene(root));
+        stage.show();
         cerrarVentana();
+    } catch (IOException excepcion) {
+        LOG.error(excepcion);
+        System.out.println("Error de conexion de BD");
+    }
     }
    
     public void cerrarVentana(){
@@ -154,15 +171,22 @@ public class Ventana_ConsultarAgenteControlador implements Initializable{
         escenario.close();
     }
     
-    public void desplegarVentanaCorrespondiente(String rutaVentanaFXML){
-        try{
-            Parent root=FXMLLoader.load(getClass().getResource(rutaVentanaFXML));
-            Scene scene = new Scene(root);
+    public void desplegarVentanaCorrespondiente(String rutaVentanaFXML) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(rutaVentanaFXML));
+            Parent root = loader.load();
             Stage stage = new Stage();
-            stage.setScene(scene);
+            stage.setScene(new Scene(root));
+
+            Object controlador = loader.getController();
+            if (controlador instanceof Ventana_MenuPrincipalAdministradorControlador) {
+                Ventana_MenuPrincipalAdministradorControlador MenuPrincipalAdministradorControlador = (Ventana_MenuPrincipalAdministradorControlador) controlador;
+                MenuPrincipalAdministradorControlador.inicializar(stage);
+            }
+
             stage.show();
             cerrarVentana();
-        }catch(IOException excepcion){
+        } catch (IOException excepcion) {
             LOG.error(excepcion);
         }
     }

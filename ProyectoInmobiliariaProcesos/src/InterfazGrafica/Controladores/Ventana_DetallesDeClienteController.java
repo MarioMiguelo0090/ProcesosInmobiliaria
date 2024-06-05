@@ -97,10 +97,14 @@ public class Ventana_DetallesDeClienteController implements Initializable {
             }
         });
     }    
-    public void inicializar(int idUsuario){
+    public void inicializar(int idUsuario, Stage stage){
         this.idUsuario=idUsuario;
         llenarDatosUsuario();
-        llenarDatosCliente();                
+        llenarDatosCliente();
+        this.stage_ventana = stage;
+        stage_ventana.setOnCloseRequest(event -> {
+            event.consume();
+        });
     }
     
     public void llenarDatosUsuario(){
