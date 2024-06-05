@@ -194,6 +194,7 @@ public class Alertas extends Application {
             mensaje.setContentText("El usuario fue registrado correctamante");
             mensaje.showAndWait();        
         });
+    }
 
     public static boolean mostrarConfirmacionDeAccion(String mensajeAlerta) {
         Alert mensaje = new Alert(AlertType.CONFIRMATION);

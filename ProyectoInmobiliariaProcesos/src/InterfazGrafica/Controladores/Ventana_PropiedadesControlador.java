@@ -280,7 +280,7 @@ public class Ventana_PropiedadesControlador implements Initializable {
         }else{
             boolean resultado = Alertas.mostrarConfirmacionDeAccion("¿Desea volver al menú principal?");
             if(resultado){
-                String rutaVentanaFXML="/interfazGrafica/Ventana_RegistrarPropiedad.fxml";
+                String rutaVentanaFXML="/interfazGrafica/Ventana_MenuPrincipalAdministrador.fxml";
                 desplegarVentanaCorrespondiente(rutaVentanaFXML);
             }
         } 
