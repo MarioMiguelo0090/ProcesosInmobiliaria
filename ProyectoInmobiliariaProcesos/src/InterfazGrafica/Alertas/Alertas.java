@@ -47,11 +47,32 @@ public class Alertas extends Application {
         });
     }
     
+    public static void mostrarMensajeCamposVacios(){
+        Platform.runLater(() -> {
+            Alert mensaje = new Alert(AlertType.INFORMATION);
+            mensaje.setTitle("Campos vacíos");
+            mensaje.setContentText("Por favor llene todos los campos correspondiente");
+            mensaje.showAndWait();
+        });
+    }
+    
     public static void mostrarMensajeErrorEnLaConexion(){
         Platform.runLater(() ->{
             Alert mensaje = new Alert(AlertType.ERROR);
             mensaje.setTitle("Error en la conexion");
             mensaje.setContentText("Se ha perdido la conexión en la base de datos");
+            mensaje.showAndWait();
+        });
+    }
+    
+    public static void mostrarMensajeCorreoConFormatoInvalido(){
+        Platform.runLater(() ->{
+            Alert mensaje = new Alert(AlertType.ERROR);
+            mensaje.setTitle("Correo invalido");
+            mensaje.setContentText(
+                "El correo electrónico es inválido. "
+                                + "Por favor, asegúrate de que tenga el formato "
+                                + "correcto, por ejemplo: usuario@dominio.com"); 
             mensaje.showAndWait();
         });
     }
