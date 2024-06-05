@@ -19,8 +19,10 @@ public class DAOPropietario implements IPropietarioInterface {
     public static final ManejadorBaseDatos BASE_DE_DATOS = new ManejadorBaseDatos();
     private Connection conexion;
 
-    private static final String VERIFICAR_EXISTENCIA_CORREO = """
-        SELECT COUNT(*) AS number_of_matches FROM usuario WHERE correo = ?""";
+    private static final String VERIFICAR_EXISTENCIA_CORREO = "SELECT COUNT(*) AS number_of_matches \n" +
+"FROM usuario \n" +
+"JOIN propietario ON usuario.idUsuario = propietario.Usuario_idCliente \n" +
+"WHERE usuario.correo = ?;";
     private static final String VERIFICAR_EXISTENCIA_RFC = """
         SELECT COUNT(*) AS number_of_matches FROM usuario WHERE RFC = ?""";
     
