@@ -55,19 +55,19 @@
                   <Font name="System Bold" size="19.0" />
                </font>
             </Label>
-            <Label id="lbl_Nombre" fx:id="lbl_ApellidoP" layoutX="25.0" layoutY="81.0" text="Apellido Paterno">
+            <Label id="lbl_ApellidoPa" fx:id="lbl_ApellidoP" layoutX="25.0" layoutY="81.0" text="Apellido Paterno">
                <font>
                   <Font name="System Bold Italic" size="16.0" />
                </font>
             </Label>
             <TextField fx:id="txfd_ApellidoP" layoutX="161.0" layoutY="82.0" prefHeight="26.0" prefWidth="275.0" style="-fx-background-radius: 13;" />
-            <Label id="lbl_Nombre" fx:id="lbl_ApellidoM" layoutX="27.0" layoutY="115.0" text="Apellido Materno">
+            <Label id="lbl_ApellidoM" fx:id="lbl_ApellidoM" layoutX="27.0" layoutY="115.0" text="Apellido Materno">
                <font>
                   <Font name="System Bold Italic" size="16.0" />
                </font>
             </Label>
             <TextField fx:id="txfd_ApellidoM" layoutX="161.0" layoutY="115.0" prefHeight="26.0" prefWidth="275.0" style="-fx-background-radius: 13;" />
-            <Label id="lbl_Nombre" fx:id="lbl_Correo" layoutX="27.0" layoutY="186.0" text="Correo">
+            <Label id="lbl_Cor" fx:id="lbl_Correo" layoutX="27.0" layoutY="186.0" text="Correo">
                <font>
                   <Font name="System Bold Italic" size="16.0" />
                </font>
@@ -78,27 +78,27 @@
                   <Font size="23.0" />
                </font>
             </Label>
-            <Label id="label_ErrorCorreo" layoutX="386.0" layoutY="185.0" text="*" textFill="RED">
+            <Label id="label_ErrorCorreo" fx:id="label_ErrorCorreo" layoutX="386.0" layoutY="185.0" text="*" textFill="RED">
                <font>
                   <Font size="23.0" />
                </font>
             </Label>
-            <Label id="label_ErrorTelefono" layoutX="630.0" layoutY="151.0" text="*" textFill="RED">
+            <Label id="label_ErrorTelefono" fx:id="label_ErrorTelefono" layoutX="630.0" layoutY="151.0" text="*" textFill="RED">
                <font>
                   <Font size="23.0" />
                </font>
             </Label>
-            <Label id="label_ErrorRfc" layoutX="328.0" layoutY="150.0" text="*" textFill="RED">
+            <Label id="label_ErrorRfc" fx:id="label_ErrorRfc" layoutX="328.0" layoutY="150.0" text="*" textFill="RED">
                <font>
                   <Font size="23.0" />
                </font>
             </Label>
-            <Label id="label_ErrorApellidoPaterno" layoutX="441.0" layoutY="78.0" text="*" textFill="RED">
+            <Label id="label_ErrorApellidoPaterno" fx:id="label_ErrorApellidoPaterno" layoutX="441.0" layoutY="78.0" text="*" textFill="RED">
                <font>
                   <Font size="23.0" />
                </font>
             </Label>
-            <Label id="label_ErrorApellidoMaterno" layoutX="446.0" layoutY="98.0" text="*" textFill="RED">
+            <Label id="label_ErrorApellidoMaterno" fx:id="label_ErrorApellidoMaterno" layoutX="441.0" layoutY="106.0" text="*" textFill="RED">
                <font>
                   <Font size="23.0" />
                </font>
