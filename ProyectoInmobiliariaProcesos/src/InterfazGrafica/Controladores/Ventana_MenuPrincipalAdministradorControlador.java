@@ -130,5 +130,21 @@ public class Ventana_MenuPrincipalAdministradorControlador implements Initializa
         escenario = (Stage)pane_Principal.getScene().getWindow();
         escenario.close();
     }
+
+    
+    public void desplegarVentanaCorrespondiente(String rutaVentanaFXML){
+        try{
+            Parent root=FXMLLoader.load(getClass().getResource(rutaVentanaFXML));
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.show();
+            cerrarVentana();
+        }catch(IOException excepcion){
+            LOG.error(excepcion);
+            System.out.println(excepcion.getMessage());
+        }
+    }
+
 }
 

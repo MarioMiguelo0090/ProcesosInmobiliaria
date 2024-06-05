@@ -35,7 +35,7 @@ public class DAOPropiedad implements PropiedadInterface{
             declaracion.setInt(4, propiedad.getNumeroDePisos());
             declaracion.setInt(5, propiedad.getAntiguedad());
             declaracion.setFloat(6, propiedad.getMetrosDeTerreno());
-            declaracion.setFloat(7, propiedad.getPrecio());
+            declaracion.setString(7, propiedad.getPrecio());
             declaracion.setString(8,propiedad.getEstadoPropiedad());
             declaracion.setInt(9, propiedad.getPropietario().getIdPropietario());
             declaracion.setInt(10,propiedad.getDireccion().getIdDireccion());
@@ -158,13 +158,13 @@ public class DAOPropiedad implements PropiedadInterface{
     }
 
     @Override
-    public int modificarPrecioTerreno(Propiedad propiedad, float precio) {
+    public int modificarPrecioTerreno(Propiedad propiedad, String precio) {
        PreparedStatement sentencia;
         int resultadoModificacion = 0;
         try{
             conexion = BASE_DE_DATOS.getConexion();
             sentencia = conexion.prepareStatement("UPDATE propiedad SET precio = ? where idPropiedad = ?");
-            sentencia.setFloat(1, precio);
+            sentencia.setString(1, precio);
             sentencia.setInt(2, propiedad.getIdPropiedad());
             resultadoModificacion = sentencia.executeUpdate();
             conexion.close();
@@ -252,7 +252,7 @@ public class DAOPropiedad implements PropiedadInterface{
                     propiedadObtenida.setNumeroDeBanios(resultado.getInt("numeroDeBanios"));
                     propiedadObtenida.setNumeroDeHabitaciones(resultado.getInt("numeroDeHabitaciones"));
                     propiedadObtenida.setNumeroDePisos(resultado.getInt("numeroDePisos"));
-                    propiedadObtenida.setPrecio(resultado.getFloat("precio"));
+                    propiedadObtenida.setPrecio(resultado.getString("precio"));
                     int idPropietario = resultado.getInt("Propietario_idPropietario");
                     int idTipoDePropiedad = resultado.getInt("idTipoPropiedad");
                     int idDireccion = resultado.getInt("idDireccion");
@@ -298,7 +298,7 @@ public class DAOPropiedad implements PropiedadInterface{
                     propiedadObtenida.setNumeroDeBanios(resultado.getInt("numeroDeBanios"));
                     propiedadObtenida.setNumeroDeHabitaciones(resultado.getInt("numeroDeHabitaciones"));
                     propiedadObtenida.setNumeroDePisos(resultado.getInt("numeroDePisos"));
-                    propiedadObtenida.setPrecio(resultado.getFloat("precio"));
+                    propiedadObtenida.setPrecio(resultado.getString("precio"));
                     int idPropietario = resultado.getInt("Propietario_idPropietario");
                     int idTipoDePropiedad = resultado.getInt("idTipoPropiedad");
                     int idDireccion = resultado.getInt("idDireccion");
@@ -345,7 +345,7 @@ public class DAOPropiedad implements PropiedadInterface{
                     propiedadObtenida.setNumeroDeBanios(resultado.getInt("numeroDeBanios"));
                     propiedadObtenida.setNumeroDeHabitaciones(resultado.getInt("numeroDeHabitaciones"));
                     propiedadObtenida.setNumeroDePisos(resultado.getInt("numeroDePisos"));
-                    propiedadObtenida.setPrecio(resultado.getFloat("precio"));
+                    propiedadObtenida.setPrecio(resultado.getString("precio"));
                     int idPropietario = resultado.getInt("Propietario_idPropietario");
                     int idTipoDePropiedad = resultado.getInt("idTipoPropiedad");
                     int idDireccion = resultado.getInt("idDireccion");
