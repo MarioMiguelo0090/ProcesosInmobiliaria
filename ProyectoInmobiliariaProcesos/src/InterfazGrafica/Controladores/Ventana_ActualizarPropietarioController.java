@@ -69,7 +69,8 @@ public class Ventana_ActualizarPropietarioController {
         label_ErrorRFC.setVisible(false);    
         label_ErrorTelefono.setVisible(false);    
         label_ErrorCorreo.setVisible(false);
-
+    }
+    
     public void inicializar(Stage stage) {
         this.escenario = stage;
         escenario.setOnCloseRequest(event -> {
