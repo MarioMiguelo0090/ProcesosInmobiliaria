@@ -77,6 +77,13 @@ public class Ventana_ModificarPropiedadControlador implements Initializable {
         cargarDatosPropiedad();
         cargarComboboxs();
     }
+    public void inicializar(Stage stage) {
+        this.escenario = stage;
+        escenario.setOnCloseRequest(event -> {
+            event.consume();
+        });
+    }
+    
     
     public void cargarDatosPropiedad(){
         PropiedadAuxiliar propiedad = PropiedadAuxiliar.getInstancia();

@@ -81,6 +81,13 @@ public class Ventana_DarDeAltaClienteController implements Initializable {
         btn_cancelar.setOnAction(event->regresarVentanaPrincipal());
     }
     
+    public void inicializar(Stage stage) {
+        this.stage_ventana = stage;
+        stage_ventana.setOnCloseRequest(event -> {
+            event.consume();
+        });
+    }
+    
     public void regresarVentanaPrincipal(){
         String rutaVentanaFXML="/interfazGrafica/Ventana_MenuPrincipalAdministrador.fxml";
         desplegarVentanaCorrespondiente(rutaVentanaFXML); 

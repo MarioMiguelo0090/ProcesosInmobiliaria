@@ -55,6 +55,12 @@ public class Ventana_ActualizarPropietarioController {
         btn_Guardar.setOnAction(event -> realizarRegistro());
         btn_Regresar.setOnAction(event -> regresarDeVentanabtn());        
     }
+    public void inicializar(Stage stage) {
+        this.escenario = stage;
+        escenario.setOnCloseRequest(event -> {
+            event.consume();
+        });
+    }
 
     public void cargarDatosPropietario(int idUsuario) {
         propietario = daoPropietario.consultarPropietarioPorIDUsuario(idUsuario);

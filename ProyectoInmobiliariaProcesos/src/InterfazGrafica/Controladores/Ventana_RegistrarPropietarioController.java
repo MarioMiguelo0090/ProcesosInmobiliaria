@@ -39,6 +39,13 @@ public class Ventana_RegistrarPropietarioController implements Initializable  {
         btn_Regresar.setOnAction(event -> regresarVentanaPrincipal());
     }
     
+    public void inicializar(Stage stage) {
+        this.escenario = stage;
+        escenario.setOnCloseRequest(event -> {
+            event.consume();
+        });
+    }
+    
     public Usuario obtenerUsuario(){
         Usuario usuario = new Usuario();
         try {
@@ -68,14 +75,21 @@ public class Ventana_RegistrarPropietarioController implements Initializable  {
     
     public void desplegarVentanaCorrespondiente(String rutaVentanaFXML){
         try {
-            Parent root = FXMLLoader.load(getClass().getResource(rutaVentanaFXML));
-            Scene scene = new Scene(root);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(rutaVentanaFXML));
+            Parent root = loader.load();
             Stage stage = new Stage();
-            stage.setScene(scene);
+            stage.setScene(new Scene(root));
+
+            Object controlador = loader.getController();
+            if (controlador instanceof Ventana_ConsultarPropietariosController) {
+                Ventana_ConsultarPropietariosController ConsultarPropietariosController = (Ventana_ConsultarPropietariosController) controlador;
+                ConsultarPropietariosController.inicializar(stage);
+            }
+
             stage.show();
             cerrarVentana();
         } catch (IOException excepcion) {
-           LOG.error(excepcion);
+            LOG.error(excepcion);
         }
     }
     

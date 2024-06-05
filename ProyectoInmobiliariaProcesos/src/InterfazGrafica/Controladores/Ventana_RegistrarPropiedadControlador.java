@@ -86,6 +86,13 @@ public class Ventana_RegistrarPropiedadControlador implements Initializable {
         spn_NoPisos.setValueFactory(valueFactoryPisos);
     }    
     
+        public void inicializar(Stage stage) {
+        this.escenario = stage;
+        escenario.setOnCloseRequest(event -> {
+            event.consume();
+        });
+    }
+    
     public void cerrarVentana(){
         escenario = (Stage)anchor_Ventana.getScene().getWindow();
         escenario.close();

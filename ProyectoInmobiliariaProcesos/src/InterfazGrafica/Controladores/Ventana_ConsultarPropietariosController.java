@@ -86,6 +86,13 @@ public class Ventana_ConsultarPropietariosController implements Initializable {
 
         addButtonToTable();
     }
+    
+    public void inicializar(Stage stage) {
+        this.escenario = stage;
+        escenario.setOnCloseRequest(event -> {
+            event.consume();
+        });
+    }
 
     public List<Usuario> obtenerPropietarios(){
         DAOPropietario daoPropietario = new DAOPropietario();
@@ -130,9 +137,11 @@ public class Ventana_ConsultarPropietariosController implements Initializable {
             Parent root = loader.load();
             Ventana_ActualizarPropietarioController controller = loader.getController();
             controller.cargarDatosPropietario(idUsuario);
-
+            
             Scene scene = new Scene(root);
+            
             Stage stage = new Stage();
+            controller.inicializar(stage);
             stage.setScene(scene);
             stage.show();
             cerrarVentana();
@@ -142,30 +151,39 @@ public class Ventana_ConsultarPropietariosController implements Initializable {
     }
 
     public void registrarPropietario(){
-        String rutaVentanaFXML="/interfazGrafica/Ventana_RegistrarPropietario.fxml";
-        desplegarVentanaCorrespondiente(rutaVentanaFXML); 
+        try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/InterfazGrafica/Ventana_RegistrarPropietario.fxml"));
+        Parent root = loader.load();
+        Ventana_RegistrarPropietarioController controlador = loader.getController();
+        Stage stage = new Stage();
+        controlador.inicializar(stage);
+        stage.setScene(new Scene(root));
+        stage.show();
+        cerrarVentana();
+    } catch (IOException excepcion) {
+        LOG.error(excepcion);
+        System.out.println("Error de conexion de BD");
+    }
     }
 
      public void regresarVentanaPrincipal(){
-        String rutaVentanaFXML="/interfazGrafica/Ventana_MenuPrincipalAdministrador.fxml";
-        desplegarVentanaCorrespondiente(rutaVentanaFXML); 
+            try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/InterfazGrafica/Ventana_MenuPrincipalAdministrador.fxml"));
+        Parent root = loader.load();
+        Ventana_MenuPrincipalAdministradorControlador controlador = loader.getController();
+        Stage stage = new Stage();
+        controlador.inicializar(stage);
+        stage.setScene(new Scene(root));
+        stage.show();
+        cerrarVentana();
+    } catch (IOException excepcion) {
+        LOG.error(excepcion);
+        System.out.println("Error de conexion de BD");
+    }
     }
    
     public void cerrarVentana(){
         escenario = (Stage)pane_Principal.getScene().getWindow();
         escenario.close();
-    }
-   
-    public void desplegarVentanaCorrespondiente(String rutaVentanaFXML){
-        try{
-            Parent root=FXMLLoader.load(getClass().getResource(rutaVentanaFXML));
-            Scene scene = new Scene(root);
-            Stage stage = new Stage();
-            stage.setScene(scene);
-            stage.show();
-            cerrarVentana();
-        }catch(IOException excepcion){
-            LOG.error(excepcion);
-        }
     }
 }

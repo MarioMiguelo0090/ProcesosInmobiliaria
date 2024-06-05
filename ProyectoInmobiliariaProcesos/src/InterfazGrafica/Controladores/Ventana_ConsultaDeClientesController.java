@@ -70,7 +70,14 @@ public class Ventana_ConsultaDeClientesController implements Initializable {
             agregarBoton();        
         }
        btn_Regresar.setOnAction(event->regresarVentanaPrincipal());
-    }    
+    }   
+    
+    public void inicializar(Stage stage) {
+        this.stage_ventana = stage;
+        stage_ventana.setOnCloseRequest(event -> {
+            event.consume();
+        });
+    }
     
     public List<Usuario> obtenerClientes(){
         DAOCliente daoCliente=new DAOCliente();        
@@ -118,16 +125,18 @@ public class Ventana_ConsultaDeClientesController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/InterfazGrafica/Ventana_DetallesDeCliente.fxml"));
             Parent root = loader.load();
             Ventana_DetallesDeClienteController controlador= loader.getController();
-            controlador.inicializar(idUsuario);
-            Scene scene = new Scene(root);
             Stage stage = new Stage();
-            stage.setScene(scene);
-            stage.show();
+        controlador.inicializar(idUsuario, stage);
+        stage.setScene(new Scene(root));
+        stage.show();
+            
             cerrarVentana();
         }catch(IOException excepcion){
             LOG.error(excepcion);        
             Alertas.mostrarMensajeErrorEnLaConexion();
-        }                        
+        }    
+        
+     
     }
     
     public void regresarVentanaPrincipal(){

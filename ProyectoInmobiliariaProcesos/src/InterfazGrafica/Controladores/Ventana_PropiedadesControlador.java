@@ -104,7 +104,14 @@ public class Ventana_PropiedadesControlador implements Initializable {
         }
         btn_Regresar.setOnAction(event->regresarVentanaPrincipal());
         btn_RegistrarPropiedad.setOnAction(event->registrarPropiedad());
-    }    
+    }   
+    
+    public void inicializar(Stage stage) {
+        this.escenario = stage;
+        escenario.setOnCloseRequest(event -> {
+            event.consume();
+        });
+    }
     
     public void cargarComboboxs(){
         DAOTipoPropiedad daoTipoPropiedad = new DAOTipoPropiedad();
@@ -223,7 +230,19 @@ public class Ventana_PropiedadesControlador implements Initializable {
                             Propiedad propiedadSeleccionada = getTableView().getItems().get(getIndex());
                             PropiedadAuxiliar.setInstancia(propiedadSeleccionada);
                             String ruta = "/InterfazGrafica/Ventana_ModificarPropiedad.fxml";
-                            desplegarVentanaCorrespondiente(ruta);
+                                try {
+                                FXMLLoader loader = new FXMLLoader(getClass().getResource(ruta));
+                                Parent root = loader.load();
+                                Ventana_ModificarPropiedadControlador controlador = loader.getController();
+                                Stage stage = new Stage();
+                                controlador.inicializar(stage);
+                                stage.setScene(new Scene(root));
+                                stage.show();
+                                cerrarVentana();
+                            } catch (IOException excepcion) {
+                                LOG.error(excepcion);
+                                System.out.println("Error de conexion de BD");
+                            }
                         });
                     }                
                     @Override
@@ -263,8 +282,19 @@ public class Ventana_PropiedadesControlador implements Initializable {
     }
     
     public void registrarPropiedad(){
-        String rutaVentanaFXML = "/interfazGrafica/Ventana_RegistrarPropiedad.fxml";
-        desplegarVentanaCorrespondiente(rutaVentanaFXML);
+        try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/InterfazGrafica/Ventana_RegistrarPropiedad.fxml"));
+        Parent root = loader.load();
+        Ventana_RegistrarPropiedadControlador controlador = loader.getController();
+        Stage stage = new Stage();
+        controlador.inicializar(stage);
+        stage.setScene(new Scene(root));
+        stage.show();
+        cerrarVentana();
+    } catch (IOException excepcion) {
+        LOG.error(excepcion);
+        System.out.println("Error de conexion de BD");
+    }
     }
     
     public void regresarVentanaPrincipal(){
