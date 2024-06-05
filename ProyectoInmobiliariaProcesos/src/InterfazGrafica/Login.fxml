@@ -11,7 +11,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="402.0" prefWidth="601.0" style="-fx-background-color: #E9E9E9; -fx-border-image-source: " xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="InterfazGrafica.Controladores.LoginController">
+<AnchorPane id="AnchorPane" prefHeight="402.0" prefWidth="601.0" style="-fx-background-color: #E9E9E9;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="InterfazGrafica.Controladores.LoginController">
    <children>
       <ImageView fx:id="img_Background" fitHeight="347.0" fitWidth="800.0" layoutX="-3.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -28,8 +28,8 @@
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <TextField fx:id="txfd_Usuario" layoutX="423.0" layoutY="164.0" style="-fx-border-width: black; -fx-border-color: black; -fx-background-color: white;" />
-      <PasswordField fx:id="txfd_Contrasena" layoutX="423.0" layoutY="229.0" style="-fx-border-color: black; -fx-border-width: black; -fx-background-color: white;" />
+      <TextField fx:id="txfd_Usuario" layoutX="423.0" layoutY="164.0" style="-fx-border-width: 4px; -fx-border-color: black; -fx-background-color: white;" />
+      <PasswordField fx:id="txfd_Contrasena" layoutX="423.0" layoutY="229.0" style="-fx-border-color: black; -fx-border-width: 4px; -fx-background-color: white;" />
       <Button fx:id="btn_Ingresar" layoutX="467.0" layoutY="272.0" mnemonicParsing="false" onAction="#ingresar" style="-fx-background-color: #28CD2D;" text="Ingresar" textFill="#590707" />
       <Pane fx:id="pane_ColorSuperior" prefHeight="94.0" prefWidth="614.0" style="-fx-background-color: #53d4ff;">
          <children>

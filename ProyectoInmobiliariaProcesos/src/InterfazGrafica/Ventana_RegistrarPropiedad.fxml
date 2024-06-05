@@ -27,8 +27,8 @@
                   <Font name="System Bold Italic" size="16.0" />
                </font>
             </Label>
-            <Spinner fx:id="spn_Antiguedad" layoutX="181.0" layoutY="126.0" prefHeight="26.0" prefWidth="82.0" style="-fx-background-radius: 13;" />
-            <Label fx:id="lbl_MetrosDeTerreno" layoutX="282.0" layoutY="127.0" text="Metros de terreno:">
+            <Spinner fx:id="spn_Antiguedad" layoutX="181.0" layoutY="126.0" prefHeight="26.0" prefWidth="62.0" style="-fx-background-radius: 13;" />
+            <Label fx:id="lbl_MetrosDeTerreno" layoutX="245.0" layoutY="128.0" text="Metros de terreno (m2):">
                <font>
                   <Font name="System Bold Italic" size="16.0" />
                </font>

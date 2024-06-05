@@ -1,0 +1,76 @@
+.table-view {
+    -fx-background-color: #f4f4f4;
+    -fx-border-color: transparent;
+    -fx-table-cell-border-color: transparent;
+    -fx-padding: 10;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #0073e6;
+}
+
+.table-view .column-header, .table-view .filler {
+    -fx-border-color: transparent;
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.table-view .table-row-cell {
+    -fx-border-width: 0;
+    -fx-wrap-text: true;
+    -fx-alignment: CENTER-LEFT;
+}
+
+.table-view .cell {
+    -fx-border-color: transparent;
+    -fx-font-size: 13px;
+    -fx-wrap-text: true;
+    -fx-alignment: CENTER-LEFT;
+    -fx-wrap-text: true;
+    -fx-cell-size: 60px; 
+}
+
+.table-view .table-row-cell:filled:selected {
+    -fx-background-color: #B2DFDB;
+}
+
+.table-view .table-row-cell:filled:hover {
+    -fx-background-color: #E0F2F1;
+}
+
+.table-view .table-row-cell:filled:odd {
+    -fx-background-color: #e6f7ff;
+}
+
+.table-view .table-row-cell:filled:even {
+    -fx-background-color: #ffffff; 
+}
+
+.button {
+    -fx-background-color: #ff7f50;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 10px;
+    -fx-background-radius: 5;
+    -fx-padding: 3 5;
+    -fx-min-width: 80px; 
+}
+
+.button:hover {
+    -fx-background-color: #ff6347;
+}
+
+.button:pressed {
+    -fx-background-color: #ff4500;
+}
+
+.button.actualizar {
+    -fx-font-size: 10px;
+    -fx-padding: 3 5; 
+    -fx-min-width: 80px; 
+}
