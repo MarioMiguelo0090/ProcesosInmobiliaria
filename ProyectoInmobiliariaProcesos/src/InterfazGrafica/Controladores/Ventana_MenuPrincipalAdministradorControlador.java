@@ -79,6 +79,7 @@ public class Ventana_MenuPrincipalAdministradorControlador implements Initializa
             cerrarVentana();
         }catch(IOException excepcion){
             LOG.error(excepcion);
+            System.out.println(excepcion.getMessage());
         }
     }
 }

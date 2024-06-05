@@ -76,6 +76,46 @@
                </font>
             </Label>
             <ComboBox fx:id="cmb_TipoDePropiedad" layoutX="509.0" layoutY="13.0" prefHeight="31.0" prefWidth="145.0" promptText="Tipo de propiedad" />
+            <Label fx:id="lbl_ErrorNombre" layoutX="360.0" layoutY="47.0" text="*" textFill="RED" visible="false">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="lbl_ErrorTipoDePropiedad" layoutX="503.0" layoutY="14.0" text="*" textFill="RED" visible="false">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="lbl_ErrorTipoDeEstado" layoutX="565.0" layoutY="48.0" text="*" textFill="RED" visible="false">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="lbl_ErrorMetrosDeTerreno" layoutX="483.0" layoutY="119.0" text="*" textFill="RED" visible="false">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="lbl_ErrorPrecio" layoutX="640.0" layoutY="119.0" text="*" textFill="RED" visible="false">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="lbl_ErrorNoHabitaciones" layoutX="252.0" layoutY="87.0" text="*" textFill="RED" visible="false">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="lbl_ErrorNoBanios" layoutX="466.0" layoutY="85.0" text="*" textFill="RED" visible="false">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="lbl_ErrorAntiguedad" layoutX="213.0" layoutY="113.0" text="*" textFill="RED" visible="false">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
       <Pane fx:id="pane_Direccion" layoutX="40.0" layoutY="305.0" prefHeight="158.0" prefWidth="666.0" style="-fx-border-color: #53d4ff; -fx-border-radius: 13;">
@@ -121,6 +161,36 @@
                </font>
             </Label>
             <TextField fx:id="txfd_Calle" layoutX="400.0" layoutY="88.0" prefHeight="26.0" prefWidth="206.0" style="-fx-background-radius: 13;" />
+            <Label fx:id="lbl_ErrorCodigoPostal" layoutX="297.0" layoutY="44.0" text="*" textFill="RED" visible="false">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="lbl_ErrorColonia" layoutX="594.0" layoutY="45.0" text="*" textFill="RED" visible="false">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="lbl_ErrorCalle" layoutX="599.0" layoutY="83.0" text="*" textFill="RED" visible="false">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="lbl_ErrorCiudad" layoutX="328.0" layoutY="84.0" text="*" textFill="RED" visible="false">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="lbl_ErrorRFC" layoutX="425.0" layoutY="110.0" text="*" textFill="RED" visible="false">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label id="lbl_ErrorEstado" fx:id="lbl_ErrorEstado" layoutX="604.0" layoutY="115.0" text="*" textFill="RED" visible="false">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
       <Button fx:id="btn_Cancelar" layoutX="288.0" layoutY="522.0" mnemonicParsing="false" onAction="#regresarDeVentana" prefHeight="26.0" prefWidth="91.0" style="-fx-background-color: red;" text="Cancelar" textFill="WHITE">
