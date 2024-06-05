@@ -226,6 +226,16 @@ public class Alertas extends Application {
 
     }
     
+    public static void mostrarPrecioIncorrecto(){
+        Platform.runLater(() ->{
+            Alert mensaje = new Alert(AlertType.WARNING);
+            mensaje.setTitle("Rango precio incorrecto");
+            mensaje.setContentText("Verifique que el precio minimo sea mayor al precio máximo");
+            mensaje.showAndWait();
+        });
+    }
+    
+    
     @Override
     public void start(Stage stage){
         try{

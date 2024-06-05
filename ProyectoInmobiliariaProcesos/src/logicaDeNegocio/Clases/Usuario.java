@@ -95,9 +95,11 @@ public class Usuario {
     }
 
     public void setRFC(String RFC) {
-
-            this.RFC = RFC.trim().replaceAll("\\s+", " ");            
-        
+        if(RFC!=null&&Pattern.matches(RFC_PATTERN, RFC.trim())&&RFC.trim().length()<=13){
+            this.RFC = RFC.trim().replaceAll("\\s+", " ");
+        }else{
+            throw new IllegalArgumentException();            
+        }                    
     }            
     
     @Override
