@@ -131,7 +131,6 @@ public class Ventana_RegistrarAgenteControlador implements Initializable  {
                 usuario.setCorreo(txfd_Correo.getText());
             } catch (IllegalArgumentException coreoException){
                 label_ErrorCorreo.setVisible(true);
-                Alertas.mostrarMensajeCorreoConFormatoInvalido();
                 validacion = false;
                 } 
 
@@ -195,7 +194,9 @@ public class Ventana_RegistrarAgenteControlador implements Initializable  {
             Alertas.mostrarMensajeErrorEnLaConexion();
             LOG.warn(ex);
         }
-      }           
+      }else{
+            Alertas.mostrarMensajeDatosInvalidos();
+        }          
     }
     
     private boolean enviarCorreo(Usuario usuario, Login login) {
