@@ -92,45 +92,64 @@ public class Ventana_ModificarAgenteControlador  implements Initializable{
         }
     }
     
-public void actualizarAgente(){
+public void actualizarAgente() {
     DAOUsuario daoUsuario = new DAOUsuario();
     Usuario usuarioAntiguo = daoUsuario.consultarUsuarioPorId(idUsuario);
-    Usuario usuarioActualizado = obtenerUsuario();        
-    DAOTipoPropiedad daoTipoPropiedad = new DAOTipoPropiedad();
-    DAOUbicacion daoUbicacion = new DAOUbicacion();
+    Usuario usuarioActualizado = obtenerUsuario();
     
-    if(usuarioActualizado == null){
+    if (usuarioActualizado == null) {
         Alertas.mostrarMensajeDatosInvalidos();
         return;
     }
     
     try {
-        if(!usuarioActualizado.getNombre().equals(usuarioAntiguo.getNombre())){
+        boolean datosModificados = false;
+        boolean datosDuplicados = false;
+        
+        if (!usuarioActualizado.getNombre().equals(usuarioAntiguo.getNombre())) {
             daoUsuario.modificarNombrePorIdUsuario(idUsuario, usuarioActualizado.getNombre());
+            datosModificados = true;
         }
-        if(!usuarioActualizado.getApellidoPaterno().equals(usuarioAntiguo.getApellidoPaterno())){
+        if (!usuarioActualizado.getApellidoPaterno().equals(usuarioAntiguo.getApellidoPaterno())) {
             daoUsuario.modificarApellidoPaternoPorIdUsuario(idUsuario, usuarioActualizado.getApellidoPaterno());
+            datosModificados = true;
         }
-        if(!usuarioActualizado.getApellidoMaterno().equals(usuarioAntiguo.getApellidoMaterno())){
-            daoUsuario.modificarApellidoMaternoPorIdUsuario(idUsuario, usuarioActualizado.getApellidoMaterno());            
+        if (!usuarioActualizado.getApellidoMaterno().equals(usuarioAntiguo.getApellidoMaterno())) {
+            daoUsuario.modificarApellidoMaternoPorIdUsuario(idUsuario, usuarioActualizado.getApellidoMaterno());
+            datosModificados = true;
         }
-        if(!usuarioActualizado.getCorreo().equals(usuarioAntiguo.getCorreo())){
+        if (!usuarioActualizado.getCorreo().equals(usuarioAntiguo.getCorreo())) {
             int resultadoCorreo = daoUsuario.modificarCorreoPorIdUsuario(idUsuario, usuarioActualizado.getCorreo());
-            if(resultadoCorreo != 1){
+            if (resultadoCorreo != 1) {
                 Alertas.mostrarMensajeDatosDuplicados();
-                System.out.println("Correo repetido");
+                datosDuplicados = true;
+            } else {
+                datosModificados = true;
             }
         }
-        if(!usuarioActualizado.getRFC().equals(usuarioAntiguo.getRFC())){
+        if (!usuarioActualizado.getRFC().equals(usuarioAntiguo.getRFC())) {
             int resultadoRFC = daoUsuario.modificarRFCPorIdUsuario(idUsuario, usuarioActualizado.getRFC());
-            if(resultadoRFC != 1){
+            if (resultadoRFC != 1) {
+                Alertas.mostrarMensajeDatosDuplicados();
                 System.out.println("RFC repetido");
+                datosDuplicados = true;
+            } else {
+                datosModificados = true;
             }
         }
-        if(!usuarioActualizado.getTelefono().equals(usuarioAntiguo.getTelefono())){
+        if (!usuarioActualizado.getTelefono().equals(usuarioAntiguo.getTelefono())) {
             daoUsuario.modificarTelefonoPorIdUsuario(idUsuario, usuarioActualizado.getTelefono());
+            datosModificados = true;
         }
-        Alertas.mostrarMensajeActualizacionExitosa();
+        
+        if (datosModificados) {
+            Alertas.mostrarMensajeActualizacionExitosa();
+            regresarDeVentana();
+        } else if (datosDuplicados) {
+
+        } else {
+            Alertas.mostrarMensajeSinCambios();
+        }
     } catch (Exception e) {
         LOG.warn(e);
         Alertas.mostrarMensajeErrorEnLaConexion();

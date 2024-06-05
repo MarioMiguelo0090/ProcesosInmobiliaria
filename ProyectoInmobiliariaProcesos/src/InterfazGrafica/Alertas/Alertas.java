@@ -38,6 +38,15 @@ public class Alertas extends Application {
         });
     }
     
+    public static void mostrarMensajeSinCambios(){
+        Platform.runLater(() -> {
+            Alert mensaje = new Alert(AlertType.INFORMATION);
+            mensaje.setTitle("DATOS IGUALES");
+            mensaje.setContentText("No hay cambios");
+            mensaje.showAndWait();
+        });
+    }
+    
     public static void mostrarMensajeErrorEnLaConexion(){
         Platform.runLater(() ->{
             Alert mensaje = new Alert(AlertType.ERROR);
