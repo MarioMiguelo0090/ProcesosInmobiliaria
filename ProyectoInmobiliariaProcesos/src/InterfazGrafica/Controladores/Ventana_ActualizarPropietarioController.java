@@ -38,7 +38,7 @@ public class Ventana_ActualizarPropietarioController {
     @FXML private Label label_ErrorApellidoMaterno;
     @FXML private Label label_ErrorApellidoPaterno;
     @FXML private Label label_ErrorCorreo;
-    @FXML private Label label_ErrorRfc;
+    @FXML private Label label_ErrorRFC;
     @FXML private Label label_ErrorTelefono;
 
 
@@ -55,15 +55,27 @@ public class Ventana_ActualizarPropietarioController {
         label_ErrorApellidoPaterno.setVisible(false);
         label_ErrorCorreo.setVisible(false);    
         label_ErrorNombre.setVisible(false);    
-        label_ErrorRfc.setVisible(false);    
+        label_ErrorRFC.setVisible(false);    
         label_ErrorTelefono.setVisible(false);    
         label_ErrorCorreo.setVisible(false); 
     }
+
+    
+    public void verificarDato(){
+        label_ErrorApellidoMaterno.setVisible(false);
+        label_ErrorApellidoPaterno.setVisible(false);
+        label_ErrorCorreo.setVisible(false);    
+        label_ErrorNombre.setVisible(false);    
+        label_ErrorRFC.setVisible(false);    
+        label_ErrorTelefono.setVisible(false);    
+        label_ErrorCorreo.setVisible(false);
+
     public void inicializar(Stage stage) {
         this.escenario = stage;
         escenario.setOnCloseRequest(event -> {
             event.consume();
         });
+
     }
 
     public void cargarDatosPropietario(int idUsuario) {
@@ -84,6 +96,7 @@ public class Ventana_ActualizarPropietarioController {
 
     @FXML
     private void realizarRegistro() {
+        if (verificarInformacion()) {
         try {
             String nombre = txfd_Nombre.getText();
             String apellidoPaterno = txfd_ApellidoP.getText();
@@ -114,6 +127,9 @@ public class Ventana_ActualizarPropietarioController {
         } catch (NumberFormatException e) {
             mostrarAlerta("Error", "ID de propietario inválido");
             LOG.info(e);
+        }
+        }else{
+            Alertas.mostrarMensajeDatosInvalidos();
         }
     }
     
@@ -211,7 +227,7 @@ public class Ventana_ActualizarPropietarioController {
             try{
                 usuario.setRFC(txfd_RFC.getText());
             } catch (IllegalArgumentException nombrePaisException){
-                label_ErrorRfc.setVisible(true);
+                label_ErrorRFC.setVisible(true);
                 validacion = false;
             }
         
@@ -230,6 +246,6 @@ public class Ventana_ActualizarPropietarioController {
         label_ErrorApellidoMaterno.setVisible(false);
         label_ErrorCorreo.setVisible(false);
         label_ErrorTelefono.setVisible(false);
-        label_ErrorRfc.setVisible(false);
+        label_ErrorRFC.setVisible(false);
     }
 }

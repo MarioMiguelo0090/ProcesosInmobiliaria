@@ -43,14 +43,18 @@ public class Ventana_RegistrarPropietarioController implements Initializable  {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        btn_Regresar.setOnAction(event -> regresarVentanaPrincipal());
+        btn_Regresar.setOnAction(event -> regresarVentanaPrincipal()); 
+        verificarDato();
+    }
+    
+    public void verificarDato(){
         label_ErrorApellidoMaterno.setVisible(false);
         label_ErrorApellidoPaterno.setVisible(false);
         label_ErrorCorreo.setVisible(false);    
         label_ErrorNombre.setVisible(false);    
         label_ErrorRfc.setVisible(false);    
         label_ErrorTelefono.setVisible(false);    
-        label_ErrorCorreo.setVisible(false); 
+        label_ErrorCorreo.setVisible(false);
     }
     
     public void inicializar(Stage stage) {
@@ -62,17 +66,14 @@ public class Ventana_RegistrarPropietarioController implements Initializable  {
     
     public Usuario obtenerUsuario(){
         Usuario usuario = new Usuario();
-        try {
+        
             usuario.setNombre(txfd_Nombre.getText());
             usuario.setApellidoPaterno(txfd_ApellidoP.getText());
             usuario.setApellidoMaterno(txfd_ApellidoM.getText());
             usuario.setCorreo(txfd_Correo.getText());
             usuario.setTelefono(txfd_Telefono.getText());
             usuario.setRFC(txfd_RFC.getText());
-        } catch (IllegalArgumentException excepcion) {
-            usuario = null;
-            LOG.info(excepcion);
-        }
+        
         return usuario;                        
     }
     
@@ -109,6 +110,7 @@ public class Ventana_RegistrarPropietarioController implements Initializable  {
     
    @FXML
     public void registrarPropietario() {
+        if (verificarInformacion()) {
         try {
             Usuario usuario = obtenerUsuario();
             if (usuario == null) {
@@ -136,6 +138,9 @@ public class Ventana_RegistrarPropietarioController implements Initializable  {
             Alertas.mostrarMensajeErrorEnLaConexion();
             LOG.error(ex);
         }
+        }else{
+            Alertas.mostrarMensajeDatosInvalidos();
+        } 
     }
 
     public void regresarVentanaPrincipal(){
