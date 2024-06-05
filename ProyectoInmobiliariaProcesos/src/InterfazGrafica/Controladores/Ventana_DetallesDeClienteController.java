@@ -282,18 +282,26 @@ public class Ventana_DetallesDeClienteController implements Initializable {
     }
     
     public void salirDeLaVentana(){
-         String rutaVentanaFXML = null;
-        try{
-            rutaVentanaFXML = "/InterfazGrafica/Ventana_ConsultaDeClientes.fxml";
-            Parent root=FXMLLoader.load(getClass().getResource(rutaVentanaFXML));
-            Scene scene = new Scene(root);
+        
+        String    rutaVentanaFXML = "/InterfazGrafica/Ventana_ConsultaDeClientes.fxml";
+           
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(rutaVentanaFXML));
+            Parent root = loader.load();
             Stage stage = new Stage();
-            stage.setScene(scene);
+            stage.setScene(new Scene(root));
+
+            Object controlador = loader.getController();
+            if (controlador instanceof Ventana_ConsultaDeClientesController) {
+                Ventana_ConsultaDeClientesController ConsultarPropietariosController = (Ventana_ConsultaDeClientesController) controlador;
+                ConsultarPropietariosController.inicializar(stage);
+            }
+
             stage.show();
-        }catch(IOException excepcion){
+            cerrarVentana();
+        } catch (IOException excepcion) {
             LOG.error(excepcion);
         }
-        cerrarVentana();                
     }
     
     public void cerrarVentana(){
