@@ -34,7 +34,7 @@ public class DAOCliente implements ClienteInterface{
                     + "(estadoCliente,rangoDePrecioMinimo,rangoDePrecioMaximo,minimoMetrosCuadrados,idUsuario,"
                     + "idUbicacion,idTipoPropiedad,ciudad) values (?,?,?,?,?,?,?,?);");
             declaracion.setString(1, "Activo");
-            declaracion.setBigDecimal(2, cliente.getRangoDePrecioMaximo());
+            declaracion.setBigDecimal(2, cliente.getRangoDePrecioMinimo());
             declaracion.setBigDecimal(3, cliente.getRangoDePrecioMaximo());
             declaracion.setBigDecimal(4, cliente.getMinimoMetrosCuadrados());
             declaracion.setInt(5, cliente.getUsuario().getIdUsuario());
