@@ -40,10 +40,10 @@
                         </Label>
                      </children>
                   </Pane>
-                  <TableView fx:id="tableView_Propiedades" layoutX="17.0" layoutY="165.0" prefHeight="449.0" prefWidth="1458.0">
+                  <TableView fx:id="tableView_Propiedades" layoutX="17.0" layoutY="165.0" prefHeight="449.0" prefWidth="1458.0" stylesheets="@tabla.css">
                      <columns>
-                        <TableColumn fx:id="column_idPropietario" prefWidth="79.99999618530273" text="idPropietario" />
-                        <TableColumn fx:id="column_Nombre" minWidth="0.0" prefWidth="240.00006103515625" text="Nombre" />
+                        <TableColumn fx:id="column_idPropietario" prefWidth="98.40001678466797" text="idPropietario" />
+                        <TableColumn fx:id="column_Nombre" minWidth="0.0" prefWidth="222.39999389648438" text="Nombre" />
                         <TableColumn fx:id="column_ApellidoP" prefWidth="197.60000610351562" text="Apellido Paterno" />
                         <TableColumn fx:id="column_ApellidoM" prefWidth="188.0" text="Apellido Materno" />
                         <TableColumn fx:id="column_RFC" minWidth="0.0" prefWidth="175.99993896484375" text="RFC" />
@@ -53,7 +53,7 @@
                      </columns>
                   </TableView>
                   <Label layoutX="260.0" layoutY="102.0" />
-                  <Button fx:id="btn_RegistrarPropietario" layoutX="1145.0" layoutY="104.0" mnemonicParsing="false" onAction = "#registrarPropietario" prefHeight="31.0" prefWidth="182.0" style="-fx-background-color: green;" text="Registrar Propietario" textFill="WHITE">
+                  <Button fx:id="btn_RegistrarPropietario" layoutX="1145.0" layoutY="104.0" mnemonicParsing="false" onAction="#registrarPropietario" prefHeight="31.0" prefWidth="182.0" style="-fx-background-color: green;" text="Registrar Propietario" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
