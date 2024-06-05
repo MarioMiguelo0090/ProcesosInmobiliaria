@@ -100,7 +100,7 @@ public class Ventana_RegistrarAgenteControlador implements Initializable  {
                 txfd_Correo.getText().isEmpty();
     }
     
-       private boolean verificarInformacion(){
+    private boolean verificarInformacion(){
         Usuario usuario=new Usuario();
 
         boolean validacion = true;

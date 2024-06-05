@@ -19,6 +19,7 @@ import logicaDeNegocio.DAO.DAOCliente;
 import logicaDeNegocio.DAO.DAOPropietario;
 import java.util.logging.Logger;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 
 public class Ventana_RegistrarPropietarioController implements Initializable  {
     private static final org.apache.log4j.Logger LOG=org.apache.log4j.Logger.getLogger(Ventana_RegistrarPropietarioController.class);
@@ -31,12 +32,25 @@ public class Ventana_RegistrarPropietarioController implements Initializable  {
     @FXML private TextField txfd_RFC;
     @FXML private TextField txfd_Telefono;
     @FXML private Button btn_Regresar;
+    @FXML private Label label_ErrorNombre;
+    @FXML private Label label_ErrorApellidoMaterno;
+    @FXML private Label label_ErrorApellidoPaterno;
+    @FXML private Label label_ErrorCorreo;
+    @FXML private Label label_ErrorRfc;
+    @FXML private Label label_ErrorTelefono;
     
     private static final Logger logger = Logger.getLogger(Ventana_RegistrarPropietarioController.class.getName());
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         btn_Regresar.setOnAction(event -> regresarVentanaPrincipal());
+        label_ErrorApellidoMaterno.setVisible(false);
+        label_ErrorApellidoPaterno.setVisible(false);
+        label_ErrorCorreo.setVisible(false);    
+        label_ErrorNombre.setVisible(false);    
+        label_ErrorRfc.setVisible(false);    
+        label_ErrorTelefono.setVisible(false);    
+        label_ErrorCorreo.setVisible(false); 
     }
     
     public Usuario obtenerUsuario(){
@@ -113,6 +127,81 @@ public class Ventana_RegistrarPropietarioController implements Initializable  {
     public void regresarVentanaPrincipal(){
         String rutaVentanaFXML="/interfazGrafica/Ventana_ConsultarPropietarios.fxml";
         desplegarVentanaCorrespondiente(rutaVentanaFXML); 
+    }
+    
+    private boolean estaVacio() {
+        return txfd_Nombre.getText().isEmpty()||
+                txfd_ApellidoP.getText().isEmpty()||
+                txfd_ApellidoM.getText().isEmpty()||
+                txfd_RFC.getText().isEmpty()||
+                txfd_Telefono.getText().isEmpty()||
+                txfd_Correo.getText().isEmpty();
+    }
+    
+    private boolean verificarInformacion(){
+        Usuario usuario=new Usuario();
+
+        boolean validacion = true;
+        
+        if (!estaVacio()){
+            try{
+                 usuario.setNombre(txfd_Nombre.getText());
+            } catch (IllegalArgumentException exception){
+                label_ErrorNombre.setVisible(true);
+                validacion = false;
+            }
+
+            try{
+                usuario.setApellidoPaterno(txfd_ApellidoP.getText());
+            } catch (IllegalArgumentException nombreException){
+                label_ErrorApellidoPaterno.setVisible(true);
+                validacion = false;
+            }
+            
+            try{
+                usuario.setApellidoMaterno(txfd_ApellidoM.getText());
+            } catch (IllegalArgumentException nombreException){
+                label_ErrorApellidoMaterno.setVisible(true);
+                validacion = false;
+            } 
+
+            try{
+                usuario.setCorreo(txfd_Correo.getText());
+            } catch (IllegalArgumentException coreoException){
+                label_ErrorCorreo.setVisible(true);
+                validacion = false;
+                } 
+
+            try{
+                usuario.setTelefono(txfd_Telefono.getText());
+            } catch (IllegalArgumentException nombrePaisException){
+                label_ErrorTelefono.setVisible(true);
+                validacion = false;
+            }
+            
+            try{
+                usuario.setRFC(txfd_RFC.getText());
+            } catch (IllegalArgumentException nombrePaisException){
+                label_ErrorRfc.setVisible(true);
+                validacion = false;
+            }
+        
+        }else {
+          Alertas.mostrarMensajeCamposVacios();
+
+          validacion = false;  
+        }
+        return validacion;
+        
+    }
+       
+    private void etiquetasDeError() {
+        label_ErrorNombre.setVisible(false);
+        label_ErrorApellidoPaterno.setVisible(false);
+        label_ErrorApellidoMaterno.setVisible(false);
+        label_ErrorCorreo.setVisible(false);
+        label_ErrorTelefono.setVisible(false);
+        label_ErrorRfc.setVisible(false);
     }
 
 }

@@ -73,6 +73,36 @@
                </font>
             </Label>
             <TextField fx:id="txfd_Correo" layoutX="88.0" layoutY="189.0" prefHeight="26.0" prefWidth="295.0" style="-fx-background-radius: 13;" />
+            <Label fx:id="label_ErrorNombre" layoutX="446.0" layoutY="48.0" text="*" textFill="RED">
+               <font>
+                  <Font size="23.0" />
+               </font>
+            </Label>
+            <Label id="label_ErrorCorreo" layoutX="386.0" layoutY="185.0" text="*" textFill="RED">
+               <font>
+                  <Font size="23.0" />
+               </font>
+            </Label>
+            <Label id="label_ErrorTelefono" layoutX="630.0" layoutY="151.0" text="*" textFill="RED">
+               <font>
+                  <Font size="23.0" />
+               </font>
+            </Label>
+            <Label id="label_ErrorRfc" layoutX="328.0" layoutY="150.0" text="*" textFill="RED">
+               <font>
+                  <Font size="23.0" />
+               </font>
+            </Label>
+            <Label id="label_ErrorApellidoPaterno" layoutX="441.0" layoutY="78.0" text="*" textFill="RED">
+               <font>
+                  <Font size="23.0" />
+               </font>
+            </Label>
+            <Label id="label_ErrorApellidoMaterno" layoutX="446.0" layoutY="98.0" text="*" textFill="RED">
+               <font>
+                  <Font size="23.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
       <Button fx:id="btn_Guardar" layoutX="396.0" layoutY="358.0" mnemonicParsing="false" onAction="#registrarPropietario" prefHeight="26.0" prefWidth="91.0" style="-fx-background-color: green;" text="Guardar" textFill="WHITE">
