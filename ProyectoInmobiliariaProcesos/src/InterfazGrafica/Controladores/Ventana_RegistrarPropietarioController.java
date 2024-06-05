@@ -18,6 +18,7 @@ import logicaDeNegocio.Clases.Usuario;
 import logicaDeNegocio.DAO.DAOCliente;
 import logicaDeNegocio.DAO.DAOPropietario;
 import java.util.logging.Logger;
+import javafx.scene.control.Button;
 
 public class Ventana_RegistrarPropietarioController implements Initializable  {
     private static final org.apache.log4j.Logger LOG=org.apache.log4j.Logger.getLogger(Ventana_RegistrarPropietarioController.class);
@@ -29,12 +30,13 @@ public class Ventana_RegistrarPropietarioController implements Initializable  {
     @FXML private TextField txfd_Nombre;
     @FXML private TextField txfd_RFC;
     @FXML private TextField txfd_Telefono;
+    @FXML private Button btn_Regresar;
     
     private static final Logger logger = Logger.getLogger(Ventana_RegistrarPropietarioController.class.getName());
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+        btn_Regresar.setOnAction(event -> regresarVentanaPrincipal());
     }
     
     public Usuario obtenerUsuario(){
@@ -108,6 +110,9 @@ public class Ventana_RegistrarPropietarioController implements Initializable  {
         }
     }
 
-
+    public void regresarVentanaPrincipal(){
+        String rutaVentanaFXML="/interfazGrafica/Ventana_ConsultarPropietarios.fxml";
+        desplegarVentanaCorrespondiente(rutaVentanaFXML); 
+    }
 
 }
