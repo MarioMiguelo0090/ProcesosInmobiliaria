@@ -69,5 +69,35 @@
           <font>
             <Font name="System Bold Italic" size="12.0" />
          </font></Button>
+      <Label fx:id="label_ErrorNombre" layoutX="634.0" layoutY="98.0" text="*" textFill="RED">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="label_ErrorApellidoMaterno" layoutX="634.0" layoutY="187.0" text="*" textFill="RED">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="label_ErrorApellidoPaterno" layoutX="634.0" layoutY="140.0" text="*" textFill="RED">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="label_ErrorCorreo" layoutX="634.0" layoutY="303.0" text="*" textFill="RED">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="label_ErrorRfc" layoutX="634.0" layoutY="242.0" text="*" textFill="RED">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="label_ErrorTelefono" layoutX="358.0" layoutY="242.0" text="*" textFill="RED">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

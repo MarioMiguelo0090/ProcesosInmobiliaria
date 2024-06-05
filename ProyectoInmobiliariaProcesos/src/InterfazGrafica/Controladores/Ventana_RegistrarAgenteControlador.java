@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -18,7 +19,6 @@ import logicaDeNegocio.Clases.GeneradorDeContrasenias;
 import logicaDeNegocio.Clases.Login;
 import logicaDeNegocio.Clases.Usuario;
 import logicaDeNegocio.DAO.DAOAgenteInmobiliario;
-import logicaDeNegocio.DAO.DAOCliente;
 
 public class Ventana_RegistrarAgenteControlador implements Initializable  {
     private static final org.apache.log4j.Logger LOG=org.apache.log4j.Logger.getLogger(Ventana_RegistrarAgenteControlador.class);
@@ -30,26 +30,29 @@ public class Ventana_RegistrarAgenteControlador implements Initializable  {
     @FXML private TextField txfd_Nombre;
     @FXML private TextField txfd_RFC;
     @FXML private TextField txfd_Telefono;
-    @FXML private TextField txfd_Contrasenia;
+    @FXML private Label label_ErrorNombre;
+    @FXML private Label label_ErrorApellidoMaterno;
+    @FXML private Label label_ErrorApellidoPaterno;
+    @FXML private Label label_ErrorCorreo;
+    @FXML private Label label_ErrorRfc;
+    @FXML private Label label_ErrorTelefono;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+        etiquetasDeError();
         
     }
     
     public Usuario obtenerUsuario(){
         Usuario usuario=new Usuario();
-        try{
             usuario.setNombre(txfd_Nombre.getText());
             usuario.setApellidoPaterno(txfd_ApellidoPaterno.getText());
             usuario.setApellidoMaterno(txfd_ApellidoMaterno.getText());
             usuario.setCorreo(txfd_Correo.getText());
             usuario.setTelefono(txfd_Telefono.getText());
             usuario.setRFC(txfd_RFC.getText());
-        }catch(IllegalArgumentException excepcion){
-            usuario=null;
-            LOG.info(excepcion);
-        }
+        
         return usuario;                        
     }
     
@@ -88,7 +91,84 @@ public class Ventana_RegistrarAgenteControlador implements Initializable  {
         }
     }
     
+    private boolean estaVacio() {
+        return txfd_Nombre.getText().isEmpty()||
+                txfd_ApellidoPaterno.getText().isEmpty()||
+                txfd_ApellidoMaterno.getText().isEmpty()||
+                txfd_RFC.getText().isEmpty()||
+                txfd_Telefono.getText().isEmpty()||
+                txfd_Correo.getText().isEmpty();
+    }
+    
+       private boolean verificarInformacion(){
+        Usuario usuario=new Usuario();
+
+        boolean validacion = true;
+        
+        if (!estaVacio()){
+            try{
+                 usuario.setNombre(txfd_Nombre.getText());
+            } catch (IllegalArgumentException exception){
+                label_ErrorNombre.setVisible(true);
+                validacion = false;
+            }
+
+            try{
+                usuario.setApellidoPaterno(txfd_ApellidoPaterno.getText());
+            } catch (IllegalArgumentException nombreException){
+                label_ErrorApellidoPaterno.setVisible(true);
+                validacion = false;
+            }
+            
+            try{
+                usuario.setApellidoMaterno(txfd_ApellidoMaterno.getText());
+            } catch (IllegalArgumentException nombreException){
+                label_ErrorApellidoMaterno.setVisible(true);
+                validacion = false;
+            } 
+
+            try{
+                usuario.setCorreo(txfd_Correo.getText());
+            } catch (IllegalArgumentException coreoException){
+                label_ErrorCorreo.setVisible(true);
+                Alertas.mostrarMensajeCorreoConFormatoInvalido();
+                validacion = false;
+                } 
+
+            try{
+                usuario.setTelefono(txfd_Telefono.getText());
+            } catch (IllegalArgumentException nombrePaisException){
+                label_ErrorTelefono.setVisible(true);
+                validacion = false;
+            }
+            
+            try{
+                usuario.setRFC(txfd_RFC.getText());
+            } catch (IllegalArgumentException nombrePaisException){
+                label_ErrorRfc.setVisible(true);
+                validacion = false;
+            }
+        
+        }else {
+          Alertas.mostrarMensajeCamposVacios();
+
+          validacion = false;  
+        }
+        return validacion;
+        
+    }
+       
+    private void etiquetasDeError() {
+        label_ErrorNombre.setVisible(false);
+        label_ErrorApellidoPaterno.setVisible(false);
+        label_ErrorApellidoMaterno.setVisible(false);
+        label_ErrorCorreo.setVisible(false);
+        label_ErrorTelefono.setVisible(false);
+        label_ErrorRfc.setVisible(false);
+    }
+    
     public void registrarAgente(){
+        if (verificarInformacion()) {
         try {
             Usuario usuario=obtenerUsuario();
             Login login = crearAcceso();
@@ -115,7 +195,7 @@ public class Ventana_RegistrarAgenteControlador implements Initializable  {
             Alertas.mostrarMensajeErrorEnLaConexion();
             LOG.warn(ex);
         }
-                   
+      }           
     }
     
     private boolean enviarCorreo(Usuario usuario, Login login) {
