@@ -12,6 +12,7 @@ public class Direccion {
     private Ubicacion ubicacion;
     private static final String SOLO_NUMEROS_PATTERN = "\\d+";
     private static final String SOLO_LETRAS_PATTERN = "^[\\p{L}\\sáéíóúÁÉÍÓÚüÜ]+$";
+     private static final String CALLE_PATTERN = "^[\\p{L}\\sáéíóúÁÉÍÓÚüÜ0-9#]+$";
 
     public Direccion() {
     }
@@ -41,7 +42,7 @@ public class Direccion {
     }
 
     public void setCalle(String calle)throws IllegalArgumentException{
-        if(calle!=null&&Pattern.matches(SOLO_LETRAS_PATTERN, String.valueOf(calle))){
+        if(calle!=null&&Pattern.matches(CALLE_PATTERN, String.valueOf(calle))){
             this.calle = calle;
         }else{
             throw new IllegalArgumentException();

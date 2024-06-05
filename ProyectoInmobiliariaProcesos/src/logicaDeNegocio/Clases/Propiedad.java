@@ -11,7 +11,7 @@ public class Propiedad {
     private int numeroDePisos;
     private int antiguedad;
     private float metrosDeTerreno;
-    private float precio;
+    private String precio;
     private String estadoPropiedad;
     private TipoPropiedad tipoDePropiedad;
     private Direccion direccion;
@@ -103,15 +103,15 @@ public class Propiedad {
         }
     }
 
-    public float getPrecio() {
+    public String getPrecio() {
         return precio;
     }
 
-    public void setPrecio(float precio)throws IllegalArgumentException {
-        if(precio>=0&&Pattern.matches(SOLO_NUMEROS_FLOTANTES_PATTERN, String.valueOf(precio))){
+    public void setPrecio(String precio)throws IllegalArgumentException {
+        if(precio.length()>0&&precio.length()<=15&&Pattern.matches(SOLO_NUMEROS_PATTERN, String.valueOf(precio))){
             this.precio = precio;
         }else{
-            throw new IllegalArgumentException();
+          throw new IllegalArgumentException();
         }
     }
 
@@ -123,7 +123,7 @@ public class Propiedad {
         if(estadoPropiedad!=null&&Pattern.matches(SOLO_LETRAS_PATTERN, estadoPropiedad)){
             this.estadoPropiedad = estadoPropiedad;
         }else{
-            throw new IllegalArgumentException();
+          throw new IllegalArgumentException();
         }
     }
 
@@ -162,7 +162,7 @@ public class Propiedad {
                 numeroDePisos == propiedad.numeroDePisos &&
                 antiguedad == propiedad.antiguedad &&
                 Float.compare(propiedad.metrosDeTerreno, metrosDeTerreno) == 0 &&
-                Float.compare(propiedad.precio, precio) == 0 &&
+                Objects.equals(precio, propiedad.precio)&&
                 Objects.equals(nombre, propiedad.nombre) &&
                 Objects.equals(estadoPropiedad, propiedad.estadoPropiedad)&&
                 Objects.equals(tipoDePropiedad, propiedad.tipoDePropiedad) &&

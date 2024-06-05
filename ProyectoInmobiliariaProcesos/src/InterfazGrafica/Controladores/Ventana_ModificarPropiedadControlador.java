@@ -145,7 +145,7 @@ public class Ventana_ModificarPropiedadControlador implements Initializable {
             propiedad.setNumeroDeBanios(spn_NoBanios.getValue());
             propiedad.setNumeroDeHabitaciones(spn_NoHabitaciones.getValue());
             propiedad.setNumeroDePisos(spn_NoPisos.getValue());
-            propiedad.setPrecio(Float.parseFloat(txfd_Precio.getText()));
+            propiedad.setPrecio(txfd_Precio.getText());
             propiedad.setNombre(txfd_Nombre.getText());
             direccion.setIdDireccion(propiedadAuxiliar.getDireccion().getIdDireccion());
             direccion.setCalle(txfd_Calle.getText());

@@ -16,7 +16,7 @@ public final class PropiedadAuxiliar {
     private int numeroDePisos;
     private int antiguedad;
     private float metrosDeTerreno;
-    private float precio;
+    private String precio;
     private String estadoPropiedad;
     private TipoPropiedad tipoDePropiedad;
     private Direccion direccion;
@@ -101,11 +101,11 @@ public final class PropiedadAuxiliar {
         this.metrosDeTerreno = metrosDeTerreno;
     }
 
-    public float getPrecio() {
+    public String getPrecio() {
         return precio;
     }
 
-    private void setPrecio(float precio) {
+    private void setPrecio(String precio) {
         this.precio = precio;
     }
 
