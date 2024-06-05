@@ -1,5 +1,6 @@
 package InterfazGrafica.Controladores;
 
+import InterfazGrafica.Alertas.Alertas;
 import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import logicaDeNegocio.Clases.Propietario;
@@ -21,28 +23,23 @@ public class Ventana_ActualizarPropietarioController {
     private Stage escenario;
 
     
-    @FXML
-    private TextField txfd_Nombre;
-    @FXML
-    private TextField txfd_ApellidoP;
-    @FXML
-    private TextField txfd_ApellidoM;
-    @FXML
-    private TextField txfd_Telefono;
-    @FXML
-    private TextField txfd_Correo;
-    @FXML
-    private TextField txfd_RFC;
-    @FXML
-    private TextField txt_EstadoPropietario;
-    @FXML
-    private Button btn_Guardar;
-    @FXML
-    private Button btn_Cancelar;    
-    @FXML 
-    private Button btn_Regresar;
-    @FXML
-    private AnchorPane pane_Principal;
+    @FXML private TextField txfd_Nombre;
+    @FXML private TextField txfd_ApellidoP;
+    @FXML private TextField txfd_ApellidoM;
+    @FXML private TextField txfd_Telefono;
+    @FXML private TextField txfd_Correo;
+    @FXML private TextField txfd_RFC;
+    @FXML private TextField txt_EstadoPropietario;
+    @FXML private Button btn_Guardar;
+    @FXML private Button btn_Cancelar;    
+    @FXML private Button btn_Regresar;
+    @FXML private AnchorPane pane_Principal;
+    @FXML private Label label_ErrorNombre;
+    @FXML private Label label_ErrorApellidoMaterno;
+    @FXML private Label label_ErrorApellidoPaterno;
+    @FXML private Label label_ErrorCorreo;
+    @FXML private Label label_ErrorRfc;
+    @FXML private Label label_ErrorTelefono;
 
 
 
@@ -53,7 +50,14 @@ public class Ventana_ActualizarPropietarioController {
     @FXML
     private void initialize() {
         btn_Guardar.setOnAction(event -> realizarRegistro());
-        btn_Regresar.setOnAction(event -> regresarDeVentanabtn());        
+        btn_Regresar.setOnAction(event -> regresarDeVentanabtn());
+        label_ErrorApellidoMaterno.setVisible(false);
+        label_ErrorApellidoPaterno.setVisible(false);
+        label_ErrorCorreo.setVisible(false);    
+        label_ErrorNombre.setVisible(false);    
+        label_ErrorRfc.setVisible(false);    
+        label_ErrorTelefono.setVisible(false);    
+        label_ErrorCorreo.setVisible(false); 
     }
 
     public void cargarDatosPropietario(int idUsuario) {
@@ -146,4 +150,80 @@ public class Ventana_ActualizarPropietarioController {
         alerta.setContentText(mensaje);
         alerta.showAndWait();
     }    
+    
+    
+    private boolean estaVacio() {
+        return txfd_Nombre.getText().isEmpty()||
+                txfd_ApellidoP.getText().isEmpty()||
+                txfd_ApellidoM.getText().isEmpty()||
+                txfd_RFC.getText().isEmpty()||
+                txfd_Telefono.getText().isEmpty()||
+                txfd_Correo.getText().isEmpty();
+    }
+    
+    private boolean verificarInformacion(){
+        Usuario usuario=new Usuario();
+
+        boolean validacion = true;
+        
+        if (!estaVacio()){
+            try{
+                 usuario.setNombre(txfd_Nombre.getText());
+            } catch (IllegalArgumentException exception){
+                label_ErrorNombre.setVisible(true);
+                validacion = false;
+            }
+
+            try{
+                usuario.setApellidoPaterno(txfd_ApellidoP.getText());
+            } catch (IllegalArgumentException nombreException){
+                label_ErrorApellidoPaterno.setVisible(true);
+                validacion = false;
+            }
+            
+            try{
+                usuario.setApellidoMaterno(txfd_ApellidoM.getText());
+            } catch (IllegalArgumentException nombreException){
+                label_ErrorApellidoMaterno.setVisible(true);
+                validacion = false;
+            } 
+
+            try{
+                usuario.setCorreo(txfd_Correo.getText());
+            } catch (IllegalArgumentException coreoException){
+                label_ErrorCorreo.setVisible(true);
+                validacion = false;
+                } 
+
+            try{
+                usuario.setTelefono(txfd_Telefono.getText());
+            } catch (IllegalArgumentException nombrePaisException){
+                label_ErrorTelefono.setVisible(true);
+                validacion = false;
+            }
+            
+            try{
+                usuario.setRFC(txfd_RFC.getText());
+            } catch (IllegalArgumentException nombrePaisException){
+                label_ErrorRfc.setVisible(true);
+                validacion = false;
+            }
+        
+        }else {
+          Alertas.mostrarMensajeCamposVacios();
+
+          validacion = false;  
+        }
+        return validacion;
+        
+    }
+       
+    private void etiquetasDeError() {
+        label_ErrorNombre.setVisible(false);
+        label_ErrorApellidoPaterno.setVisible(false);
+        label_ErrorApellidoMaterno.setVisible(false);
+        label_ErrorCorreo.setVisible(false);
+        label_ErrorTelefono.setVisible(false);
+        label_ErrorRfc.setVisible(false);
+    }
 }
