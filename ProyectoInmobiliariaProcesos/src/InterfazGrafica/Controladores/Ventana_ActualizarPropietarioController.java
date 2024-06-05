@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import logicaDeNegocio.Clases.Propietario;
 import logicaDeNegocio.Clases.Usuario;
@@ -17,7 +18,9 @@ import logicaDeNegocio.DAO.DAOUsuario;
 
 public class Ventana_ActualizarPropietarioController {
     private static final org.apache.log4j.Logger LOG=org.apache.log4j.Logger.getLogger(Ventana_ActualizarPropietarioController.class);
+    private Stage escenario;
 
+    
     @FXML
     private TextField txfd_Nombre;
     @FXML
@@ -35,7 +38,13 @@ public class Ventana_ActualizarPropietarioController {
     @FXML
     private Button btn_Guardar;
     @FXML
-    private Button btn_Cancelar;
+    private Button btn_Cancelar;    
+    @FXML 
+    private Button btn_Regresar;
+    @FXML
+    private AnchorPane pane_Principal;
+
+
 
     private DAOPropietario daoPropietario = new DAOPropietario();
     private DAOUsuario daoUsuario = new DAOUsuario();
@@ -44,6 +53,7 @@ public class Ventana_ActualizarPropietarioController {
     @FXML
     private void initialize() {
         btn_Guardar.setOnAction(event -> realizarRegistro());
+        btn_Regresar.setOnAction(event -> regresarDeVentanabtn());        
     }
 
     public void cargarDatosPropietario(int idUsuario) {
@@ -112,6 +122,22 @@ public class Ventana_ActualizarPropietarioController {
             LOG.warn(e);        
         }
     }
+    
+    @FXML
+    private void regresarDeVentanabtn() {
+        Stage stage = (Stage) btn_Regresar.getScene().getWindow();
+        stage.close();     
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/interfazGrafica/Ventana_ConsultarPropietarios.fxml"));
+            Parent root = loader.load();
+            Stage newStage = new Stage();
+            newStage.setScene(new Scene(root));
+            newStage.show();
+        } catch (IOException e) {
+            mostrarAlerta("Error", "No se pudo cargar la ventana ActualizarPropietarioController.");
+            LOG.warn(e);        
+        }
+    }
 
     private void mostrarAlerta(String titulo, String mensaje) {
         Alert alerta = new Alert(AlertType.INFORMATION);
@@ -119,5 +145,5 @@ public class Ventana_ActualizarPropietarioController {
         alerta.setHeaderText(null);
         alerta.setContentText(mensaje);
         alerta.showAndWait();
-    }
+    }    
 }
