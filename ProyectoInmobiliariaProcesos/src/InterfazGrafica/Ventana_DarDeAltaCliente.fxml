@@ -121,7 +121,7 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <Label fx:id="lbl_ErrorTelefono" layoutX="365.0" layoutY="201.0" text="*" textFill="RED">
+      <Label fx:id="lbl_ErrorTelefono" layoutX="358.0" layoutY="201.0" text="*" textFill="RED">
          <font>
             <Font size="20.0" />
          </font>
@@ -141,12 +141,12 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <Label fx:id="lbl_ErrorPrecioMinimo" layoutX="377.0" layoutY="350.0" text="*" textFill="RED">
+      <Label fx:id="lbl_ErrorPrecioMinimo" layoutX="384.0" layoutY="350.0" text="*" textFill="RED">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label fx:id="lbl_ErrorPrecioMaximo" layoutX="565.0" layoutY="350.0" text="*" textFill="RED">
+      <Label fx:id="lbl_ErrorPrecioMaximo" layoutX="571.0" layoutY="350.0" text="*" textFill="RED">
          <font>
             <Font size="20.0" />
          </font>

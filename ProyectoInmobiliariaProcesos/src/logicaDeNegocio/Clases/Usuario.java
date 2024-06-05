@@ -71,8 +71,8 @@ public class Usuario {
     }
 
     public void setTelefono(String telefono) {
-        if(Pattern.matches(SOLO_NUMEROS_PATTERN, String.valueOf(telefono))){
-            this.telefono = telefono;
+        if(Pattern.matches(SOLO_NUMEROS_PATTERN, String.valueOf(telefono))&&telefono.trim().length()<=10){
+            this.telefono = telefono.trim().replaceAll("\\s+", " ");
         }else{
             throw new IllegalArgumentException();
         }

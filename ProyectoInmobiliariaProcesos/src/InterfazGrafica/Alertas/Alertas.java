@@ -152,7 +152,7 @@ public class Alertas extends Application {
     
     public static void mostrarMensajeDatosModificados(){
         Platform.runLater(() ->{
-            Alert mensaje = new Alert(AlertType.CONFIRMATION);
+            Alert mensaje = new Alert(AlertType.INFORMATION);
             mensaje.setTitle("Datos modificados");
             mensaje.setContentText("Los datos han sido modificados correctamente");
             mensaje.showAndWait();
