@@ -7,6 +7,8 @@ import javafx.scene.control.TextField;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -16,6 +18,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import logicaDeNegocio.Clases.Cliente;
@@ -34,44 +37,56 @@ public class Ventana_DarDeAltaClienteController implements Initializable {
     private static final org.apache.log4j.Logger LOG=org.apache.log4j.Logger.getLogger(Ventana_DarDeAltaClienteController.class);
     @FXML
     private ComboBox cmb_Estado;
-
     @FXML
     private ComboBox cmb_TipoPropiedad;
-
     @FXML
     private TextField txfd_ApellidoMaterno;
-
     @FXML
     private TextField txfd_ApellidoPaterno;
-
     @FXML
     private TextField txfd_Ciudad;
-
     @FXML
     private TextField txfd_Correo;
-
     @FXML
     private TextField txfd_MinimoMetros;
-
     @FXML
     private TextField txfd_Nombre;
-
     @FXML
     private TextField txfd_PrecioMaximo;
-
     @FXML
     private TextField txfd_PrecioMinimo;
-
     @FXML
     private TextField txfd_RFC;
-
     @FXML
     private TextField txfd_Telefono;
-    
     @FXML
     private AnchorPane anchor_DarDeAltaCliente;
     @FXML
     private Button btn_cancelar;
+    @FXML
+    private Label lbl_ErrorApellidoMaterno;
+    @FXML
+    private Label lbl_ErrorApellidoPaterno;
+    @FXML
+    private Label lbl_ErrorCiudad;
+    @FXML
+    private Label lbl_ErrorCorreo;
+    @FXML
+    private Label lbl_ErrorEstado;
+    @FXML
+    private Label lbl_ErrorMinimoMetros;
+    @FXML
+    private Label lbl_ErrorNombre;
+    @FXML
+    private Label lbl_ErrorPrecioMaximo;
+    @FXML
+    private Label lbl_ErrorPrecioMinimo;
+    @FXML
+    private Label lbl_ErrorRFC;
+    @FXML
+    private Label lbl_ErrorTelefono;
+    @FXML
+    private Label lbl_ErrorTipoPropiedad;
     private Stage stage_ventana;
     
     @Override
@@ -79,6 +94,22 @@ public class Ventana_DarDeAltaClienteController implements Initializable {
         llenarComboBoxEstado();
         llenarComboBoxTipoPropiedad();
         btn_cancelar.setOnAction(event->regresarVentanaPrincipal());
+        inicializarEtiquetasDeError();
+        txfd_RFC.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if (newValue != null) {
+                    txfd_RFC.setText(newValue.toUpperCase());
+                }
+            }
+        });
+    }
+    
+    public void inicializar(Stage stage) {
+        this.stage_ventana = stage;
+        stage_ventana.setOnCloseRequest(event -> {
+            event.consume();
+        });
     }
     
     public void regresarVentanaPrincipal(){
@@ -112,7 +143,7 @@ public class Ventana_DarDeAltaClienteController implements Initializable {
             usuario.setApellidoMaterno(txfd_ApellidoMaterno.getText());
             usuario.setCorreo(txfd_Correo.getText());
             usuario.setTelefono(txfd_Telefono.getText());
-            usuario.setRFC(txfd_RFC.getText());
+            usuario.setRFC(txfd_RFC.getText());            
         }catch(IllegalArgumentException excepcion){
             usuario=null;
             LOG.info(excepcion);
@@ -171,38 +202,46 @@ public class Ventana_DarDeAltaClienteController implements Initializable {
     }
     
     public void registrarCliente(){
-        Usuario usuario=obtenerUsuario();
-        Cliente cliente=obtenerCliente();
-        Login login=crearAcceso();
-        if(usuario==null||cliente==null||login==null){
-            Alertas.mostrarMensajeDatosInvalidos();
-            return;            
+        inicializarEtiquetasDeError();
+        if(verificarInformacion()){               
+            Usuario usuario=obtenerUsuario();
+            Cliente cliente=obtenerCliente();
+            if(validarPrecios(cliente)){
+                Login login=crearAcceso();               
+                cliente.setEstadoCliente("Activo");
+                DAOUsuario daoUsuario=new DAOUsuario();
+                int resultadoInsercion=daoUsuario.registrarUsuario(usuario);
+                switch (resultadoInsercion) {
+                    case 1:
+                        int idUsuario=daoUsuario.obtenerIdUsuarioPorCorreo(usuario.getCorreo());
+                        usuario.setIdUsuario(idUsuario);
+                        cliente.setUsuario(usuario);
+                        DAOCliente daoCliente=new DAOCliente();                
+                        login.setIUsuario(idUsuario);
+                        int resultadoInsercionCliente=daoCliente.registrarCliente(cliente,login);
+                        if(resultadoInsercionCliente==1){
+                            enviarCorreo(usuario, login);
+                            Alertas.clienteRegistradoCorrectamente();  
+                            regresarVentanaPrincipal();
+                        }else{                    
+                            Alertas.mostrarMensajeErrorEnLaConexion();
+                        }   break;
+                    case 0:
+                        Alertas.mostrarMensajeDatosDuplicados();                
+                        break;
+                    default:
+                        Alertas.mostrarMensajeErrorEnLaConexion();                
+                        break;
+                }      
+            }else{
+                Alertas.mostrarPrecioIncorrecto();
+                lbl_ErrorPrecioMinimo.setVisible(true);
+                lbl_ErrorPrecioMaximo.setVisible(true);
+            }               
+        }else{
+            Alertas.mostrarMensajeDatosInvalidos();        
         }
-        cliente.setEstadoCliente("Activo");
-        DAOUsuario daoUsuario=new DAOUsuario();
-        int resultadoInsercion=daoUsuario.registrarUsuario(usuario);
-        switch (resultadoInsercion) {
-            case 1:
-                int idUsuario=daoUsuario.obtenerIdUsuarioPorCorreo(usuario.getCorreo());
-                usuario.setIdUsuario(idUsuario);
-                cliente.setUsuario(usuario);
-                DAOCliente daoCliente=new DAOCliente();                
-                login.setIUsuario(idUsuario);
-                int resultadoInsercionCliente=daoCliente.registrarCliente(cliente,login);
-                if(resultadoInsercionCliente==1){
-                    enviarCorreo(usuario, login);
-                    Alertas.clienteRegistradoCorrectamente();  
-                    regresarVentanaPrincipal();
-                }else{                    
-                    Alertas.mostrarMensajeErrorEnLaConexion();
-                }   break;
-            case 0:
-                Alertas.mostrarMensajeDatosDuplicados();                
-                break;
-            default:
-                Alertas.mostrarMensajeErrorEnLaConexion();                
-                break;
-        }        
+               
     }
     
     public Login crearAcceso() {
@@ -228,4 +267,124 @@ public class Ventana_DarDeAltaClienteController implements Initializable {
         return EnviosDeCorreoElectronico.verificarEnvioCorreo(usuario.getCorreo(), "Credenciales de acceso", mensaje);
     }
     
+    public boolean validarRangoPrecio(BigDecimal rangoMinimo,BigDecimal rangoMaximo){
+        boolean validacion=false;
+        if(rangoMinimo.compareTo(rangoMaximo)<0){
+            validacion=true;            
+        }
+        return validacion;
+    }
+    
+    public void inicializarEtiquetasDeError(){    
+        lbl_ErrorApellidoMaterno.setVisible(false);
+        lbl_ErrorApellidoPaterno.setVisible(false);
+        lbl_ErrorCiudad.setVisible(false);    
+        lbl_ErrorCorreo.setVisible(false);    
+        lbl_ErrorEstado.setVisible(false);    
+        lbl_ErrorMinimoMetros.setVisible(false);    
+        lbl_ErrorNombre.setVisible(false);    
+        lbl_ErrorPrecioMaximo.setVisible(false);    
+        lbl_ErrorPrecioMinimo.setVisible(false);    
+        lbl_ErrorRFC.setVisible(false);    
+        lbl_ErrorTelefono.setVisible(false);    
+        lbl_ErrorTipoPropiedad.setVisible(false);
+    }
+    
+    public boolean verificarInformacion(){
+        Usuario usuario=new Usuario();    
+        Cliente cliente=new Cliente();
+        String estado=(String) cmb_Estado.getSelectionModel().getSelectedItem();
+        String tipo=(String) cmb_TipoPropiedad.getSelectionModel().getSelectedItem();
+        DAOUbicacion daoUbicacion=new DAOUbicacion();
+        DAOTipoPropiedad daoTipoPropiedad=new DAOTipoPropiedad();
+        Ubicacion ubicacion=new Ubicacion();
+        TipoPropiedad tipoPropiedad=new TipoPropiedad();        
+        boolean validacion = true;
+        try{
+            usuario.setNombre(txfd_Nombre.getText());
+        }catch(IllegalArgumentException excepcion){
+            lbl_ErrorNombre.setVisible(true);
+            validacion=false;
+        }
+        try{
+            usuario.setApellidoPaterno(txfd_ApellidoPaterno.getText());
+        }catch(IllegalArgumentException excepcion){
+            lbl_ErrorApellidoPaterno.setVisible(true);
+            validacion=false;
+        }
+        try{
+            usuario.setApellidoMaterno(txfd_ApellidoMaterno.getText());
+        }catch(IllegalArgumentException excepcion){
+            lbl_ErrorApellidoMaterno.setVisible(true);
+            validacion=false;
+        }
+        try{
+            usuario.setCorreo(txfd_Correo.getText());
+        }catch(IllegalArgumentException excepcion){
+            lbl_ErrorCorreo.setVisible(true);
+            validacion=false;
+        }
+        try{
+            usuario.setTelefono(txfd_Telefono.getText());
+        }catch(IllegalArgumentException excepcion){
+            lbl_ErrorTelefono.setVisible(true);
+            validacion=false;
+        }
+        try{
+            usuario.setRFC(txfd_RFC.getText());   
+        }catch(IllegalArgumentException excepcion){
+            lbl_ErrorRFC.setVisible(true);
+            validacion=false;
+        }
+        try{
+            cliente.setCiudad(txfd_Ciudad.getText());
+        }catch(IllegalArgumentException excepcion){
+            lbl_ErrorCiudad.setVisible(true);
+            validacion=false;
+        }
+        try{
+            cliente.setRangoDePrecioMinimo(new BigDecimal(txfd_PrecioMinimo.getText()));
+        }catch(IllegalArgumentException excepcion){
+            lbl_ErrorPrecioMinimo.setVisible(true);
+            validacion=false;
+        }
+        try{
+            cliente.setRangoDePrecioMaximo(new BigDecimal(txfd_PrecioMaximo.getText()));
+        }catch(IllegalArgumentException excepcion){
+            lbl_ErrorPrecioMaximo.setVisible(true);
+            validacion=false;
+        }
+        try{
+            cliente.setMinimoMetrosCuadrados(new BigDecimal(txfd_MinimoMetros.getText()));
+        }catch(IllegalArgumentException excepcion){
+            lbl_ErrorMinimoMetros.setVisible(true);
+            validacion=false;
+        }
+        try{
+            ubicacion.setEstado(estado);
+            ubicacion.setIdUbicacion(daoUbicacion.consultarIdUbicacionPorEstado(estado));
+            cliente.setUbicacion(ubicacion);
+        }catch(IllegalArgumentException excepcion){
+            lbl_ErrorEstado.setVisible(true);
+            validacion=false;
+        }
+        try{
+            tipoPropiedad.setTipo(tipo);
+            tipoPropiedad.setIdTipoPropiedad(daoTipoPropiedad.consultarIdPropiedadPorTipo(tipo));            
+            cliente.setTipoPropiedad(tipoPropiedad);                         
+        }catch(IllegalArgumentException excepcion){
+            lbl_ErrorTipoPropiedad.setVisible(true);
+            validacion=false;
+        }                                                                                
+        return validacion;                                                                         
+    }
+    
+    
+    public boolean validarPrecios(Cliente cliente){
+        boolean validacion=false;
+        if(cliente.getRangoDePrecioMinimo().compareTo(cliente.getRangoDePrecioMaximo())<0){
+            validacion=true;
+        }
+        return validacion;                                
+    }
 }

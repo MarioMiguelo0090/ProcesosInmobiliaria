@@ -48,7 +48,7 @@ public class Propiedad {
     }
 
     public void setNumeroDeHabitaciones(int numeroDeHabitaciones)throws IllegalArgumentException {
-        if(numeroDeHabitaciones>=0&&Pattern.matches(SOLO_NUMEROS_PATTERN, String.valueOf(numeroDeHabitaciones))){
+        if(numeroDeHabitaciones>0&&Pattern.matches(SOLO_NUMEROS_PATTERN, String.valueOf(numeroDeHabitaciones))){
             this.numeroDeHabitaciones = numeroDeHabitaciones;
         }else{
             throw new IllegalArgumentException();
@@ -60,7 +60,7 @@ public class Propiedad {
     }
 
     public void setNumeroDeBanios(int numeroDeBanios)throws IllegalArgumentException {
-        if(numeroDeBanios>=0&&Pattern.matches(SOLO_NUMEROS_PATTERN, String.valueOf(numeroDeBanios))){
+        if(numeroDeBanios>0&&Pattern.matches(SOLO_NUMEROS_PATTERN, String.valueOf(numeroDeBanios))){
             this.numeroDeBanios = numeroDeBanios;
         }else{
             throw new IllegalArgumentException();
@@ -72,7 +72,7 @@ public class Propiedad {
     }
 
     public void setNumeroDePisos(int numeroDePisos) throws IllegalArgumentException{
-        if(numeroDeBanios>=0&&Pattern.matches(SOLO_NUMEROS_PATTERN, String.valueOf(numeroDeBanios))){
+        if(numeroDeBanios>0&&Pattern.matches(SOLO_NUMEROS_PATTERN, String.valueOf(numeroDeBanios))){
             this.numeroDePisos = numeroDePisos;
         }else{
             throw new IllegalArgumentException();

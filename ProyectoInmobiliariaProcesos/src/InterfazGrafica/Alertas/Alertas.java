@@ -152,7 +152,7 @@ public class Alertas extends Application {
     
     public static void mostrarMensajeDatosModificados(){
         Platform.runLater(() ->{
-            Alert mensaje = new Alert(AlertType.CONFIRMATION);
+            Alert mensaje = new Alert(AlertType.INFORMATION);
             mensaje.setTitle("Datos modificados");
             mensaje.setContentText("Los datos han sido modificados correctamente");
             mensaje.showAndWait();
@@ -225,6 +225,16 @@ public class Alertas extends Application {
         return resultado.isPresent() && resultado.get() == ButtonType.OK;
 
     }
+    
+    public static void mostrarPrecioIncorrecto(){
+        Platform.runLater(() ->{
+            Alert mensaje = new Alert(AlertType.WARNING);
+            mensaje.setTitle("Rango precio incorrecto");
+            mensaje.setContentText("Verifique que el precio minimo sea mayor al precio máximo");
+            mensaje.showAndWait();
+        });
+    }
+    
     
     @Override
     public void start(Stage stage){

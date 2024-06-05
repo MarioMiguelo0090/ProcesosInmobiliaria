@@ -8,8 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.regex.Pattern;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
 import javafx.fxml.FXML;
@@ -18,6 +20,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.layout.AnchorPane;
@@ -71,7 +74,38 @@ public class Ventana_RegistrarPropiedadControlador implements Initializable {
     @FXML
     private TextField txfd_RFCPropietario;
     @FXML
-    private ComboBox<String> cmb_TipoDePropiedad; 
+    private ComboBox<String> cmb_TipoDePropiedad;
+    @FXML
+    private Label lbl_ErrorNombre;
+    @FXML
+    private Label lbl_ErrorTipoDePropiedad;
+    @FXML
+    private Label lbl_ErrorTipoDeEstado;
+    @FXML
+    private Label lbl_ErrorMetrosDeTerreno;
+    @FXML
+    private Label lbl_ErrorPrecio;
+    @FXML
+    private Label lbl_ErrorNoHabitaciones;
+    @FXML
+    private Label lbl_ErrorNoBanios;
+    @FXML
+    private Label lbl_ErrorCodigoPostal;
+    @FXML
+    private Label lbl_ErrorColonia;
+    @FXML
+    private Label lbl_ErrorCalle;
+    @FXML
+    private Label lbl_ErrorCiudad;
+    @FXML
+    private Label lbl_ErrorRFC;
+    @FXML
+    private Label lbl_ErrorEstado;
+    @FXML
+    private Label lbl_ErrorAntiguedad;
+    @FXML
+    private Button btn_Guardar;
+    private static final String RFC_PATTERN = "^[A-ZÑ&]{3,4}\\d{2}(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01])[A-Z\\d]{3}$";
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -85,6 +119,13 @@ public class Ventana_RegistrarPropiedadControlador implements Initializable {
         SpinnerValueFactory<Integer> valueFactoryPisos = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 20, 0);
         spn_NoPisos.setValueFactory(valueFactoryPisos);
     }    
+    
+        public void inicializar(Stage stage) {
+        this.escenario = stage;
+        escenario.setOnCloseRequest(event -> {
+            event.consume();
+        });
+    }
     
     public void cerrarVentana(){
         escenario = (Stage)anchor_Ventana.getScene().getWindow();
@@ -115,6 +156,130 @@ public class Ventana_RegistrarPropiedadControlador implements Initializable {
         cmb_EstadoPropiedad.setItems(estadosPropiedad);
     }
     
+         private boolean validarDatos(){
+        boolean resultado = true;
+        Propiedad propiedad = new Propiedad();
+        Direccion direccion = new Direccion();
+        try{
+            propiedad.setAntiguedad(spn_Antiguedad.getValue());
+        }catch(NullPointerException | IllegalArgumentException excepcion){
+           LOG.warn(excepcion);
+           lbl_ErrorAntiguedad.setVisible(true);
+           resultado = false;
+        }
+        try{
+            propiedad.setEstadoPropiedad((String) cmb_EstadoPropiedad.getSelectionModel().getSelectedItem());
+        }catch(NullPointerException | IllegalArgumentException excepcion){
+           LOG.warn(excepcion);
+           lbl_ErrorTipoDeEstado.setVisible(true);
+           resultado = false;
+        }
+        try{
+             propiedad.setMetrosDeTerreno(Float.parseFloat(txfd_MetrosDeTerreno.getText()));
+        }catch(NullPointerException | IllegalArgumentException excepcion){
+           LOG.warn(excepcion);
+           lbl_ErrorMetrosDeTerreno.setVisible(true);
+           resultado = false;
+        }
+        try{
+             propiedad.setMetrosDeTerreno(Float.parseFloat(txfd_MetrosDeTerreno.getText()));
+        }catch(NullPointerException | IllegalArgumentException excepcion){
+           LOG.warn(excepcion);
+           lbl_ErrorMetrosDeTerreno.setVisible(true);
+           resultado = false;
+        }
+        try{
+            propiedad.setNumeroDeBanios(spn_NoBanios.getValue());
+        }catch(NullPointerException | IllegalArgumentException excepcion){
+           LOG.warn(excepcion);
+           lbl_ErrorNoBanios.setVisible(true);
+           resultado = false;
+        }
+        try{
+            propiedad.setNumeroDeHabitaciones(spn_NoHabitaciones.getValue());
+        }catch(NullPointerException | IllegalArgumentException excepcion){
+           LOG.warn(excepcion);
+           lbl_ErrorNoHabitaciones.setVisible(true);
+           resultado = false;
+        }
+        try{
+             String tipoDePropiedad = (String)cmb_TipoDePropiedad.getSelectionModel().getSelectedItem();
+             if(tipoDePropiedad.isEmpty()){
+                resultado = true;
+             }
+        }catch(NullPointerException | IllegalArgumentException excepcion){
+            LOG.warn(excepcion);
+            lbl_ErrorTipoDePropiedad.setVisible(true);
+            resultado = false;
+        }
+        try{
+            propiedad.setNumeroDePisos(spn_NoPisos.getValue());
+        }catch(NullPointerException | IllegalArgumentException excepcion){
+           LOG.warn(excepcion);
+           lbl_ErrorNombre.setVisible(true);
+           resultado = false;
+        }
+        try{
+            propiedad.setPrecio(txfd_Precio.getText());
+        }catch(NullPointerException | IllegalArgumentException excepcion){
+           LOG.warn(excepcion);
+           lbl_ErrorPrecio.setVisible(true);
+           resultado = false;
+        }
+        try{
+            propiedad.setNombre(txfd_Nombre.getText());
+        }catch(NullPointerException | IllegalArgumentException excepcion){
+           LOG.warn(excepcion);
+           lbl_ErrorNombre.setVisible(true);
+           resultado = false;
+        }
+        try{
+            direccion.setCalle(txfd_Calle.getText());
+        }catch(NullPointerException | IllegalArgumentException excepcion){
+           LOG.warn(excepcion);
+           lbl_ErrorCalle.setVisible(true);
+           resultado = false;
+        }
+        try{
+           direccion.setCiudad(txfd_Ciudad.getText());
+        }catch(NullPointerException | IllegalArgumentException excepcion){
+           LOG.warn(excepcion);
+           lbl_ErrorCiudad.setVisible(true);
+           resultado = false;
+        }
+        try{
+            direccion.setCodigoPostal(txfd_CodigoPostal.getText());
+        }catch(NullPointerException | IllegalArgumentException excepcion){
+           LOG.warn(excepcion);
+           lbl_ErrorCodigoPostal.setVisible(true);
+           resultado = false;
+        }
+        try{
+            direccion.setColonia(txfd_Colonia.getText());
+        }catch(NullPointerException | IllegalArgumentException excepcion){
+           LOG.warn(excepcion);
+           lbl_ErrorColonia.setVisible(true);
+           resultado = false;
+        }
+        try{
+            String estado = (String)cmb_Estado.getSelectionModel().getSelectedItem();
+            if(estado.isEmpty()){
+                resultado = true;
+             }
+        }catch(NullPointerException | IllegalArgumentException excepcion){
+           LOG.warn(excepcion);
+           lbl_ErrorEstado.setVisible(true);
+           resultado = false;
+        }
+        if(Pattern.matches(RFC_PATTERN, txfd_RFCPropietario.getText())){
+            resultado = true;
+        }else{
+            lbl_ErrorRFC.setVisible(true);
+            resultado = false;
+        }
+        return resultado;
+     }
+    
     private Propiedad obtenerDatosPropiedad(){
         DAOPropietario daoPropietario = new DAOPropietario();
         DAOUsuario daoUsuario = new  DAOUsuario();
@@ -122,29 +287,24 @@ public class Ventana_RegistrarPropiedadControlador implements Initializable {
         Direccion direccion = new Direccion();
         Propietario propietario = new Propietario();
         Usuario usuario = new Usuario();
-        try{
-            propiedad.setAntiguedad(spn_Antiguedad.getValue());
-            propiedad.setEstadoPropiedad((String) cmb_EstadoPropiedad.getSelectionModel().getSelectedItem());
-            propiedad.setMetrosDeTerreno(Float.parseFloat(txfd_MetrosDeTerreno.getText()));
-            propiedad.setNumeroDeBanios(spn_NoBanios.getValue());
-            propiedad.setNumeroDeHabitaciones(spn_NoHabitaciones.getValue());
-            propiedad.setNumeroDePisos(spn_NoPisos.getValue());
-            propiedad.setPrecio(txfd_Precio.getText());
-            propiedad.setNombre(txfd_Nombre.getText());
-            direccion.setCalle(txfd_Calle.getText());
-            direccion.setCiudad(txfd_Ciudad.getText());
-            direccion.setCodigoPostal(txfd_CodigoPostal.getText());
-            direccion.setColonia(txfd_Colonia.getText());
-            usuario = daoUsuario.consultarUsuarioPorRFC(txfd_RFCPropietario.getText());
-            propietario = daoPropietario.consultarPropietarioPorIDUsuario(usuario.getIdUsuario());
-            propiedad.setTipoDePropiedad(obtenerObjectoTipoPropiedad());
-            propiedad.setDireccion(direccion);
-            propiedad.setDireccion(obtenerUbicacion(propiedad.getDireccion()));
-            propiedad.setPropietario(propietario);
-        }catch(NullPointerException | IllegalArgumentException excepcion){
-           LOG.warn(excepcion);
-           propiedad = null;
-        }
+        propiedad.setAntiguedad(spn_Antiguedad.getValue());
+        propiedad.setEstadoPropiedad((String) cmb_EstadoPropiedad.getSelectionModel().getSelectedItem());
+        propiedad.setMetrosDeTerreno(Float.parseFloat(txfd_MetrosDeTerreno.getText()));
+        propiedad.setNumeroDeBanios(spn_NoBanios.getValue());
+        propiedad.setNumeroDeHabitaciones(spn_NoHabitaciones.getValue());
+        propiedad.setNumeroDePisos(spn_NoPisos.getValue());
+        propiedad.setPrecio(txfd_Precio.getText());
+        propiedad.setNombre(txfd_Nombre.getText());
+        direccion.setCalle(txfd_Calle.getText());
+        direccion.setCiudad(txfd_Ciudad.getText());
+        direccion.setCodigoPostal(txfd_CodigoPostal.getText());
+        direccion.setColonia(txfd_Colonia.getText());
+        usuario = daoUsuario.consultarUsuarioPorRFC(txfd_RFCPropietario.getText());
+        propietario = daoPropietario.consultarPropietarioPorIDUsuario(usuario.getIdUsuario());
+        propiedad.setTipoDePropiedad(obtenerObjectoTipoPropiedad());
+        propiedad.setDireccion(direccion);
+        propiedad.setDireccion(obtenerUbicacion(propiedad.getDireccion()));
+        propiedad.setPropietario(propietario);
         return propiedad;
     }
     
@@ -161,32 +321,36 @@ public class Ventana_RegistrarPropiedadControlador implements Initializable {
         return direccion;
     }
     
-    public void realizarRegistro(){
-        Propiedad propiedadNueva = obtenerDatosPropiedad();
-        if (Objects.nonNull(propiedadNueva)) {
-            if(!Objects.isNull(propiedadNueva.getPropietario().getUsuario())){
-                DAODireccion daoDireccion = new DAODireccion();
-                int resultadoInsercionDireccion = daoDireccion.insertarDireccion(propiedadNueva.getDireccion());
-                if (resultadoInsercionDireccion != -1) {
-                    propiedadNueva.setDireccion(daoDireccion.ObtenerUltimaDireccionRegistrada());
-                    DAOPropiedad daoPropiedad = new DAOPropiedad();
-                    int resultadoInsercion = daoPropiedad.registrarPropiedad(propiedadNueva);
-                    if (resultadoInsercion != -1) {
-                        Alertas.mostrarMensajeDatosIngresados();
-                        regresarDeVentana();
+    @FXML
+    public void realizarRegistro(ActionEvent event){
+        if(validarDatos()){
+            Propiedad propiedadNueva = obtenerDatosPropiedad();
+            if (Objects.nonNull(propiedadNueva)) {
+                if(!Objects.isNull(propiedadNueva.getPropietario().getUsuario())){
+                    DAODireccion daoDireccion = new DAODireccion();
+                    int resultadoInsercionDireccion = daoDireccion.insertarDireccion(propiedadNueva.getDireccion());
+                    if (resultadoInsercionDireccion != -1) {
+                        propiedadNueva.setDireccion(daoDireccion.ObtenerUltimaDireccionRegistrada());
+                        DAOPropiedad daoPropiedad = new DAOPropiedad();
+                        int resultadoInsercion = daoPropiedad.registrarPropiedad(propiedadNueva);
+                        if (resultadoInsercion != -1) {
+                            Alertas.mostrarMensajeDatosIngresados();
+                            regresarDeVentana();
+                        } else {
+                            Alertas.mostrarMensajeErrorEnLaConexion();
+                        }
                     } else {
                         Alertas.mostrarMensajeErrorEnLaConexion();
                     }
                 } else {
-                    Alertas.mostrarMensajeErrorEnLaConexion();
+                    Alertas.mostrarMensajeRFCoNoEncontrado();
                 }
-            } else {
-                Alertas.mostrarMensajeRFCoNoEncontrado();
+            }else{
+                Alertas.mostrarMensajeDatosInvalidos();
             }
         }else{
             Alertas.mostrarMensajeDatosInvalidos();
         }
-        
     }
     
     public void regresarDeVentana(){
