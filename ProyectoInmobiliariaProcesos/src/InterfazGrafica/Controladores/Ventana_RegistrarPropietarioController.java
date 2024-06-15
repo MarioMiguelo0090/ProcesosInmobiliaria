@@ -129,7 +129,7 @@ public class Ventana_RegistrarPropietarioController implements Initializable  {
                         Alertas.mostrarMensajeErrorEnLaConexion();
                     }
                 } else {
-                    Alertas.mostrarMensajeDatosDuplicados();
+                    Alertas.mostrarMensajeRFCDuplicados();
                 }
             } else {
                 Alertas.mostrarMensajeDatosDuplicados();

@@ -172,22 +172,16 @@ public void desplegarVentanaDetallesDeCliente(int idUsuario) {
     }
     
     public void desplegarVentanaCorrespondiente(String rutaVentanaFXML) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(rutaVentanaFXML));
-            Parent root = loader.load();
+         try{
+            Parent root=FXMLLoader.load(getClass().getResource(rutaVentanaFXML));
+            Scene scene = new Scene(root);
             Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-
-            Object controlador = loader.getController();
-            if (controlador instanceof Ventana_MenuPrincipalAdministradorControlador) {
-                Ventana_MenuPrincipalAdministradorControlador MenuPrincipalAdministradorControlador = (Ventana_MenuPrincipalAdministradorControlador) controlador;
-                MenuPrincipalAdministradorControlador.inicializar(stage);
-            }
-
+            stage.setScene(scene);
             stage.show();
             cerrarVentana();
-        } catch (IOException excepcion) {
+        }catch(IOException excepcion){
             LOG.error(excepcion);
+            System.out.println(excepcion.getMessage());
         }
     }
     
