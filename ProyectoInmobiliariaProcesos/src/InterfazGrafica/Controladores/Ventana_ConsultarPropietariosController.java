@@ -167,19 +167,18 @@ public class Ventana_ConsultarPropietariosController implements Initializable {
     }
 
      public void regresarVentanaPrincipal(){
-            try {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/InterfazGrafica/Ventana_MenuPrincipalAdministrador.fxml"));
-        Parent root = loader.load();
-        Ventana_MenuPrincipalAdministradorControlador controlador = loader.getController();
-        Stage stage = new Stage();
-        controlador.inicializar(stage);
-        stage.setScene(new Scene(root));
-        stage.show();
-        cerrarVentana();
-    } catch (IOException excepcion) {
-        LOG.error(excepcion);
-        System.out.println("Error de conexion de BD");
-    }
+         
+        try{
+            Parent root=FXMLLoader.load(getClass().getResource("/InterfazGrafica/Ventana_MenuPrincipalAdministrador.fxml"));
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.show();
+            cerrarVentana();
+        }catch(IOException excepcion){
+            LOG.error(excepcion);
+            System.out.println(excepcion.getMessage());
+        }
     }
    
     public void cerrarVentana(){

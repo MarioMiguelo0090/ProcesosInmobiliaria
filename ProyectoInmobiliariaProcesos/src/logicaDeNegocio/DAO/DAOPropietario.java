@@ -23,8 +23,11 @@ public class DAOPropietario implements IPropietarioInterface {
 "FROM usuario \n" +
 "JOIN propietario ON usuario.idUsuario = propietario.Usuario_idCliente \n" +
 "WHERE usuario.correo = ?;";
-    private static final String VERIFICAR_EXISTENCIA_RFC = """
-        SELECT COUNT(*) AS number_of_matches FROM usuario WHERE RFC = ?""";
+    private static final String VERIFICAR_EXISTENCIA_RFC = 
+     "SELECT COUNT(*) AS number_of_matches \n" +
+"FROM usuario \n" +
+"JOIN propietario ON usuario.idUsuario = propietario.Usuario_idCliente \n" +
+"WHERE usuario.RFC = ?;";
     
     @Override
     public int agregarNuevoPropietario(Usuario usuario) throws SQLException {

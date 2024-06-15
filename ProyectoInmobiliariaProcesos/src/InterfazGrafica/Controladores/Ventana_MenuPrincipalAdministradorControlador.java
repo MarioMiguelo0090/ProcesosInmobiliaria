@@ -3,6 +3,8 @@ package InterfazGrafica.Controladores;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -39,27 +41,22 @@ public class Ventana_MenuPrincipalAdministradorControlador implements Initializa
         btn_GestionPropietario.setOnAction(event->abrirVentanaPropietarios());
     }
     
-        public void inicializar(Stage stage) {
-        this.escenario = stage;
-        escenario.setOnCloseRequest(event -> {
-            event.consume();
-        });
-    }
-    
+
     public void abrirVentanaPropiedades(){
-         try {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/InterfazGrafica/Ventana_Propiedades.fxml"));
-        Parent root = loader.load();
-        Ventana_PropiedadesControlador controlador = loader.getController();
-        Stage stage = new Stage();
-        controlador.inicializar(stage);
-        stage.setScene(new Scene(root));
-        stage.show();
-        cerrarVentana();
-    } catch (IOException excepcion) {
-        LOG.error(excepcion);
-        System.out.println("Error de conexion de BD");
-    }
+        
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/InterfazGrafica/Ventana_Propiedades.fxml"));
+            Parent root = loader.load();
+            Ventana_PropiedadesControlador controlador = loader.getController();
+            Stage stage = new Stage();
+            controlador.inicializar(stage);
+            stage.setScene(new Scene(root));
+            stage.show();
+            cerrarVentana();
+        } catch (IOException ex) {
+           LOG.error(ex);
+        }
+        
     }
     
     public void abrirVentanaPropietarios(){
@@ -88,10 +85,10 @@ public class Ventana_MenuPrincipalAdministradorControlador implements Initializa
         stage.setScene(new Scene(root));
         stage.show();
         cerrarVentana();
-    } catch (IOException excepcion) {
-        LOG.error(excepcion);
-        System.out.println("Error de conexion de BD");
-    }
+        } catch (IOException excepcion) {
+            LOG.error(excepcion);
+            System.out.println("Error de conexion de BD");
+        }
     }
     
     public void abrirVentanaRegistrarCliente(){
@@ -120,10 +117,10 @@ public class Ventana_MenuPrincipalAdministradorControlador implements Initializa
         stage.setScene(new Scene(root));
         stage.show();
         cerrarVentana();
-    } catch (IOException excepcion) {
-        LOG.error(excepcion);
-        System.out.println("Error de conexion de BD");
-    }
+        } catch (IOException excepcion) {
+            LOG.error(excepcion);
+            System.out.println("Error de conexion de BD");
+        }
     }
     
     public void cerrarVentana(){

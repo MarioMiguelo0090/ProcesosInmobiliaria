@@ -117,8 +117,17 @@ public class Alertas extends Application {
     public static void mostrarMensajeDatosDuplicados(){
         Platform.runLater(() ->{
             Alert mensaje = new Alert(AlertType.WARNING);
-            mensaje.setTitle("Duplicado de datos");
-            mensaje.setContentText("Los datos que desea ingresar ya han sido previamente insertados");
+            mensaje.setTitle("Correo duplicado");
+            mensaje.setContentText("El correo ya se encuentra registrado en este sistema con otro tipo de cuenta.");
+            mensaje.showAndWait();
+        });
+    }
+    
+    public static void mostrarMensajeRFCDuplicados(){
+        Platform.runLater(() ->{
+            Alert mensaje = new Alert(AlertType.WARNING);
+            mensaje.setTitle("RFC duplicado");
+            mensaje.setContentText("El RFC ya se encuentra registrado en este sistema.");
             mensaje.showAndWait();
         });
     }

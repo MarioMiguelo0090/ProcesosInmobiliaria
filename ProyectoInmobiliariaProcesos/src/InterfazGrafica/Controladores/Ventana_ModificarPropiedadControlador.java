@@ -381,7 +381,8 @@ public class Ventana_ModificarPropiedadControlador implements Initializable {
        boolean resultadoValidacion = validarDatos();
        Propiedad propiedadAntigua = obtenerDatosPropiedadAAuxiliar();
        if(resultadoValidacion){
-           Propiedad propiedadNueva = obtenerDatosPropiedad();if(Objects.nonNull(propiedadNueva)){
+           Propiedad propiedadNueva = obtenerDatosPropiedad();
+        if(Objects.nonNull(propiedadNueva)){
             if(!propiedadNueva.equals(propiedadAntigua)){
                 if (Objects.nonNull(propiedadNueva)) {
                     if(!Objects.isNull(propiedadNueva.getPropietario().getUsuario())){
